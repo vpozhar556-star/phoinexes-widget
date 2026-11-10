@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PHOINEXES — video hero demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:#0b0b0b;color:#fff;font-family:Inter,Arial,sans-serif}
+.hero{position:relative;height:100vh;min-height:600px;overflow:hidden}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% 50%}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,8,8,.92) 0%,rgba(8,8,8,.65) 38%,rgba(8,8,8,0) 65%),linear-gradient(0deg,rgba(8,8,8,.85) 0%,rgba(8,8,8,0) 30%)}
+header{position:absolute;top:0;left:0;right:0;z-index:3;display:flex;align-items:center;gap:30px;height:70px;padding:0 44px;background:rgba(8,8,8,.45);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(6px)}
+.brand{display:flex;align-items:center;gap:10px;font-family:Audiowide;letter-spacing:3px;font-size:15px;margin-right:20px}.brand svg{width:28px;height:28px}
+.menuList{display:flex;gap:28px;list-style:none;margin:0;padding:0}
+.menuList > li > a{position:relative;color:#dbddde;text-decoration:none;font-family:Audiowide;font-size:13px;letter-spacing:1px;text-transform:uppercase;transition:color .25s,text-shadow .25s}
+.menuList > li > a::after{content:"";position:absolute;left:0;bottom:-7px;height:2px;width:100%;background:linear-gradient(90deg,#FD4B03 0,#FD4B03 calc(100% - 6px),transparent calc(100% - 6px));transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.menuList > li > a::before{content:"";position:absolute;bottom:-9px;left:0;width:6px;height:6px;background:#fff;box-shadow:0 0 8px 2px #FD4B03;opacity:0;transform:rotate(45deg);pointer-events:none}
+.menuList > li > a:hover{color:#FD4B03;text-shadow:0 0 12px rgba(253,75,3,.65)}
+.menuList > li > a:hover::after{transform:scaleX(1)}
+.menuList > li > a:hover::before{animation:sp .45s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes sp{0%{opacity:1;left:0}85%{opacity:1}100%{opacity:0;left:calc(100% - 6px)}}
+.sp{flex:1}.nb{border:1px solid #fff;padding:9px 18px;color:#fff;font-size:13px;text-decoration:none;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%);transition:background .2s,color .2s}.nb:hover{background:#fff;color:#111}
+.copy{position:absolute;z-index:3;left:clamp(24px,6vw,96px);top:50%;transform:translateY(-45%);max-width:640px}
+.tag{color:#FD4B03;font-size:13px;letter-spacing:3px;margin-bottom:20px;text-transform:uppercase;opacity:0;animation:up .9s .3s forwards}
+h1{font-family:Audiowide;font-weight:400;font-size:clamp(34px,4.6vw,64px);line-height:1.1;margin:0 0 20px;letter-spacing:1px}
+h1 span{display:block;opacity:0;transform:translateY(24px);animation:up .9s forwards}h1 span:nth-child(1){animation-delay:.5s}h1 span:nth-child(2){animation-delay:.7s}h1 span:nth-child(3){animation-delay:.9s}
+.sub{color:#b5b5b5;font-size:17px;line-height:1.6;margin:0 0 34px;max-width:480px;opacity:0;animation:up .9s 1.1s forwards}
+.cta{display:inline-block;padding:16px 34px;color:#fff;font:15px Audiowide;letter-spacing:2px;text-decoration:none;opacity:0;animation:up .9s 1.3s forwards;
+ background:linear-gradient(135deg,transparent 11px,#FD4B03 11px,#FD4B03 12.5px,transparent 12.5px) top left/18px 18px no-repeat,linear-gradient(-45deg,transparent 11px,#FD4B03 11px,#FD4B03 12.5px,transparent 12.5px) bottom right/18px 18px no-repeat,rgba(253,75,3,.15);
+ box-shadow:inset 0 0 0 1px #FD4B03;clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);transition:background-color .2s,color .2s}
+.cta:hover{background-color:#FD4B03;color:#141414}
+@keyframes up{to{opacity:1;transform:none}}
+.live{position:absolute;z-index:3;right:44px;bottom:30px;color:#a3a3a3;font-size:12px;letter-spacing:2px}.live b{color:#FD4B03;font-weight:400;animation:bl 2.4s infinite}@keyframes bl{50%{opacity:.25}}
+@media(max-width:900px){.menuList{display:none}header{padding:0 16px}.hero video{object-position:62% 50%}.hero:after{background:linear-gradient(0deg,rgba(8,8,8,.95) 0%,rgba(8,8,8,.6) 45%,rgba(8,8,8,.1) 75%)}.copy{top:auto;bottom:70px;transform:none;right:24px}}
+</style></head><body>
+<section class="hero">
+<video autoplay muted loop playsinline poster="https://d8j0ntlcm91z4.cloudfront.net/user_3LeBLE3q3Elqr48BsoNhUfFKUdc/hf_20261110_180342_158378cd-1afc-4922-90cd-c0111d015a70.png"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_3LeBLE3q3Elqr48BsoNhUfFKUdc/hf_20261110_180957_b8d80925-0604-48c8-bd73-5920c5ef2b53.mp4" type="video/mp4"></video>
+<header><div class="brand"><svg viewBox="0 0 158 158" aria-hidden="true"><path fill="#FD4B03" fill-rule="evenodd" d="M135.766,157.029 L102.421,157.029 C115.526,145.280 132.225,125.348 126.187,95.805 C124.062,124.725 105.514,145.482 83.257,157.029 L21.651,157.029 C10.974,157.029 2.120,149.272 0.450,139.108 C100.242,169.189 111.020,95.303 97.380,69.155 C86.895,49.055 67.425,50.821 53.432,57.029 C50.059,63.378 45.136,66.055 41.206,68.435 C35.732,71.750 29.683,92.204 29.683,92.204 C29.683,92.204 21.112,79.463 25.362,65.554 C18.672,60.266 15.233,52.940 24.146,35.935 C36.558,12.254 64.588,15.653 75.681,0.568 L135.766,0.568 C145.466,0.568 153.662,6.971 156.333,15.763 C142.732,3.283 106.022,17.295 106.022,17.295 C106.022,17.295 132.663,27.287 157.251,21.858 C157.251,21.895 157.254,21.932 157.254,21.970 C157.254,21.970 157.254,35.805 157.254,53.820 C150.558,56.786 142.223,56.685 131.949,53.309 C142.905,68.919 157.155,59.071 157.155,59.071 C157.189,59.085 157.220,59.099 157.254,59.112 C157.254,68.445 157.254,78.585 157.254,88.339 C157.254,113.240 157.254,135.627 157.254,135.627 C157.254,147.446 147.633,157.029 135.766,157.029 ZM33.203,52.409 L32.564,60.082 C32.564,60.082 36.200,56.387 39.596,52.409 C39.160,50.260 40.294,46.021 43.431,39.622 C39.776,41.152 33.203,52.409 33.203,52.409 ZM97.795,94.003 C77.316,155.257 20.417,144.461 0.163,112.676 L0.163,64.116 C0.255,63.967 0.341,63.818 0.435,63.668 C1.096,122.422 69.478,135.494 97.795,94.003 Z"/></svg>PHOINEXES</div>
+<ul class="menuList"><li><a href="#">About</a></li><li><a href="#">Industry</a></li><li><a href="#">To investors</a></li><li><a href="#">To partners</a></li><li><a href="#">Game &amp; Earn</a></li><li><a href="#">FAQ</a></li><li><a href="#">Contacts</a></li></ul>
+<span class="sp"></span><a class="nb" href="#">Sign up</a><a class="nb" href="#">Log in</a></header>
+<div class="copy"><div class="tag">AI approach to capital management</div>
+<h1><span>PHOINEXES —</span><span>DATA-DRIVEN</span><span>CAPITAL MANAGEMENT</span></h1>
+<p class="sub">AI technologies for systematic management of your funds</p><a class="cta" href="#">START NOW</a></div>
+<div class="live"><b>●</b> LIVE AI ENGINE</div>
+</section>
+<script>
+(function(){var GL='01#%$\u20AE\u25B2\u25BCAIX';
+document.querySelectorAll('.menuList > li > a').forEach(function(a){a.addEventListener('mouseenter',function(){
+ var tn=a.firstChild, target=tn.__phx||(tn.__phx=tn.textContent), f=0; clearInterval(a.__t);
+ a.__t=setInterval(function(){f++;tn.textContent=target.split('').map(function(ch,i){return ch===' '?' ':(i<f/2?ch:GL[(Math.random()*GL.length)|0]);}).join('');
+  if(f/2>=target.length){clearInterval(a.__t);tn.textContent=target;}},28);});});})();
+</script></body></html>
