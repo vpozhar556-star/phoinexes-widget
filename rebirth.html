@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PHOINEXES — rebirth from ash</title>
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:#0b0b0b;color:#fff;font-family:Inter,Arial,sans-serif}
+.hero{position:relative;height:100vh;min-height:600px;overflow:hidden;background:#0b0b0b}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:72% 50%}
+.shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,8,8,.9) 0%,rgba(8,8,8,.55) 38%,rgba(8,8,8,0) 62%),linear-gradient(0deg,rgba(8,8,8,.75) 0%,rgba(8,8,8,0) 28%)}
+#fx{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}
+header{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;align-items:center;gap:30px;height:70px;padding:0 44px;background:rgba(8,8,8,.4);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(6px)}
+.brand{display:flex;align-items:center;gap:10px;font-family:Audiowide;letter-spacing:3px;font-size:15px;margin-right:20px}.brand svg{width:28px;height:28px}
+.menuList{display:flex;gap:28px;list-style:none;margin:0;padding:0}
+.menuList > li > a{position:relative;color:#dbddde;text-decoration:none;font-family:Audiowide;font-size:13px;letter-spacing:1px;text-transform:uppercase;transition:color .25s,text-shadow .25s}
+.menuList > li > a::after{content:"";position:absolute;left:0;bottom:-7px;height:2px;width:100%;background:#FD4B03;transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.menuList > li > a:hover{color:#FD4B03;text-shadow:0 0 12px rgba(253,75,3,.65)}.menuList > li > a:hover::after{transform:scaleX(1)}
+.sp{flex:1}.nb{border:1px solid #fff;padding:9px 18px;color:#fff;font-size:13px;text-decoration:none;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%)}
+.copy{position:absolute;z-index:3;left:clamp(24px,6vw,96px);top:50%;transform:translateY(-45%);max-width:680px}
+.tag{color:#FD4B03;font-size:13px;letter-spacing:3px;margin-bottom:20px;text-transform:uppercase;opacity:0;transition:opacity 1.8s}
+h1{font-family:Audiowide,Arial,sans-serif;font-weight:400;font-size:clamp(34px,4.6vw,64px);line-height:1.12;margin:0 0 20px;letter-spacing:1px;cursor:default}
+h1 span{display:block;opacity:0;transition:opacity 1.2s, text-shadow 2.4s, color 2.4s}
+h1.lit span{opacity:1}
+h1.glow span{color:#ffd9b8;text-shadow:0 0 18px rgba(253,75,3,.9),0 0 40px rgba(253,75,3,.6)}
+.sub{color:#b5b5b5;font-size:17px;line-height:1.6;margin:0 0 34px;max-width:480px;opacity:0;transform:translateY(14px);transition:opacity 1.8s .3s,transform 1.8s .3s}
+.cta{display:inline-block;padding:16px 34px;color:#fff;font:15px Audiowide,Arial;letter-spacing:2px;text-decoration:none;opacity:0;transform:translateY(14px);transition:opacity 1.8s .6s,transform 1.8s .6s,background-color .2s,color .2s;
+ background:linear-gradient(135deg,transparent 11px,#FD4B03 11px,#FD4B03 12.5px,transparent 12.5px) top left/18px 18px no-repeat,linear-gradient(-45deg,transparent 11px,#FD4B03 11px,#FD4B03 12.5px,transparent 12.5px) bottom right/18px 18px no-repeat,rgba(253,75,3,.15);
+ box-shadow:inset 0 0 0 1px #FD4B03;clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px)}
+.cta:hover{background-color:#FD4B03;color:#141414}
+.ready .tag,.ready .sub,.ready .cta{opacity:1;transform:none}
+.hint{position:absolute;z-index:5;right:44px;bottom:30px;color:#8a8a8a;font-size:12px;letter-spacing:2px}
+@media(max-width:900px){.menuList{display:none}header{padding:0 16px}.hero video{object-position:66% 50%}.shade{background:linear-gradient(0deg,rgba(8,8,8,.95) 0%,rgba(8,8,8,.6) 45%,rgba(8,8,8,.1) 75%)}.copy{top:auto;bottom:70px;transform:none;right:24px}.hint{display:none}}
+</style></head><body>
+<section class="hero" id="hero">
+<video autoplay muted loop playsinline poster="https://d8j0ntlcm91z4.cloudfront.net/user_3LeBLE3q3Elqr48BsoNhUfFKUdc/hf_20261110_180342_d8539e8f-b11b-4408-96ad-48f0a5871ef5.png"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_3LeBLE3q3Elqr48BsoNhUfFKUdc/hf_20261110_182515_67dabb7e-47a1-4129-a57b-20d779542b6e.mp4" type="video/mp4"></video>
+<div class="shade"></div>
+<header><div class="brand"><svg viewBox="0 0 158 158" aria-hidden="true"><path fill="#FD4B03" fill-rule="evenodd" d="M135.766,157.029 L102.421,157.029 C115.526,145.280 132.225,125.348 126.187,95.805 C124.062,124.725 105.514,145.482 83.257,157.029 L21.651,157.029 C10.974,157.029 2.120,149.272 0.450,139.108 C100.242,169.189 111.020,95.303 97.380,69.155 C86.895,49.055 67.425,50.821 53.432,57.029 C50.059,63.378 45.136,66.055 41.206,68.435 C35.732,71.750 29.683,92.204 29.683,92.204 C29.683,92.204 21.112,79.463 25.362,65.554 C18.672,60.266 15.233,52.940 24.146,35.935 C36.558,12.254 64.588,15.653 75.681,0.568 L135.766,0.568 C145.466,0.568 153.662,6.971 156.333,15.763 C142.732,3.283 106.022,17.295 106.022,17.295 C106.022,17.295 132.663,27.287 157.251,21.858 C157.251,21.895 157.254,21.932 157.254,21.970 C157.254,21.970 157.254,35.805 157.254,53.820 C150.558,56.786 142.223,56.685 131.949,53.309 C142.905,68.919 157.155,59.071 157.155,59.071 C157.189,59.085 157.220,59.099 157.254,59.112 C157.254,68.445 157.254,78.585 157.254,88.339 C157.254,113.240 157.254,135.627 157.254,135.627 C157.254,147.446 147.633,157.029 135.766,157.029 ZM33.203,52.409 L32.564,60.082 C32.564,60.082 36.200,56.387 39.596,52.409 C39.160,50.260 40.294,46.021 43.431,39.622 C39.776,41.152 33.203,52.409 33.203,52.409 ZM97.795,94.003 C77.316,155.257 20.417,144.461 0.163,112.676 L0.163,64.116 C0.255,63.967 0.341,63.818 0.435,63.668 C1.096,122.422 69.478,135.494 97.795,94.003 Z"/></svg>PHOINEXES</div>
+<ul class="menuList"><li><a href="#">About</a></li><li><a href="#">Industry</a></li><li><a href="#">To investors</a></li><li><a href="#">To partners</a></li><li><a href="#">Game &amp; Earn</a></li><li><a href="#">FAQ</a></li><li><a href="#">Contacts</a></li></ul>
+<span class="sp"></span><a class="nb" href="#">Sign up</a><a class="nb" href="#">Log in</a></header>
+<div class="copy" id="copy"><div class="tag">AI approach to capital management</div>
+<h1 id="h1"><span>PHOINEXES —</span><span>DATA-DRIVEN</span><span>CAPITAL MANAGEMENT</span></h1>
+<p class="sub">AI technologies for systematic management of your funds</p><a class="cta" href="#">START NOW</a></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div class="hint">Hover the headline</div>
+</section>
+<script>
+(function(){
+  var hero=document.getElementById('hero'), h1=document.getElementById('h1'), copy=document.getElementById('copy');
+  var cv=document.getElementById('fx'), x=cv.getContext('2d'), DPR=Math.min(devicePixelRatio||1,2), W,H, P=[], embers=[], state='idle', t0=0, busy=false;
+  function size(){W=hero.clientWidth;H=hero.clientHeight;cv.width=W*DPR;cv.height=H*DPR;x.setTransform(DPR,0,0,DPR,0,0);}
+  function ash(){ return {x:W*(0.62+Math.random()*0.22), y:H*(0.78+Math.random()*0.1)}; }  // ash pile on the right
+  function sample(){
+    var hr=hero.getBoundingClientRect(), pts=[], off=document.createElement('canvas'), o=off.getContext('2d');
+    off.width=W; off.height=H;
+    [].forEach.call(h1.querySelectorAll('span'),function(s){
+      var cs=getComputedStyle(s), tn=s.firstChild, txt=tn.textContent, re=/\S+/g, m;
+      o.font=cs.fontWeight+' '+cs.fontSize+' '+cs.fontFamily; o.textBaseline='alphabetic'; o.fillStyle='#fff';
+      if(o.letterSpacing!==undefined) o.letterSpacing=cs.letterSpacing;
+      while((m=re.exec(txt))){ var rg=document.createRange(); rg.setStart(tn,m.index); rg.setEnd(tn,m.index+m[0].length);
+        var r=rg.getBoundingClientRect(), mm=o.measureText(m[0]);
+        var asc=mm.actualBoundingBoxAscent||parseFloat(cs.fontSize)*0.8, desc=mm.actualBoundingBoxDescent||0;
+        o.fillText(m[0], r.left-hr.left, r.top-hr.top+(r.height+asc-desc)/2); }
+    });
+    var d=o.getImageData(0,0,W,H).data, step=W<900?2:3;
+    for(var yy=0;yy<H;yy+=step)for(var xx=0;xx<W;xx+=step){ if(d[(yy*W+xx)*4+3]>130) pts.push({tx:xx,ty:yy}); }
+    return pts;
+  }
+  function build(fromAsh){
+    var pts=sample(); var minX=1e9,maxX=-1e9; pts.forEach(function(p){minX=Math.min(minX,p.tx);maxX=Math.max(maxX,p.tx);});
+    P=pts.map(function(p){var a=ash(); return {tx:p.tx,ty:p.ty,sx:fromAsh?a.x:p.tx,sy:fromAsh?a.y:p.ty,x:fromAsh?a.x:p.tx,y:fromAsh?a.y:p.ty,
+      d:(p.tx-minX)/(maxX-minX+1)*1.1+Math.random()*0.5, cx:(Math.random()-0.5)*260, cy:-120-Math.random()*220, s:1+Math.random()*1.2};});
+  }
+  function lerp(a,b,t){return a+(b-a)*t}
+  function ease(t){return t<0?0:t>1?1:1-Math.pow(1-t,3)}
+  function col(k,al){ // k: 0 ash grey -> .6 orange -> 1 white hot
+    var r,g,b; if(k<0.6){var u=k/0.6;r=lerp(110,253,u);g=lerp(105,75,u);b=lerp(100,3,u);} else {var u=(k-0.6)/0.4;r=lerp(253,255,u);g=lerp(75,225,u);b=lerp(3,190,u);}
+    return 'rgba('+(r|0)+','+(g|0)+','+(b|0)+','+al+')';
+  }
+  // ---- phases ----
+  function assemble(from){ // particles fly from current/ash positions into letters and ignite
+    state='assemble'; t0=performance.now(); busy=true;
+    P.forEach(function(p){ if(from==='scatter'){p.sx=p.x;p.sy=p.y;} });
+  }
+  function scatter(){ // letters burn into ash and drift away
+    if(busy) return; h1.classList.remove('glow'); h1.classList.remove('lit');
+    build(false); state='scatter'; t0=performance.now(); busy=true;
+  }
+  function frame(now){
+    x.clearRect(0,0,W,H);
+    var T=(now-t0)/1000;
+    if(state==='assemble'){
+      var dur=5.2, done=true;
+      x.globalCompositeOperation='lighter';
+      for(var i=0;i<P.length;i++){var p=P[i], k=ease((T-p.d)/(dur-1.6));
+        if(k<1) done=false;
+        // curved flight through a control point
+        var mx=lerp(p.sx,p.tx,0.5)+p.cx, my=lerp(p.sy,p.ty,0.5)+p.cy;
+        var a=(1-k)*(1-k), b=2*(1-k)*k, c=k*k;
+        p.x=a*p.sx+b*mx+c*p.tx; p.y=a*p.sy+b*my+c*p.ty;
+        var heat=k<0.75?k*0.75:0.56+(k-0.75)*1.76;
+        x.fillStyle=col(Math.min(1,heat), k<=0?0:(0.35+0.65*k)); x.fillRect(p.x,p.y,p.s,p.s);
+      }
+      x.globalCompositeOperation='source-over';
+      if(done || T>dur+1){ state='ignite'; t0=now; h1.classList.add('lit','glow'); hero.classList.add('ready'); setTimeout(function(){h1.classList.remove('glow');},1600); }
+    } else if(state==='ignite'){
+      var al=Math.max(0,1-T/1.6); x.globalCompositeOperation='lighter';
+      for(var i=0;i<P.length;i++){var p=P[i]; x.fillStyle=col(1,al); x.fillRect(p.tx,p.ty,p.s,p.s);}
+      x.globalCompositeOperation='source-over';
+      if(al<=0){state='idle';busy=false;}
+    } else if(state==='scatter'){
+      var dur=2.4; x.globalCompositeOperation='lighter';
+      for(var i=0;i<P.length;i++){var p=P[i], k=ease((T-p.d*0.6)/dur);
+        p.x=p.tx+k*(80+p.cx*0.7+(p.ty%7)*14); p.y=p.ty+k*(p.cy*0.8)+Math.sin(T*2+i)*k*4;
+        var heat=1-k; x.fillStyle=col(Math.max(0,heat), 0.95-0.35*k); x.fillRect(p.x,p.y,p.s,p.s);}
+      x.globalCompositeOperation='source-over';
+      if(T>dur+0.9){ assemble('scatter'); }
+    }
+    // rising embers from the ash pile
+    if(Math.random()<0.35) embers.push({x:W*(0.6+Math.random()*0.3),y:H*0.85,vx:(Math.random()-0.5)*0.4,vy:-0.3-Math.random()*0.6,l:1});
+    x.globalCompositeOperation='lighter';
+    for(var j=embers.length-1;j>=0;j--){var e=embers[j]; e.x+=e.vx+Math.sin(now/500+j)*0.3; e.y+=e.vy; e.l-=0.0035;
+      if(e.l<=0){embers.splice(j,1);continue;} x.fillStyle='rgba(255,140,50,'+(e.l*0.8)+')'; x.fillRect(e.x,e.y,1.6,1.6);}
+    x.globalCompositeOperation='source-over';
+    requestAnimationFrame(frame);
+  }
+  function start(){ size(); build(true); assemble('ash'); requestAnimationFrame(frame); }
+  h1.addEventListener('mouseenter',scatter);
+  h1.addEventListener('touchstart',scatter,{passive:true});
+  window.addEventListener('resize',function(){size(); if(!busy){build(false);} });
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(function(){setTimeout(start,300);});
+})();
+</script></body></html>
