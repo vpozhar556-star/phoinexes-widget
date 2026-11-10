@@ -4,8 +4,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}html,body{margin:0;background:#0b0b0b;color:#fff;font-family:Inter,Arial,sans-serif}
-.hero{position:relative;height:100vh;min-height:600px;overflow:hidden;background:#0b0b0b}
-.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:72% 50%}
+.hero{position:relative;height:100vh;min-height:600px;overflow:hidden;background:#0b0b0b url(https://d2ol7oe51mr4n9.cloudfront.net/user_3LeBLE3q3Elqr48BsoNhUfFKUdc/8dbb36de-3d2a-496f-870e-29fb22908843.jpg) 72% 50%/cover no-repeat}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:72% 50%;opacity:0;transition:opacity 1.6s ease}
+.hero video.on{opacity:1}
 .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,8,8,.9) 0%,rgba(8,8,8,.55) 38%,rgba(8,8,8,0) 62%),linear-gradient(0deg,rgba(8,8,8,.75) 0%,rgba(8,8,8,0) 28%)}
 #fx{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}
 header{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;align-items:center;gap:30px;height:70px;padding:0 44px;background:rgba(8,8,8,.4);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(6px)}
@@ -31,7 +32,7 @@ h1.glow span{color:#ffd9b8;text-shadow:0 0 18px rgba(253,75,3,.9),0 0 40px rgba(
 @media(max-width:900px){.menuList{display:none}header{padding:0 16px}.hero video{object-position:66% 50%}.shade{background:linear-gradient(0deg,rgba(8,8,8,.95) 0%,rgba(8,8,8,.6) 45%,rgba(8,8,8,.1) 75%)}.copy{top:auto;bottom:70px;transform:none;right:24px}.hint{display:none}}
 </style></head><body>
 <section class="hero" id="hero">
-<video autoplay muted loop playsinline poster="https://d8j0ntlcm91z4.cloudfront.net/user_3LeBLE3q3Elqr48BsoNhUfFKUdc/hf_20261110_180342_d8539e8f-b11b-4408-96ad-48f0a5871ef5.png"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_3LeBLE3q3Elqr48BsoNhUfFKUdc/hf_20261110_182515_67dabb7e-47a1-4129-a57b-20d779542b6e.mp4" type="video/mp4"></video>
+<video id="bgv" autoplay muted loop playsinline preload="auto" poster="https://d2ol7oe51mr4n9.cloudfront.net/user_3LeBLE3q3Elqr48BsoNhUfFKUdc/8dbb36de-3d2a-496f-870e-29fb22908843.jpg"><source src="https://d2ol7oe51mr4n9.cloudfront.net/user_3LeBLE3q3Elqr48BsoNhUfFKUdc/0447e759-51e4-4a64-96ec-c04768a2ec85.mp4" type="video/mp4"></video>
 <div class="shade"></div>
 <header><div class="brand"><svg viewBox="0 0 158 158" aria-hidden="true"><path fill="#FD4B03" fill-rule="evenodd" d="M135.766,157.029 L102.421,157.029 C115.526,145.280 132.225,125.348 126.187,95.805 C124.062,124.725 105.514,145.482 83.257,157.029 L21.651,157.029 C10.974,157.029 2.120,149.272 0.450,139.108 C100.242,169.189 111.020,95.303 97.380,69.155 C86.895,49.055 67.425,50.821 53.432,57.029 C50.059,63.378 45.136,66.055 41.206,68.435 C35.732,71.750 29.683,92.204 29.683,92.204 C29.683,92.204 21.112,79.463 25.362,65.554 C18.672,60.266 15.233,52.940 24.146,35.935 C36.558,12.254 64.588,15.653 75.681,0.568 L135.766,0.568 C145.466,0.568 153.662,6.971 156.333,15.763 C142.732,3.283 106.022,17.295 106.022,17.295 C106.022,17.295 132.663,27.287 157.251,21.858 C157.251,21.895 157.254,21.932 157.254,21.970 C157.254,21.970 157.254,35.805 157.254,53.820 C150.558,56.786 142.223,56.685 131.949,53.309 C142.905,68.919 157.155,59.071 157.155,59.071 C157.189,59.085 157.220,59.099 157.254,59.112 C157.254,68.445 157.254,78.585 157.254,88.339 C157.254,113.240 157.254,135.627 157.254,135.627 C157.254,147.446 147.633,157.029 135.766,157.029 ZM33.203,52.409 L32.564,60.082 C32.564,60.082 36.200,56.387 39.596,52.409 C39.160,50.260 40.294,46.021 43.431,39.622 C39.776,41.152 33.203,52.409 33.203,52.409 ZM97.795,94.003 C77.316,155.257 20.417,144.461 0.163,112.676 L0.163,64.116 C0.255,63.967 0.341,63.818 0.435,63.668 C1.096,122.422 69.478,135.494 97.795,94.003 Z"/></svg>PHOINEXES</div>
 <ul class="menuList"><li><a href="#">About</a></li><li><a href="#">Industry</a></li><li><a href="#">To investors</a></li><li><a href="#">To partners</a></li><li><a href="#">Game &amp; Earn</a></li><li><a href="#">FAQ</a></li><li><a href="#">Contacts</a></li></ul>
@@ -44,6 +45,8 @@ h1.glow span{color:#ffd9b8;text-shadow:0 0 18px rgba(253,75,3,.9),0 0 40px rgba(
 </section>
 <script>
 (function(){
+  var bgv=document.getElementById('bgv'), cn=navigator.connection||{};
+  if(cn.saveData||/(^|-)2g/.test(cn.effectiveType||'')){ bgv.remove(); } else { bgv.addEventListener('playing',function(){bgv.classList.add('on');}); if(!bgv.paused&&bgv.readyState>2) bgv.classList.add('on'); }
   var hero=document.getElementById('hero'), h1=document.getElementById('h1'), copy=document.getElementById('copy');
   var cv=document.getElementById('fx'), x=cv.getContext('2d'), DPR=Math.min(devicePixelRatio||1,2), W,H, P=[], embers=[], state='idle', t0=0, busy=false;
   function size(){W=hero.clientWidth;H=hero.clientHeight;cv.width=W*DPR;cv.height=H*DPR;x.setTransform(DPR,0,0,DPR,0,0);}
