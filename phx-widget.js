@@ -137,11 +137,13 @@
       '.phx-mi-g i.c{color:#3dff9a !important;-webkit-text-fill-color:#3dff9a;text-shadow:0 0 8px rgba(46,230,130,.85)}' +
       '.phx-mi-g i.k{text-shadow:0 0 12px rgba(46,230,130,.9),0 0 2px #fff}';
     document.head.appendChild(phxPulseCss);
+    var PHX_PULSE = false;                    // pulse line along the header: true = on, false = off
     var phxBtnWait = document.createElement('style');
     phxBtnWait.textContent = '.siteHeader .themeBtn:not(.phx-gen){color:transparent !important}';
-    if (innerWidth > 991) { document.head.appendChild(phxBtnWait); setTimeout(function(){ phxBtnWait.remove(); }, 9000); }
+    if (PHX_PULSE && innerWidth > 991) { document.head.appendChild(phxBtnWait); setTimeout(function(){ phxBtnWait.remove(); }, 9000); }
     /* Pulse line: menu -> PDF -> language -> Sign up -> Log in (buttons light up green) */
     var phxPulse = function(){
+      if (!PHX_PULSE) { phxBtnWait.remove(); return; }
       try {
         var q = function(s){ return document.querySelector(s); };
         var last = phxQ('.siteHeader .menuList > li > a').pop() || phxQ('.menuList > li > a').pop();
