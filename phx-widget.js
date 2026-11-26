@@ -54,6 +54,72 @@
     window.jivo_onOpen = function(){ b.classList.add('phx-hidden'); if (po) po.apply(this, arguments); };
     window.jivo_onClose = function(){ b.classList.remove('phx-hidden'); if (pc) pc.apply(this, arguments); };
 
+    /* SUPPORT chooser: one button, two channels (live chat on the site / Telegram support) */
+    (function(){
+      var tgA = document.querySelector('.fixedSocials2 a[href*="t.me"]');
+      var TG = tgA ? tgA.href : 'https://t.me/phoinexessupportreserve';
+      var TGN = '@' + TG.replace(/\/+$/, '').split('/').pop();
+      var fs = document.querySelector('.fixedSocials2');
+      if (fs && fs.querySelectorAll('li').length <= 1) fs.classList.add('phx-gone');
+      else if (tgA && tgA.closest('li')) tgA.closest('li').classList.add('phx-gone');
+      var sc = document.createElement('style');
+      sc.textContent = '.phx-gone{display:none !important}' +
+        '#phx-sup-menu{position:fixed;right:24px;bottom:86px;z-index:2147483001;width:250px;padding:6px 8px 8px;box-sizing:border-box;background:rgba(20,20,20,.97);' +
+        'box-shadow:inset 0 0 0 1px #FD4B03,0 12px 30px rgba(0,0,0,.55);clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);' +
+        'font-family:"Nasalization Rg",Arial,sans-serif;transform-origin:100% 100%;opacity:0;transform:translateY(10px) scaleY(.15);pointer-events:none;' +
+        'transition:opacity .25s,transform .4s cubic-bezier(.2,.8,.2,1)}' +
+        '#phx-sup-menu.open{opacity:1;transform:none;pointer-events:auto}' +
+        '#phx-sup-menu .t{font-size:10px;letter-spacing:2px;color:#8f8f8f;padding:6px 6px 8px;white-space:nowrap}' +
+        '#phx-sup-menu a{display:flex;align-items:center;gap:12px;padding:10px 6px;color:#fff;text-decoration:none;font-size:12px;letter-spacing:1.5px;border-top:1px solid #2a2a2a;cursor:pointer;transition:background .2s}' +
+        '#phx-sup-menu a:hover{background:rgba(253,75,3,.12)}' +
+        '#phx-sup-menu .ic{width:34px;height:34px;flex:0 0 34px;display:grid;place-items:center;border:1px solid #3d3d3d;box-sizing:border-box}' +
+        '#phx-sup-menu .ic svg{width:18px;height:18px;display:block}' +
+        '#phx-sup-menu .tx{min-width:0;flex:1}' +
+        '#phx-sup-menu .tx b{display:block;font-weight:400;white-space:nowrap}' +
+        '#phx-sup-menu .tx small{display:block;font:10px/1.3 Arial,sans-serif;letter-spacing:.4px;color:#8a8a8a;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
+        '#phx-sup-menu .ar{color:#FD4B03;font-size:14px}' +
+        '#phx-sup-menu .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#2bd96b;margin-right:5px;box-shadow:0 0 6px #2bd96b;vertical-align:1px}' +
+        '#phx-support-btn.act{filter:brightness(1.25)}' +
+        '@media (max-width:600px){#phx-sup-menu{right:12px;bottom:66px;width:min(250px,calc(100vw - 24px))}}';
+      document.head.appendChild(sc);
+      var m = document.createElement('div');
+      m.id = 'phx-sup-menu'; m.setAttribute('role', 'menu');
+      m.innerHTML = '<div class="t">CHOOSE SUPPORT</div>' +
+        '<a role="menuitem" data-k="chat"><span class="ic"><svg viewBox="0 0 24 24"><path fill="#FD4B03" d="M4 4h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm3 6.5a1.5 1.5 0 1 0 0 .01zm5 0a1.5 1.5 0 1 0 0 .01zm5 0a1.5 1.5 0 1 0 0 .01z"/></svg></span>' +
+        '<span class="tx"><b>LIVE CHAT</b><small><i class="dot"></i>Online \u00B7 here on the site</small></span><span class="ar">\u203A</span></a>' +
+        '<a role="menuitem" data-k="tg" href="' + TG + '" target="_blank" rel="noopener"><span class="ic"><svg viewBox="0 0 24 24"><path fill="#2AABEE" d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13.1l-4.8-1.5c-1-.3-1.1-1 .2-1.5L20.5 2.9c.9-.3 1.6.2 1.4 1.4z"/></svg></span>' +
+        '<span class="tx"><b>TELEGRAM</b><small>' + TGN + '</small></span><span class="ar">\u203A</span></a>';
+      document.body.appendChild(m);
+      var GLS = '01#%$\u25B2\u25BC/AIX<>';
+      var dec = function(el, d){
+        var fin = el.getAttribute('data-t') || el.textContent; el.setAttribute('data-t', fin);
+        var f = 0, n = fin.length;
+        clearInterval(el._t);
+        el._t = setInterval(function(){
+          f++; var o = '';
+          for (var i = 0; i < n; i++) {
+            var s = d + i * 1.2;
+            o += (fin[i] === ' ' || f >= s + 6) ? fin[i] : (f >= s ? GLS.charAt((Math.random() * GLS.length) | 0) : '\u00A0');
+          }
+          el.textContent = o;
+          if (f >= d + n * 1.2 + 6) { clearInterval(el._t); el.textContent = fin; }
+        }, 35);
+      };
+      var open = function(){
+        m.classList.add('open'); b.classList.add('act');
+        dec(m.querySelector('.t'), 0);
+        [].forEach.call(m.querySelectorAll('.tx b'), function(e, i){ dec(e, 4 + i * 6); });
+      };
+      var close = function(){ m.classList.remove('open'); b.classList.remove('act'); };
+      b.onclick = function(e){ e.stopPropagation(); if (m.classList.contains('open')) close(); else open(); };
+      m.querySelector('[data-k="chat"]').onclick = function(e){ e.preventDefault(); close(); if (window.jivo_api) jivo_api.open(); };
+      m.querySelector('[data-k="tg"]').addEventListener('click', function(){ setTimeout(close, 150); });
+      document.addEventListener('click', function(e){ if (m.classList.contains('open') && !m.contains(e.target)) close(); });
+      document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+      var po3 = window.jivo_onOpen;
+      window.jivo_onOpen = function(){ close(); if (po3) po3.apply(this, arguments); };
+    })();
+
     /* Header menu: decode effect on hover */
     var GL='01#%$\u20AE\u25B2\u25BCAIX';
     document.querySelectorAll('.menuList > li > a').forEach(function(a){
@@ -343,6 +409,56 @@
         });
       };
       window.jivo_onOpen = function(){ if (prev) prev.apply(this, arguments); setTimeout(function(){ run(0); }, 120); };
+    })();
+
+    /* Jivo chat window: opens like a hologram built from code */
+    (function(){
+      var css = document.createElement('style');
+      css.textContent = 'html.phx-holo #jcont jdiv[class^="main__"]:has(> jdiv[class^="headerBox__"]){transform-origin:50% 100%;animation:phxHoloIn 1s cubic-bezier(.2,.8,.2,1) both}' +
+        '@keyframes phxHoloIn{0%{opacity:0;transform:scaleY(.03);filter:brightness(2.2) saturate(0)}' +
+        '30%{opacity:.75;transform:scaleY(1.02);filter:brightness(1.7) saturate(.4)}45%{opacity:.35}58%{opacity:.9}70%{opacity:.55}' +
+        '100%{opacity:1;transform:none;filter:none}}' +
+        '.phx-holo-fx{position:fixed;pointer-events:none;z-index:2147483647;transition:opacity .45s}';
+      document.head.appendChild(css);
+      var GLH = '01#%$\u25B2\u25BC/AIX<>';
+      var holo = function(tries){
+        var win = document.querySelector('#jcont jdiv[class^="main__"]');
+        win = win && win.parentNode ? [].slice.call(document.querySelectorAll('#jcont jdiv[class^="main__"]')).filter(function(e){ return e.querySelector('jdiv[class^="headerBox__"]'); })[0] : null;
+        if (!win) { if (tries < 10) setTimeout(function(){ holo(tries + 1); }, 60); return; }
+        var r = win.getBoundingClientRect();
+        if (r.width < 50 || r.height < 50) { if (tries < 10) setTimeout(function(){ holo(tries + 1); }, 60); return; }
+        var de = document.documentElement; de.classList.remove('phx-holo'); void de.offsetWidth; de.classList.add('phx-holo');
+        setTimeout(function(){ de.classList.remove('phx-holo'); }, 1100);
+        var cv = document.createElement('canvas'), dpr = Math.min(window.devicePixelRatio || 1, 2), W = r.width, H = r.height;
+        cv.className = 'phx-holo-fx'; cv.style.left = r.left + 'px'; cv.style.top = r.top + 'px'; cv.style.width = W + 'px'; cv.style.height = H + 'px';
+        cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); document.body.appendChild(cv);
+        var ctx = cv.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        var CW = 12, CH = 15, cols = Math.ceil(W / CW), rows = Math.ceil(H / CH), t0 = performance.now(), DUR = 950;
+        var fr = function(now){
+          var k = Math.min(1, (now - t0) / DUR), scan = H * (1 - k);
+          ctx.clearRect(0, 0, W, H);
+          ctx.font = '12px Consolas,"Courier New",monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          for (var y = 0; y < rows; y++) {
+            var py = y * CH + CH / 2, dist = py - scan;
+            if (dist < -CH) continue;
+            for (var x = 0; x < cols; x++) {
+              if (Math.random() < 0.45) continue;
+              var a = dist < CH * 3 ? 0.95 : Math.max(0, 0.5 - (dist / H) * 0.9);
+              a *= (1 - k * 0.85);
+              if (a <= 0.03) continue;
+              ctx.fillStyle = dist < CH * 2 ? 'rgba(255,220,190,' + a + ')' : 'rgba(253,' + (90 + ((Math.random() * 60) | 0)) + ',3,' + a + ')';
+              ctx.fillText(GLH.charAt((Math.random() * GLH.length) | 0), x * CW + CW / 2, py);
+            }
+          }
+          ctx.fillStyle = 'rgba(253,75,3,' + (0.9 * (1 - k)) + ')'; ctx.fillRect(0, scan - 1, W, 2);
+          var g = ctx.createLinearGradient(0, scan - 30, 0, scan + 10); g.addColorStop(0, 'rgba(253,75,3,0)'); g.addColorStop(1, 'rgba(253,75,3,' + (0.25 * (1 - k)) + ')');
+          ctx.fillStyle = g; ctx.fillRect(0, scan - 30, W, 40);
+          if (k < 1) requestAnimationFrame(fr); else { cv.style.opacity = '0'; setTimeout(function(){ cv.remove(); }, 500); }
+        };
+        requestAnimationFrame(fr);
+      };
+      var prevH = window.jivo_onOpen;
+      window.jivo_onOpen = function(){ if (prevH) prevH.apply(this, arguments); setTimeout(function(){ holo(0); }, 30); };
     })();
 
     /* Hero: sharp still image instead of the heavy video */
