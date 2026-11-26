@@ -121,7 +121,7 @@
       (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function(){ if (document.readyState === 'complete') phxMiGo(); else window.addEventListener('load', phxMiGo); });
       setTimeout(phxMiGo, 3000);
     } else {
-      document.addEventListener('click', function(e){ if (e.target.closest && e.target.closest('.burger')) setTimeout(function(){ var mc = document.querySelector('.menuContainer'); if (mc && getComputedStyle(mc).opacity !== '0') phxMiRun(); }, 320); }, true);
+      document.addEventListener('click', function(e){ if (e.target.closest && e.target.closest('.burger')) setTimeout(function(){ var mc = document.querySelector('.menuContainer'); if (mc && mc.classList.contains('active')) phxMiRun(); }, 320); }, true);
     }
     }
     if (phxOn(CONFIG.marketPanel)) {
@@ -187,7 +187,7 @@
     if (CONFIG.heroImage) (function(){
       var BASE = 'https://vpozhar556-star.github.io/phoinexes-widget/';
       var hs = document.createElement('style');
-      hs.textContent = '.heroVisual .phx-hero-pic,.heroVisual .phx-hero-pic img{position:absolute;left:0;top:0;width:100%;height:100%;display:block;margin:0}.heroVisual .phx-hero-pic img{object-fit:cover;object-position:50% 50%}.heroVisual .phx-hero-pic.tall img{object-position:62% 45%}.heroInner .heroVisual{transform:none !important;transition:none !important}.heroVisual .phx-hero-pic{opacity:0;transform:scale(1.04);transition:opacity 1.2s ease,transform 2.2s cubic-bezier(.2,.8,.2,1)}.heroVisual .phx-hero-pic.on{opacity:1;transform:none}';
+      hs.textContent = '.heroVisual .phx-hero-pic,.heroVisual .phx-hero-pic img{position:absolute;left:0;top:0;width:100%;height:100%;display:block;margin:0}.heroVisual .phx-hero-pic img{object-fit:cover;object-position:50% 50%}.heroVisual .phx-hero-pic.tall img{object-position:62% 45%}.heroInner .heroVisual{transform:none !important;transition:none !important;overflow:hidden}.heroVisual .phx-hero-pic{opacity:0;transform:scale(1.04);transition:opacity 1.2s ease,transform 2.2s cubic-bezier(.2,.8,.2,1)}.heroVisual .phx-hero-pic.on{opacity:1;transform:none}';
       document.head.appendChild(hs);
       function fit(pic){ var p = pic.parentElement; if (p) pic.classList.toggle('tall', p.clientHeight > p.clientWidth * 0.8); }
       function swap(){
