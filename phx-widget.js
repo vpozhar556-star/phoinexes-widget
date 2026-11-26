@@ -67,7 +67,7 @@
     if (CONFIG.heroImage) (function(){
       var BASE = 'https://vpozhar556-star.github.io/phoinexes-widget/';
       var hs = document.createElement('style');
-      hs.textContent = '.heroVisual .phx-hero-pic,.heroVisual .phx-hero-pic img{position:absolute;left:0;top:0;width:100%;height:100%;display:block;margin:0}.heroVisual .phx-hero-pic img{object-fit:cover;object-position:50% 50%}.heroVisual .phx-hero-pic.tall img{object-position:62% 45%}';
+      hs.textContent = '.heroVisual .phx-hero-pic,.heroVisual .phx-hero-pic img{position:absolute;left:0;top:0;width:100%;height:100%;display:block;margin:0}.heroVisual .phx-hero-pic img{object-fit:cover;object-position:50% 50%}.heroVisual .phx-hero-pic.tall img{object-position:62% 45%}.heroInner .heroVisual{transform:none !important;transition:none !important}.heroVisual .phx-hero-pic{opacity:0;transform:scale(1.04);transition:opacity 1.2s ease,transform 2.2s cubic-bezier(.2,.8,.2,1)}.heroVisual .phx-hero-pic.on{opacity:1;transform:none}';
       document.head.appendChild(hs);
       function fit(pic){ var p = pic.parentElement; if (p) pic.classList.toggle('tall', p.clientHeight > p.clientWidth * 0.8); }
       function swap(){
@@ -78,6 +78,9 @@
         try { v.pause(); v.removeAttribute('autoplay'); [].slice.call(v.querySelectorAll('source')).forEach(function(x){ x.remove(); }); v.removeAttribute('src'); v.load(); } catch(e){}
         v.style.display = 'none';
         fit(pic); window.addEventListener('resize', function(){ fit(pic); });
+        var him = pic.querySelector('img'), hon = function(){ requestAnimationFrame(function(){ pic.classList.add('on'); }); };
+        if (him.complete) hon(); else { him.addEventListener('load', hon); him.addEventListener('error', hon); }
+        setTimeout(function(){ pic.classList.add('on'); }, 3000);
         return true;
       }
       if (!swap()) { var hn = 0, hiv = setInterval(function(){ if (swap() || ++hn > 40) clearInterval(hiv); }, 250); }
