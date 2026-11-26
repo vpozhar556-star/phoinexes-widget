@@ -145,7 +145,7 @@
       try {
         var q = function(s){ return document.querySelector(s); };
         var last = phxQ('.siteHeader .menuList > li > a').pop() || phxQ('.menuList > li > a').pop();
-        var pdf = q('.siteHeader .fileLink'), lang = q('.siteHeader .langBtn') || q('.siteHeader .langContainer');
+        var vq = function(sel){ return [].slice.call(document.querySelectorAll(sel)).filter(phxVis)[0]; }, pdf = vq('.siteHeader .fileLink'), lang = vq('.siteHeader .langBtn') || vq('.siteHeader .langContainer');
         var btns = [].slice.call(document.querySelectorAll('.siteHeader .themeBtn')).filter(phxVis);
         var tg = [pdf, lang].concat(btns).filter(function(e){ return e && phxVis(e); });
         if (!last || !tg.length) { phxBtnWait.remove(); return; }
