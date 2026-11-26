@@ -70,7 +70,7 @@
     /* Intro: menu + hero texts "compute" letter by letter (code glyphs) */
     var PHX_GL = '01#%$₮▲▼/AIX<>';
     var phxMiCss = document.createElement('style');
-    phxMiCss.textContent = '.phx-mi .wd{white-space:nowrap}' +
+    phxMiCss.textContent = '.phx-mi{white-space:nowrap}' +
       '.phx-mi i{font-style:normal;display:inline-block;text-align:center;transition:color .35s,text-shadow .6s,transform .4s,opacity .35s}' +
       '.phx-mi i.w{opacity:0;transform:translateY(5px)}' +
       '.phx-mi i.c{opacity:1;color:#FD4B03 !important;-webkit-text-fill-color:#FD4B03;text-shadow:0 0 8px rgba(253,75,3,.75);transform:translateY(-1px)}' +
@@ -88,13 +88,17 @@
         if (!el || el.__phxMi) return; el.__phxMi = 1;
         var parts = phxTexts(el), left = parts.length;
         parts.forEach(function(tn){
-          var txt = tn.textContent, box = document.createElement('span'), ch = [], wd = null;
+          var txt = tn.textContent, box = document.createElement('span'), ch = [], rg = document.createRange(), tops = [], last = null, pend = '';
           box.className = 'phx-mi';
-          txt.split('').forEach(function(c){
-            if (/\s/.test(c)) { wd = null; box.appendChild(document.createTextNode(c)); return; }
-            if (!wd) { wd = document.createElement('span'); wd.className = 'wd'; box.appendChild(wd); }
-            var i = document.createElement('i'); i.textContent = c; wd.appendChild(i); ch.push({ i: i, c: c });
+          for (var q = 0; q < txt.length; q++) { if (/\s/.test(txt.charAt(q))) { tops.push(null); continue; } rg.setStart(tn, q); rg.setEnd(tn, q + 1); var rr = rg.getClientRects(); tops.push(rr.length ? rr[0].top : null); }
+          txt.split('').forEach(function(c, q){
+            if (/\s/.test(c)) { pend += c; return; }
+            var t = tops[q], br = last !== null && t !== null && t > last + 3;
+            if (br) box.appendChild(document.createElement('br')); else if (pend) box.appendChild(document.createTextNode(pend));
+            pend = ''; if (t !== null) last = t;
+            var i = document.createElement('i'); i.textContent = c; box.appendChild(i); ch.push({ i: i, c: c });
           });
+          if (pend) box.appendChild(document.createTextNode(pend));
           tn.parentNode.replaceChild(box, tn);
           ch.forEach(function(x){ x.w = x.i.getBoundingClientRect().width; });
           ch.forEach(function(x){ x.i.style.width = x.w + 'px'; x.i.className = 'w'; });
