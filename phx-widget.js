@@ -67,6 +67,9 @@
 
     var phxOn = function(v){ return v === 'on' || (v === 'demo' && /phxdemo/.test(location.hash + location.search)); };
     if (phxOn(CONFIG.menuIntro)) {
+    var phxMiWait = document.createElement('style'); phxMiWait.textContent = '.menuList > li > a{color:transparent !important;text-shadow:none !important}';
+    if (innerWidth > 991) document.head.appendChild(phxMiWait);
+    var phxMiRun = function(){
     /* Header menu: intro — words "compute" letter by letter on page open */
     (function(){
       var SPEED = 1;
@@ -82,6 +85,7 @@
           '.phx-mi i.k{color:#fff;text-shadow:0 0 12px rgba(253,75,3,.9),0 0 2px #fff}';
         document.head.appendChild(st);
       }
+      var phxOff = 0;
       links.forEach(function(a, li){
         var tn = [].slice.call(a.childNodes).filter(function(n){ return n.nodeType === 3 && n.textContent.trim(); })[0];
         if (!tn || a.__phxMi) return; a.__phxMi = 1;
@@ -89,11 +93,11 @@
         var ch = txt.split('').map(function(c){ var i = document.createElement('i'); i.textContent = c; box.appendChild(i); return i; });
         a.replaceChild(box, tn);
         ch.forEach(function(i){ i.style.width = i.getBoundingClientRect().width + 'px'; i.className = 'w'; });
-        var f = -li * 4, lead = 0, iv = setInterval(function(){
+        var f = -Math.round(phxOff), lead = (phxOff += (txt.length * 1.2 + 5) * 0.6), iv = setInterval(function(){
           f++; if (f < 0) return;
           var done = true;
           ch.forEach(function(i, k){
-            var c = txt.charAt(k), t0 = k * 1.6, t1 = t0 + 7;
+            var c = txt.charAt(k), t0 = k * 1.2, t1 = t0 + 5;
             if (c === ' ') { i.className = 'k'; return; }
             if (f < t0) { i.className = 'w'; done = false; }
             else if (f < t1) { i.className = 'c'; i.textContent = GL.charAt((Math.random() * GL.length) | 0); done = false; }
@@ -106,9 +110,14 @@
               setTimeout(function(){ if (box.parentNode) box.parentNode.replaceChild(tn, box); }, 450 * SPEED);
             }, 350 * SPEED);
           }
-        }, 38 * SPEED);
+        }, 40 * SPEED);
       });
     })();
+    phxMiWait.remove();
+    };
+    var phxMiGo = function(){ if (phxMiGo.done) return; phxMiGo.done = 1; setTimeout(phxMiRun, 250); };
+    (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function(){ if (document.readyState === 'complete') phxMiGo(); else window.addEventListener('load', phxMiGo); });
+    setTimeout(phxMiGo, 3000);
     }
     if (phxOn(CONFIG.marketPanel)) {
     /* Left market panel: "LIVE MARKET" terminal instead of the sliding cards */
