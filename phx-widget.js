@@ -17,7 +17,8 @@
       headline: "PULSE",                      // big glowing word ("" = no headline)
       sub: "IMPROVED PERFORMANCE \u00B7 JOIN US",
       button: "JOIN US"
-    }
+    },
+    heroImage: true                           // true = sharp still image instead of the hero video
   };
   /* ================================================== */
 
@@ -61,6 +62,26 @@
           if(f/2>=target.length){clearInterval(a.__phxT); tn.textContent=target;} },28);
       });
     });
+
+    /* Hero: sharp still image instead of the heavy video */
+    if (CONFIG.heroImage) (function(){
+      var BASE = 'https://vpozhar556-star.github.io/phoinexes-widget/';
+      var hs = document.createElement('style');
+      hs.textContent = '.heroVisual .phx-hero-pic,.heroVisual .phx-hero-pic img{position:absolute;left:0;top:0;width:100%;height:100%;display:block;margin:0}.heroVisual .phx-hero-pic img{object-fit:cover;object-position:50% 50%}.heroVisual .phx-hero-pic.tall img{object-position:62% 45%}';
+      document.head.appendChild(hs);
+      function fit(pic){ var p = pic.parentElement; if (p) pic.classList.toggle('tall', p.clientHeight > p.clientWidth * 0.8); }
+      function swap(){
+        var v = document.querySelector('.heroVisual video'); if (!v) return false; if (v.__phx) return true; v.__phx = 1;
+        var pic = document.createElement('picture'); pic.className = 'phx-hero-pic';
+        pic.innerHTML = '<source type="image/webp" srcset="' + BASE + 'hero.webp"><img src="' + BASE + 'hero.jpg" alt="PHOINEXES" decoding="async">';
+        v.parentElement.insertBefore(pic, v);
+        try { v.pause(); v.removeAttribute('autoplay'); [].slice.call(v.querySelectorAll('source')).forEach(function(x){ x.remove(); }); v.removeAttribute('src'); v.load(); } catch(e){}
+        v.style.display = 'none';
+        fit(pic); window.addEventListener('resize', function(){ fit(pic); });
+        return true;
+      }
+      if (!swap()) { var hn = 0, hiv = setInterval(function(){ if (swap() || ++hn > 40) clearInterval(hiv); }, 250); }
+    })();
 
     /* Zoom countdown — flip clock (desktop card / compact mobile bar) */
     var z = CONFIG.zoom;
