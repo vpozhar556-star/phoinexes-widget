@@ -475,13 +475,13 @@
       function swap(){
         var v = document.querySelector('.heroVisual video'); if (!v) return false; if (v.__phx) return true; v.__phx = 1;
         var pic = document.createElement('picture'); pic.className = 'phx-hero-pic';
-        pic.innerHTML = '<source type="image/webp" sizes="100vw" srcset="' + BASE + 'hero-960.webp 960w,' + BASE + 'hero-1600.webp 1600w,' + BASE + 'hero-2560.webp 2560w,' + BASE + 'hero.webp 3840w"><img src="' + BASE + 'hero.jpg" alt="PHOINEXES" decoding="async" fetchpriority="high">';
+        pic.innerHTML = '<source type="image/webp" sizes="100vw" srcset="' + BASE + 'hero-960.webp 960w,' + BASE + 'hero-1600.webp 1600w,' + BASE + 'hero-2560.webp 2560w"><img src="' + BASE + 'hero.jpg" alt="PHOINEXES" decoding="async" fetchpriority="high">';
         v.parentElement.insertBefore(pic, v);
         try { v.pause(); v.removeAttribute('autoplay'); [].slice.call(v.querySelectorAll('source')).forEach(function(x){ x.remove(); }); v.removeAttribute('src'); v.load(); } catch(e){}
         v.style.display = 'none';
         fit(pic); window.addEventListener('resize', function(){ fit(pic); });
-        requestAnimationFrame(function(){ pic.classList.add('on'); });
-        var him = pic.querySelector('img'), hdone = 0, hon = function(){ if (hdone) return; hdone = 1; requestAnimationFrame(function(){ pic.classList.add('ld'); }); };
+        setTimeout(function(){ pic.classList.add('on'); }, 20);
+        var him = pic.querySelector('img'), hdone = 0, hon = function(){ if (hdone) return; hdone = 1; setTimeout(function(){ pic.classList.add('ld'); }, 20); };
         var hok = function(){ if (him.decode) him.decode().then(hon, hon); else hon(); };
         if (him.complete && him.naturalWidth) hok(); else { him.addEventListener('load', hok); him.addEventListener('error', hon); }
         return true;
