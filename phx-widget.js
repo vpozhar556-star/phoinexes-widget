@@ -274,6 +274,60 @@
       document.addEventListener('click', function(e){ if (e.target.closest && e.target.closest('.burger')) setTimeout(function(){ var mc = document.querySelector('.menuContainer'); if (mc && mc.classList.contains('active')) phxCompute(phxQ('.menuList > li > a'), PHX_MENU); }, 320); }, true);
     }
     }
+    /* Section titles further down "compute" letter by letter when scrolled into view */
+    if (typeof phxCompute === 'function' && 'IntersectionObserver' in window) (function(){
+      var swc = document.createElement('style');
+      swc.textContent = '.phx-sw{visibility:hidden}';
+      document.head.appendChild(swc);
+      var sl = [].slice.call(document.querySelectorAll('h2.sectionTitle, .textTitle')).filter(function(e){
+        return e.getBoundingClientRect().top > innerHeight && e.textContent.trim() && !e.closest('#phx-zoom, #jcont, footer');
+      });
+      if (!sl.length) return;
+      sl.forEach(function(e){ e.classList.add('phx-sw'); });
+      var sio = new IntersectionObserver(function(es){
+        es.forEach(function(en){
+          if (!en.isIntersecting) return;
+          var e = en.target; sio.unobserve(e);
+          e.classList.remove('phx-sw');
+          try {
+            phxCompute([e], e.tagName === 'H2' ? { step: 1.1, scr: 8, lap: 0.4, ms: 45 } : { step: 0.8, scr: 7, lap: 0.4, ms: 40, delay: 5 });
+          } catch (x) {}
+        });
+      }, { threshold: 0.5, rootMargin: '0px 0px -6% 0px' });
+      sl.forEach(function(e){ sio.observe(e); });
+    })();
+
+    /* Back-to-top button in the SUPPORT style (above SUPPORT, shows after scrolling) */
+    (function(){
+      var uc = document.createElement('style');
+      uc.textContent = '#phx-up{position:fixed;right:24px;bottom:86px;z-index:2147483000;width:52px;height:52px;padding:0;border:0;cursor:pointer;display:grid;place-items:center;' +
+        'background:linear-gradient(135deg,transparent 7px,#FD4B03 7px,#FD4B03 8.5px,transparent 8.5px) top left/14px 14px no-repeat,' +
+        'linear-gradient(-45deg,transparent 7px,#FD4B03 7px,#FD4B03 8.5px,transparent 8.5px) bottom right/14px 14px no-repeat,#141414;' +
+        'box-shadow:inset 0 0 0 1px #FD4B03;clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);' +
+        'opacity:0;transform:translateY(14px);pointer-events:none;transition:opacity .35s,transform .35s,filter .2s}' +
+        '#phx-up.on{opacity:1;transform:none;pointer-events:auto}' +
+        '#phx-up:hover{filter:brightness(1.25)}' +
+        '#phx-up svg{width:20px;height:20px;display:block;transition:transform .25s}' +
+        '#phx-up:hover svg{transform:translateY(-3px)}' +
+        '#phx-up::after{content:"";position:absolute;left:4px;bottom:4px;height:2px;width:calc((100% - 8px) * var(--p,0));background:#FD4B03;box-shadow:0 0 6px rgba(253,75,3,.8)}' +
+        '#phx-support-btn.act ~ #phx-up,#phx-support-btn.phx-hidden ~ #phx-up{opacity:0 !important;pointer-events:none !important}' +
+        '@media (max-width:600px){#phx-up{right:12px;bottom:66px;width:46px;height:46px}}';
+      document.head.appendChild(uc);
+      var up = document.createElement('button');
+      up.id = 'phx-up'; up.type = 'button'; up.setAttribute('aria-label', 'Back to top');
+      up.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="#FD4B03" stroke-width="2.4" stroke-linecap="square" d="M5 15l7-7 7 7"/></svg>';
+      up.onclick = function(){ try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); } };
+      document.body.appendChild(up);
+      var upd = function(){
+        var y = window.scrollY || document.documentElement.scrollTop, mx = document.documentElement.scrollHeight - innerHeight;
+        up.classList.toggle('on', y > Math.max(500, innerHeight * 0.8));
+        up.style.setProperty('--p', mx > 0 ? Math.min(1, y / mx).toFixed(3) : 0);
+      };
+      var tk = 0;
+      window.addEventListener('scroll', function(){ if (tk) return; tk = 1; requestAnimationFrame(function(){ tk = 0; upd(); }); }, { passive: true });
+      upd();
+    })();
+
     if (phxOn(CONFIG.marketPanel)) {
     /* Left market panel: "LIVE MARKET" terminal instead of the sliding cards */
     (function(){
