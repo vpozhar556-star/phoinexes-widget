@@ -444,6 +444,115 @@
       });
     })();
 
+    /* Language hint: visitors whose phone/browser language is RU / VI / TH / MS get a one-time offer to switch */
+    (function(){
+      try { if (localStorage.getItem('phxLangHint')) return; } catch (e) {}
+      var LH = {
+        ru: ['ru-RU', '\u041E\u0442\u043A\u0440\u044B\u0442\u044C \u0441\u0430\u0439\u0442 \u043D\u0430 \u0440\u0443\u0441\u0441\u043A\u043E\u043C?', '\u0414\u0430, \u0440\u0443\u0441\u0441\u043A\u0438\u0439'],
+        vi: ['vi-VI', 'Xem trang web b\u1EB1ng Ti\u1EBFng Vi\u1EC7t?', 'C\u00F3, Ti\u1EBFng Vi\u1EC7t'],
+        th: ['th-TH', '\u0E14\u0E39\u0E40\u0E27\u0E47\u0E1A\u0E44\u0E0B\u0E15\u0E4C\u0E40\u0E1B\u0E47\u0E19\u0E20\u0E32\u0E29\u0E32\u0E44\u0E17\u0E22?', '\u0E43\u0E0A\u0E48 \u0E20\u0E32\u0E29\u0E32\u0E44\u0E17\u0E22'],
+        ms: ['ms-MY', 'Lihat laman dalam Bahasa Melayu?', 'Ya, Bahasa Melayu']
+      };
+      var force = (location.hash.match(/phxlang=([a-z]{2})/) || [])[1];
+      var want = force || (((navigator.languages && navigator.languages[0]) || navigator.language || '') + '').slice(0, 2).toLowerCase();
+      var cur = (document.documentElement.lang || 'en').slice(0, 2).toLowerCase();
+      var d = LH[want]; if (!d || (want === cur && !force)) return;
+      var lc = document.createElement('style');
+      lc.textContent = '#phx-lh{position:fixed;top:84px;right:24px;z-index:2147483001;display:flex;align-items:center;gap:12px;max-width:calc(100vw - 48px);box-sizing:border-box;padding:10px 10px 10px 14px;' +
+        'background:rgba(20,20,20,.97);box-shadow:inset 0 0 0 1px #FD4B03,0 12px 30px rgba(0,0,0,.5);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);' +
+        'font:12px/1.3 "Nasalization Rg",Arial,sans-serif;color:#fff;letter-spacing:.5px;opacity:0;transform:translateY(-12px);pointer-events:none;transition:opacity .4s,transform .4s}' +
+        '#phx-lh.on{opacity:1;transform:none;pointer-events:auto}' +
+        '#phx-lh .f{display:flex;flex:0 0 auto}#phx-lh .f .phx-flag{width:22px;height:15px}' +
+        '#phx-lh .q{flex:1 1 auto;min-width:0}' +
+        '#phx-lh .y{flex:0 0 auto;padding:9px 12px;background:#FD4B03;color:#141414;text-decoration:none;font-size:11px;letter-spacing:1px;white-space:nowrap;' +
+        'clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px)}' +
+        '#phx-lh .y:hover{filter:brightness(1.15)}' +
+        '#phx-lh .x{flex:0 0 auto;width:28px;height:28px;border:0;background:none;color:#8a8a8a;font:20px/1 Arial;cursor:pointer;padding:0}#phx-lh .x:hover{color:#fff}' +
+        '@media (max-width:600px){#phx-lh{top:auto;bottom:122px;left:12px;right:12px;max-width:none}}';
+      document.head.appendChild(lc);
+      var hb = document.createElement('div'); hb.id = 'phx-lh'; hb.setAttribute('role', 'dialog');
+      hb.innerHTML = '<span class="f"></span><span class="q">' + d[1] + '</span><a class="y" href="/changelang/?lang=' + d[0] + '">' + d[2] + '</a><button class="x" type="button" aria-label="Close">\u00D7</button>';
+      var fl = document.querySelector('.langMenu a[href*="lang=' + d[0] + '"] .phx-flag');
+      if (fl) hb.querySelector('.f').appendChild(fl.cloneNode(true));
+      var hdone = function(){ try { localStorage.setItem('phxLangHint', '1'); } catch (e) {} };
+      hb.querySelector('.y').addEventListener('click', hdone);
+      hb.querySelector('.x').onclick = function(){ hdone(); hb.classList.remove('on'); setTimeout(function(){ hb.remove(); }, 500); };
+      document.body.appendChild(hb);
+      setTimeout(function(){
+        hb.classList.add('on');
+        if (want !== 'th' && typeof phxCompute === 'function') try { phxCompute([hb.querySelector('.q')], { step: 0.7, scr: 6, lap: 1, ms: 40 }); } catch (e) {}
+      }, 3500);
+      setTimeout(function(){ hb.classList.remove('on'); }, 25000);
+    })();
+
+    /* Latest news: 3 newest posts of the Telegram channel (news.json is refreshed from t.me/s/phoinexesofficial) */
+    (function(){
+      var ft = document.querySelector('footer.siteFooter') || document.querySelector('footer'); if (!ft) return;
+      var NEWS = 'https://raw.githubusercontent.com/vpozhar556-star/phoinexes-widget/main/news.json?t=' + Math.floor(Date.now() / 300000);
+      var esc = function(s){ return String(s || '').replace(/[&<>"]/g, function(c){ return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+      var nrun = function(){
+        fetch(NEWS).then(function(r){ return r.json(); }).then(function(j){
+          if (!j || !j.posts || !j.posts.length) return;
+          var nc = document.createElement('style');
+          nc.textContent = '.phx-news{padding:60px 0 60px}' +
+            '.phx-news .phx-nh{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px}' +
+            '.phx-news .phx-nh .titleWrapper{margin:0}' +
+            '.phx-news .phx-ch{font:11px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:2px;color:#FD4B03;text-decoration:none;white-space:nowrap}' +
+            '.phx-news .phx-ch:hover{filter:brightness(1.2)}' +
+            '.phx-news .phx-gr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}' +
+            '.phx-news .phx-nc{display:flex;flex-direction:column;background:#141414;color:#fff;text-decoration:none;box-shadow:inset 0 0 0 1px #2e2e2e;' +
+            'clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s,box-shadow .25s}' +
+            '.phx-news .phx-nc.in{opacity:1;transform:none}' +
+            '.phx-news .phx-nc:hover{box-shadow:inset 0 0 0 1px #FD4B03}' +
+            '.phx-news .phx-im{position:relative;aspect-ratio:16/9;overflow:hidden;background:radial-gradient(circle at 70% 40%,rgba(253,75,3,.35),transparent 60%),#0b0b0b}' +
+            '.phx-news .phx-im img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;transition:transform .6s}' +
+            '.phx-news .phx-nc:hover .phx-im img{transform:scale(1.04)}' +
+            '.phx-news .phx-im b{position:absolute;left:16px;bottom:12px;font:400 22px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:3px;color:rgba(255,255,255,.14)}' +
+            '.phx-news .phx-bd{display:flex;flex-direction:column;gap:8px;padding:14px 16px 16px;flex:1}' +
+            '.phx-news .phx-dt{font:11px/1 Arial,sans-serif;color:#8a8a8a;letter-spacing:.5px}' +
+            '.phx-news .phx-dt i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#FD4B03;margin-right:6px;box-shadow:0 0 6px #FD4B03;vertical-align:1px}' +
+            '.phx-news .phx-tl{font:14px/1.35 "Nasalization Rg",Arial,sans-serif;color:#fff;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}' +
+            '.phx-news .phx-tx{font:13px/1.5 Arial,sans-serif;color:#a3a3a3;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;white-space:pre-line}' +
+            '.phx-news .phx-mo{margin-top:auto;padding-top:4px;font:11px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:2px;color:#FD4B03}' +
+            '@media (max-width:900px){.phx-news .phx-gr{grid-template-columns:1fr}.phx-news{padding:40px 0}}';
+          document.head.appendChild(nc);
+          var lang = document.documentElement.lang || 'en';
+          var cards = j.posts.slice(0, 3).map(function(p){
+            var lines = String(p.text || '').split('\n').filter(function(s){ return s.trim(); });
+            var title = lines.shift() || '', body = lines.join('\n');
+            var dt = '';
+            try { var dd = new Date(p.date); dt = dd.toLocaleDateString(lang, { day: 'numeric', month: 'short' }) + ' \u00B7 ' + dd.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }); } catch (e) {}
+            return '<a class="phx-nc" href="' + esc(p.url) + '" target="_blank" rel="noopener">' +
+              '<span class="phx-im">' + (p.image ? '<img src="' + esc(p.image) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">' : '') + '<b>PHOINEXES</b></span>' +
+              '<span class="phx-bd"><span class="phx-dt"><i></i>' + esc(dt) + '</span><span class="phx-tl">' + esc(title) + '</span>' +
+              (body ? '<span class="phx-tx">' + esc(body) + '</span>' : '') + '<span class="phx-mo">READ IN TELEGRAM \u203A</span></span></a>';
+          }).join('');
+          var sec = document.createElement('section'); sec.className = 'phx-news';
+          sec.innerHTML = '<div class="container"><div class="phx-nh"><div class="titleWrapper"><h2 class="sectionTitle">Latest News</h2></div>' +
+            '<a class="phx-ch" href="' + esc(j.channel || 'https://t.me/phoinexesofficial') + '" target="_blank" rel="noopener">TELEGRAM CHANNEL \u203A</a></div>' +
+            '<div class="phx-gr">' + cards + '</div></div>';
+          ft.parentNode.insertBefore(sec, ft);
+          var h2 = sec.querySelector('h2'), nl = [].slice.call(sec.querySelectorAll('.phx-nc'));
+          if ('IntersectionObserver' in window) {
+            if (typeof phxCompute === 'function') h2.classList.add('phx-sw');
+            var nio = new IntersectionObserver(function(es){
+              es.forEach(function(en){
+                if (!en.isIntersecting) return;
+                nio.unobserve(en.target);
+                if (en.target === h2) { h2.classList.remove('phx-sw'); try { phxCompute([h2], { step: 1.1, scr: 8, lap: 0.4, ms: 45 }); } catch (e) {} }
+                else setTimeout(function(){ en.target.classList.add('in'); }, nl.indexOf(en.target) * 140);
+              });
+            }, { threshold: 0.25 });
+            nio.observe(h2); nl.forEach(function(c){ nio.observe(c); });
+          } else nl.forEach(function(c){ c.classList.add('in'); });
+        }).catch(function(){});
+      };
+      if ('IntersectionObserver' in window) {
+        var fio = new IntersectionObserver(function(es){ if (es[0].isIntersecting) { fio.disconnect(); nrun(); } }, { rootMargin: '900px 0px' });
+        fio.observe(ft);
+      } else nrun();
+    })();
+
     /* Jivo chat: header text "computes" when the chat opens */
     (function(){
       var GLJ = '01#%$▲▼/AIX<>', prev = window.jivo_onOpen;
