@@ -19,8 +19,8 @@
       button: "JOIN US"
     },
     heroImage: true,                          // true = sharp still image instead of the hero video
-    menuIntro: "demo",                        // menu letters "compute" on open: "on" | "demo" (only with #phxdemo) | "off"
-    marketPanel: "demo"                       // LIVE MARKET panel: "on" | "demo" (only with #phxdemo) | "off"
+    menuIntro: "on",                          // menu letters "compute" on open: "on" | "demo" (only with #phxdemo) | "off"
+    marketPanel: "on"                         // LIVE MARKET panel: "on" | "demo" (only with #phxdemo) | "off"
   };
   /* ================================================== */
 
