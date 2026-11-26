@@ -491,6 +491,31 @@
       if (!swap()) { var hn = 0, hiv = setInterval(function(){ if (swap() || ++hn > 40) clearInterval(hiv); }, 250); }
     })();
 
+    /* Bonus card video (~13 MB): on phones and slow / data-saving connections use two light frames with slow living motion */
+    (function(){
+      var BASE = 'https://vpozhar556-star.github.io/phoinexes-widget/';
+      var cn = navigator.connection || {};
+      var fast = !cn.saveData && (!cn.effectiveType || cn.effectiveType === '4g') && (!cn.downlink || cn.downlink >= 5);
+      if (window.innerWidth >= 1024 && fast) return;
+      var bs = document.createElement('style');
+      bs.textContent = '.phx-bv{position:absolute;left:0;top:0;width:100%;height:100%;overflow:hidden;z-index:-1;background:#050505}' +
+        '.phx-bv i{position:absolute;left:-8%;top:-8%;width:116%;height:116%;background:50% 50%/cover no-repeat;animation:phxBvA 16s ease-in-out infinite alternate;will-change:transform}' +
+        '.phx-bv i+i{mix-blend-mode:screen;opacity:0;animation:phxBvB 11s ease-in-out infinite}' +
+        '@keyframes phxBvA{from{transform:translateX(-4%) scale(1)}to{transform:translateX(4%) scale(1.08)}}' +
+        '@keyframes phxBvB{0%{opacity:0;transform:translateX(5%) scale(1.06)}50%{opacity:.9}100%{opacity:0;transform:translateX(-5%) scale(1)}}';
+      document.head.appendChild(bs);
+      var bgo = function(){
+        var v = document.querySelector('.bonusItem video'); if (!v) return false; if (v.__phx) return true; v.__phx = 1;
+        try { v.pause(); v.removeAttribute('autoplay'); [].slice.call(v.querySelectorAll('source')).forEach(function(x){ x.remove(); }); v.removeAttribute('src'); v.load(); } catch(e){}
+        v.style.display = 'none';
+        var d = document.createElement('div'); d.className = 'phx-bv';
+        d.innerHTML = '<i style="background-image:url(' + BASE + 'bonus-1.webp)"></i><i style="background-image:url(' + BASE + 'bonus-2.webp)"></i>';
+        v.parentElement.insertBefore(d, v);
+        return true;
+      };
+      if (!bgo()) { var bn = 0, biv = setInterval(function(){ if (bgo() || ++bn > 40) clearInterval(biv); }, 250); }
+    })();
+
     /* Zoom countdown — flip clock (desktop card / compact mobile bar) */
     var z = CONFIG.zoom;
     if (!z || !z.enabled || !z.start) return;
