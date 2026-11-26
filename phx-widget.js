@@ -267,6 +267,84 @@
     })();
     }
 
+    /* Language menu: flags + language names, name "computes" on hover */
+    (function(){
+      var F = {
+        en: '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><g fill="#b22234"><rect y="0" width="20" height="1.08"/><rect y="2.15" width="20" height="1.08"/><rect y="4.3" width="20" height="1.08"/><rect y="6.46" width="20" height="1.08"/><rect y="8.61" width="20" height="1.08"/><rect y="10.77" width="20" height="1.08"/><rect y="12.92" width="20" height="1.08"/></g><rect width="9" height="7.54" fill="#3c3b6e"/><g fill="#fff"><circle cx="1.6" cy="1.4" r=".45"/><circle cx="3.9" cy="1.4" r=".45"/><circle cx="6.2" cy="1.4" r=".45"/><circle cx="2.75" cy="3.1" r=".45"/><circle cx="5.05" cy="3.1" r=".45"/><circle cx="7.35" cy="3.1" r=".45"/><circle cx="1.6" cy="4.8" r=".45"/><circle cx="3.9" cy="4.8" r=".45"/><circle cx="6.2" cy="4.8" r=".45"/><circle cx="2.75" cy="6.4" r=".45"/><circle cx="5.05" cy="6.4" r=".45"/></g></svg>',
+        ru: '<svg viewBox="0 0 20 14"><rect width="20" height="4.67" fill="#fff"/><rect y="4.67" width="20" height="4.67" fill="#0039a6"/><rect y="9.33" width="20" height="4.67" fill="#d52b1e"/></svg>',
+        vi: '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#da251d"/><polygon fill="#ff0" points="10,2.6 11.06,5.86 14.49,5.86 11.72,7.88 12.77,11.14 10,9.12 7.23,11.14 8.28,7.88 5.51,5.86 8.94,5.86"/></svg>',
+        my: '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><g fill="#cc0001"><rect y="0" width="20" height="1"/><rect y="2" width="20" height="1"/><rect y="4" width="20" height="1"/><rect y="6" width="20" height="1"/><rect y="8" width="20" height="1"/><rect y="10" width="20" height="1"/><rect y="12" width="20" height="1"/></g><rect width="10" height="8" fill="#010066"/><circle cx="4.2" cy="4" r="2.5" fill="#fc0"/><circle cx="5" cy="4" r="2.1" fill="#010066"/><polygon fill="#fc0" points="7.6,2.6 7.95,3.6 9,3.65 8.15,4.25 8.45,5.25 7.6,4.65 6.75,5.25 7.05,4.25 6.2,3.65 7.25,3.6"/></svg>',
+        th: '<svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#a51931"/><rect y="2.33" width="20" height="9.33" fill="#f4f5f8"/><rect y="4.67" width="20" height="4.67" fill="#2d2a4a"/></svg>'
+      };
+      var N = { en: 'English', ru: 'Русский', vi: 'Tiếng Việt', my: 'Bahasa Melayu', th: 'ไทย' };
+      var GLL = '01#%$▲▼/AIX<>';
+      var st = document.createElement('style');
+      st.textContent = '.langMenu{left:auto !important;right:0 !important;width:auto !important;min-width:200px !important}' +
+        '.langMenu .langBtn.phx-lang{display:flex !important;align-items:center;gap:10px;white-space:nowrap;justify-content:flex-start;padding:0 12px !important}' +
+        '.phx-flag{display:inline-block;width:20px;height:14px;flex:none;border-radius:2px;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.18)}' +
+        '.phx-flag svg{display:block;width:100%;height:100%}' +
+        '.phx-lcode{min-width:24px}' +
+        '.phx-ln{font-family:"Nasalization Rg",Arial,sans-serif;font-size:12px;letter-spacing:.5px;text-transform:none;color:#9a9a9a;transition:color .25s,text-shadow .25s}' +
+        '.langBtn.phx-lang:hover .phx-ln,.langBtn.phx-lang.active .phx-ln{color:#fff}' +
+        '.langBtn.phx-lang:hover .phx-ln{text-shadow:0 0 10px rgba(253,75,3,.6)}' +
+        '.phx-ln b{font-weight:400;color:#FD4B03}' +
+        '.langHead .phx-flag{margin-right:6px;vertical-align:-2px;width:18px;height:12px}';
+      document.head.appendChild(st);
+      var code = function(a){
+        var m = (a.getAttribute('href') || '').match(/lang=([a-z]{2})-([A-Z]{2})/);
+        var c = (a.textContent || '').trim().toLowerCase().slice(0, 2);
+        return F[c] ? c : (m && F[m[1]] ? m[1] : (m && m[2] === 'MY' ? 'my' : c));
+      };
+      [].slice.call(document.querySelectorAll('.langMenu .langBtn')).forEach(function(a){
+        var c = code(a); if (!F[c] || a.querySelector('.phx-flag')) return;
+        var tn = [].slice.call(a.childNodes).filter(function(n){ return n.nodeType === 3 && n.textContent.trim(); })[0];
+        a.classList.add('phx-lang');
+        var fl = document.createElement('span'); fl.className = 'phx-flag'; fl.innerHTML = F[c]; a.insertBefore(fl, a.firstChild);
+        if (tn) { var cs = document.createElement('span'); cs.className = 'phx-lcode'; tn.parentNode.insertBefore(cs, tn); cs.appendChild(tn); }
+        var ln = document.createElement('span'); ln.className = 'phx-ln'; ln.textContent = N[c]; a.appendChild(ln);
+        var name = N[c], iv;
+        a.addEventListener('mouseenter', function(){
+          var f = 0; clearInterval(iv);
+          iv = setInterval(function(){
+            f++;
+            ln.innerHTML = '';
+            name.split('').forEach(function(ch, i){
+              if (ch === ' ' || i < f / 2.2) { ln.appendChild(document.createTextNode(ch)); }
+              else { var b = document.createElement('b'); b.textContent = GLL.charAt((Math.random() * GLL.length) | 0); ln.appendChild(b); }
+            });
+            if (f / 2.2 >= name.length) { clearInterval(iv); ln.textContent = name; }
+          }, 40);
+        });
+      });
+      [].slice.call(document.querySelectorAll('.langHead')).forEach(function(h){
+        var tn = [].slice.call(h.childNodes).filter(function(n){ return n.nodeType === 3 && n.textContent.trim(); })[0];
+        var c = tn ? tn.textContent.trim().toLowerCase().slice(0, 2) : '';
+        if (!F[c] || h.querySelector('.phx-flag')) return;
+        var fl = document.createElement('span'); fl.className = 'phx-flag'; fl.innerHTML = F[c]; h.insertBefore(fl, tn);
+      });
+    })();
+
+    /* Jivo chat: header text "computes" when the chat opens */
+    (function(){
+      var GLJ = '01#%$▲▼/AIX<>', prev = window.jivo_onOpen;
+      var run = function(tries){
+        var box = document.querySelector('#jcont jdiv[class^="headerBox__"]') || document.querySelector('#jcont jdiv[class*="header"]');
+        var nodes = [];
+        if (box) { var w = document.createTreeWalker(box, 4, null, false), n; while ((n = w.nextNode())) if (n.nodeValue.trim() && !n.__phxJ) nodes.push(n); }
+        if (!nodes.length) { if (tries < 8) setTimeout(function(){ run(tries + 1); }, 200); return; }
+        nodes.forEach(function(tn, idx){
+          var orig = tn.nodeValue, f = -idx * 6; tn.__phxJ = 1;
+          var iv = setInterval(function(){
+            f++;
+            if (f < 0) { tn.nodeValue = orig.replace(/\S/g, ' '); return; }
+            tn.nodeValue = orig.split('').map(function(ch, i){ return /\s/.test(ch) ? ch : (i < f / 2 ? ch : GLJ.charAt((Math.random() * GLJ.length) | 0)); }).join('');
+            if (f / 2 >= orig.length) { clearInterval(iv); tn.nodeValue = orig; tn.__phxJ = 0; }
+          }, 40);
+        });
+      };
+      window.jivo_onOpen = function(){ if (prev) prev.apply(this, arguments); setTimeout(function(){ run(0); }, 120); };
+    })();
+
     /* Hero: sharp still image instead of the heavy video */
     if (CONFIG.heroImage) (function(){
       var BASE = 'https://vpozhar556-star.github.io/phoinexes-widget/';
