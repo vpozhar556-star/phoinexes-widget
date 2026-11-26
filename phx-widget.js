@@ -470,7 +470,7 @@
       hs.textContent = '.heroVisual .phx-hero-pic,.heroVisual .phx-hero-pic img{position:absolute;left:0;top:0;width:100%;height:100%;display:block;margin:0}.heroVisual .phx-hero-pic img{object-fit:cover;object-position:50% 50%}.heroVisual .phx-hero-pic.tall img{object-position:62% 45%}.heroInner .heroVisual{transform:none !important;transition:none !important;overflow:hidden}.heroVisual .phx-hero-pic{overflow:hidden;opacity:0;transition:opacity .5s ease}.heroVisual .phx-hero-pic.on{opacity:1}' +
         '.heroVisual .phx-hero-pic::before{content:"";position:absolute;left:-30px;top:-30px;right:-30px;bottom:-30px;background:#0b0b0b url(' + LQIP + ') 50% 50%/cover no-repeat;filter:blur(18px)}.heroVisual .phx-hero-pic.tall::before{background-position:62% 45%}' +
         '.heroVisual .phx-hero-pic img{opacity:0;transform:scale(1.04);transition:opacity 1.2s ease,transform 2.2s cubic-bezier(.2,.8,.2,1)}.heroVisual .phx-hero-pic.ld img{opacity:1;transform:none}' +
-        '@media (max-width:767px) and (orientation:portrait){.heroVisual .phx-hero-pic.tall img{object-position:50% 45%}.heroVisual .phx-hero-pic.tall::before{background-position:52% 45%}}';
+        '@media (max-width:767px) and (orientation:portrait){.heroVisual .phx-hero-pic.tall img{object-position:50% 50%}}';
       document.head.appendChild(hs);
       function fit(pic){ var p = pic.parentElement; if (p) pic.classList.toggle('tall', p.clientHeight > p.clientWidth * 0.8); }
       function swap(){
