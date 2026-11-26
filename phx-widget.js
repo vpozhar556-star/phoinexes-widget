@@ -394,7 +394,7 @@
     (function(){
       var GLJ = '01#%$▲▼/AIX<>', prev = window.jivo_onOpen;
       var run = function(tries){
-        var box = document.querySelector('#jcont jdiv[class^="headerBox__"]') || document.querySelector('#jcont jdiv[class*="header"]');
+        var box = document.querySelector('#jcont jdiv[class^="headerBox__"], jdiv[class^="mobile__"] > jdiv[class^="headerBox__"]') || document.querySelector('#jcont jdiv[class*="header"]');
         var nodes = [];
         if (box) { var w = document.createTreeWalker(box, 4, null, false), n; while ((n = w.nextNode())) if (n.nodeValue.trim() && !n.__phxJ) nodes.push(n); }
         if (!nodes.length) { if (tries < 8) setTimeout(function(){ run(tries + 1); }, 200); return; }
@@ -414,7 +414,7 @@
     /* Jivo chat window: opens like a hologram built from code */
     (function(){
       var css = document.createElement('style');
-      css.textContent = 'html.phx-holo #jcont jdiv[class^="main__"]:has(> jdiv[class^="headerBox__"]){transform-origin:50% 100%;animation:phxHoloIn 1s cubic-bezier(.2,.8,.2,1) both}' +
+      css.textContent = 'html.phx-holo #jcont jdiv[class^="main__"]:has(> jdiv[class^="headerBox__"]),html.phx-holo jdiv[class^="mobile__"]:has(> jdiv[class^="headerBox__"]){transform-origin:50% 100%;animation:phxHoloIn 1s cubic-bezier(.2,.8,.2,1) both}' +
         '@keyframes phxHoloIn{0%{opacity:0;transform:scaleY(.03);filter:brightness(2.2) saturate(0)}' +
         '30%{opacity:.75;transform:scaleY(1.02);filter:brightness(1.7) saturate(.4)}45%{opacity:.35}58%{opacity:.9}70%{opacity:.55}' +
         '100%{opacity:1;transform:none;filter:none}}' +
@@ -422,8 +422,7 @@
       document.head.appendChild(css);
       var GLH = '01#%$\u25B2\u25BC/AIX<>';
       var holo = function(tries){
-        var win = document.querySelector('#jcont jdiv[class^="main__"]');
-        win = win && win.parentNode ? [].slice.call(document.querySelectorAll('#jcont jdiv[class^="main__"]')).filter(function(e){ return e.querySelector('jdiv[class^="headerBox__"]'); })[0] : null;
+        var win = [].slice.call(document.querySelectorAll('#jcont jdiv[class^="main__"], jdiv[class^="mobile__"]')).filter(function(e){ return e.querySelector('jdiv[class^="headerBox__"]') && e.getBoundingClientRect().height > 50; })[0] || null;
         if (!win) { if (tries < 10) setTimeout(function(){ holo(tries + 1); }, 60); return; }
         var r = win.getBoundingClientRect();
         if (r.width < 50 || r.height < 50) { if (tries < 10) setTimeout(function(){ holo(tries + 1); }, 60); return; }
