@@ -124,10 +124,13 @@
     var GL='01#%$\u20AE\u25B2\u25BCAIX';
     document.querySelectorAll('.menuList > li > a').forEach(function(a){
       a.addEventListener('mouseenter',function(){
+        /* letters keep a fixed width while they compute, so the menu does not jump; slower pace */
+        if (typeof phxCompute === 'function') { if (!a.__phxMi) try { phxCompute([a], { step: 2.2, scr: 9, lap: 1, ms: 55 }); } catch (e) {} return; }
+        if (!a.__phxW) { a.__phxW = 1; a.style.display = 'inline-block'; a.style.minWidth = a.getBoundingClientRect().width + 'px'; }
         var tn=(function(a){ var w = document.createTreeWalker(a, 4, null, false), n; while ((n = w.nextNode())) if (n.textContent.trim()) return n; return null; })(a); if(!tn) return;
         var target=tn.__phx||(tn.__phx=tn.textContent), f=0; clearInterval(a.__phxT);
         a.__phxT=setInterval(function(){ f++; tn.textContent=target.split('').map(function(ch,i){return ch===' '?' ':(i<f/2?ch:GL[(Math.random()*GL.length)|0]);}).join('');
-          if(f/2>=target.length){clearInterval(a.__phxT); tn.textContent=target;} },28);
+          if(f/2>=target.length){clearInterval(a.__phxT); tn.textContent=target;} },60);
       });
     });
 
