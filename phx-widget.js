@@ -381,11 +381,11 @@
       var sec = document.querySelector('.calcSection'), h = sec && sec.querySelector('h2,h3'), TTL = (h ? h.textContent.trim() : 'Our offers').toUpperCase();
       var css = document.createElement('style');
       css.textContent = '.hero .bonusItem video,.hero .bonusItem .phx-bv{display:none !important}.hero .bonusItem{position:relative;overflow:hidden;background:transparent !important}' +
-        '.hero .bonusItem .heroBonus.phx-pc{position:absolute !important;left:0 !important;top:0 !important;right:0 !important;bottom:0 !important;width:auto !important;height:auto !important;margin:0 !important;transform:none !important;' +
+        '.hero .layoutItem.phx-pc-host{position:relative;overflow:hidden}.hero .heroBonus.phx-pc{position:absolute !important;left:0 !important;top:0 !important;right:0 !important;bottom:0 !important;width:auto !important;height:auto !important;margin:0 !important;transform:none !important;' +
         'padding:28px 30px 26px !important;text-align:left !important;display:flex !important;flex-direction:column;justify-content:space-between;background:transparent !important;border-radius:0 !important;box-shadow:none !important;overflow:hidden;user-select:none}' +
         '.phx-pc .bg{display:none}' +
         '.phx-pc .bg.out{opacity:0;transform:scale(1.12)}' +
-        '.phx-pc .sh{position:absolute;left:0;top:0;width:100%;height:100%;background:linear-gradient(90deg,rgba(0,0,0,.8) 0%,rgba(0,0,0,.58) 40%,rgba(0,0,0,.18) 78%,rgba(0,0,0,0) 100%);pointer-events:none}.phx-pc .nm,.phx-pc .ln,.phx-pc .top{text-shadow:0 2px 14px rgba(0,0,0,.9)}' +
+        '.phx-pc .sh{position:absolute;left:0;top:0;width:100%;height:100%;background:linear-gradient(90deg,rgba(0,0,0,.8) 0%,rgba(0,0,0,.66) 22%,rgba(0,0,0,.46) 45%,rgba(0,0,0,.24) 68%,rgba(0,0,0,.08) 88%,rgba(0,0,0,0) 100%);pointer-events:none}.phx-pc .nm,.phx-pc .ln,.phx-pc .top{text-shadow:0 2px 14px rgba(0,0,0,.9)}' +
         '.phx-pc .top,.phx-pc .mid,.phx-pc .bot{position:relative}' +
         '.phx-pc .top{display:flex;justify-content:space-between;align-items:center;font:11px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:3px;color:#FD4B03}' +
         '.phx-pc .top b{font-weight:400;color:#9a9a9a;letter-spacing:2px}' +
@@ -402,10 +402,16 @@
         'clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);transition:filter .25s}' +
         '.phx-pc .go:hover{filter:brightness(1.12)}' +
         '@media (max-width:767px){.hero .layoutGrid.rows-2{grid-template-columns:minmax(0,46fr) minmax(0,54fr) !important}.hero .bonusItem{min-width:0}' +
-        '.hero .bonusItem .heroBonus.phx-pc{padding:14px 12px 12px !important}.phx-pc .top{font-size:9px;letter-spacing:1.5px}.phx-pc .nm{font-size:20px !important;letter-spacing:1px;margin:0 0 8px}' +
+        '.hero .heroBonus.phx-pc{padding:14px 12px 12px !important}.phx-pc .top{font-size:9px;letter-spacing:1.5px}.phx-pc .nm{font-size:20px !important;letter-spacing:1px;margin:0 0 8px}' +
         '.phx-pc .ln{font-size:11px;margin:0 0 4px;max-width:none}.phx-pc .bar{gap:2px;margin:0 0 10px}.phx-pc .ar{width:30px;height:30px}.phx-pc .go{height:30px;padding:0 9px;font-size:9px;letter-spacing:1px;gap:5px}.phx-pc .go svg{display:none}}';
       document.head.appendChild(css);
       box.className = 'heroBonus phx-pc';
+      /* desktop: the carousel sits in the lower right tile (the upper one shows the picture); on phones it stays in the upper tile */
+      var host = function(){
+        var b = tile.getBoundingClientRect(), low = [].slice.call(tile.parentElement.children).filter(function(e){ var r = e.getBoundingClientRect(); return e !== tile && e.classList.contains('layoutItem') && Math.abs(r.left - b.left) < 6 && r.top > b.top + 20 && r.width > 120 && r.height > 120; })[0] || tile;
+        if (box.parentElement !== low) { low.classList.add('phx-pc-host'); low.appendChild(box); }
+      };
+      host(); window.addEventListener('resize', function(){ clearTimeout(host.t); host.t = setTimeout(host, 200); });
       var arr = function(d){ return '<svg width="14" height="14" viewBox="0 0 14 14"><path d="' + (d < 0 ? 'M9 2 4 7l5 5' : 'M5 2l5 5-5 5') + '" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>'; };
       box.innerHTML = '<i class="bg"></i><i class="sh"></i><div class="top"><span>' + TTL + '</span><b class="ix"></b></div>' +
         '<div class="mid"><div class="nm"></div><div class="ln l1"></div><div class="ln l2"></div></div>' +
