@@ -380,12 +380,12 @@
       var BTN = { ru: '\u0412\u044b\u0431\u0440\u0430\u0442\u044c \u043f\u043b\u0430\u043d', vi: 'Ch\u1ecdn g\u00f3i', th: '\u0e40\u0e25\u0e37\u0e2d\u0e01\u0e41\u0e1c\u0e19', ms: 'Pilih pelan' }[lang] || 'Choose plan';
       var sec = document.querySelector('.calcSection'), h = sec && sec.querySelector('h2,h3'), TTL = (h ? h.textContent.trim() : 'Our offers').toUpperCase();
       var css = document.createElement('style');
-      css.textContent = '.hero .bonusItem video,.hero .bonusItem .phx-bv{display:none !important}.hero .bonusItem{position:relative;overflow:hidden;background:#0d0d0d}' +
+      css.textContent = '.hero .bonusItem video,.hero .bonusItem .phx-bv{display:none !important}.hero .bonusItem{position:relative;overflow:hidden;background:transparent !important}' +
         '.hero .bonusItem .heroBonus.phx-pc{position:absolute !important;left:0 !important;top:0 !important;right:0 !important;bottom:0 !important;width:auto !important;height:auto !important;margin:0 !important;transform:none !important;' +
         'padding:28px 30px 26px !important;text-align:left !important;display:flex !important;flex-direction:column;justify-content:space-between;background:transparent !important;border-radius:0 !important;box-shadow:none !important;overflow:hidden;user-select:none}' +
-        '.phx-pc .bg{position:absolute;left:0;top:0;width:100%;height:100%;background:50% 50%/cover no-repeat;opacity:.7;transform:scale(1.06);transition:opacity .6s ease,transform 4s ease}' +
+        '.phx-pc .bg{display:none}' +
         '.phx-pc .bg.out{opacity:0;transform:scale(1.12)}' +
-        '.phx-pc .sh{position:absolute;left:0;top:0;width:100%;height:100%;background:linear-gradient(90deg,rgba(10,10,10,.92) 0%,rgba(10,10,10,.7) 45%,rgba(10,10,10,.25) 100%),linear-gradient(0deg,rgba(10,10,10,.85) 0%,rgba(10,10,10,0) 45%);pointer-events:none}' +
+        '.phx-pc .sh{position:absolute;left:0;top:0;width:100%;height:100%;background:linear-gradient(90deg,rgba(0,0,0,.8) 0%,rgba(0,0,0,.58) 40%,rgba(0,0,0,.18) 78%,rgba(0,0,0,0) 100%);pointer-events:none}.phx-pc .nm,.phx-pc .ln,.phx-pc .top{text-shadow:0 2px 14px rgba(0,0,0,.9)}' +
         '.phx-pc .top,.phx-pc .mid,.phx-pc .bot{position:relative}' +
         '.phx-pc .top{display:flex;justify-content:space-between;align-items:center;font:11px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:3px;color:#FD4B03}' +
         '.phx-pc .top b{font-weight:400;color:#9a9a9a;letter-spacing:2px}' +
@@ -424,7 +424,6 @@
         tms.push(t);
       };
       var esc = function(s){ return s.replace(/[&<>"]/g, function(c){ return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
-      P.forEach(function(p){ if (p.img) { var im = new Image(); im.src = p.img; } });
       var show = function(i){
         cur = (i + P.length) % P.length; var p = P[cur];
         ix.textContent = (cur + 1 < 10 ? '0' : '') + (cur + 1) + ' / ' + (P.length < 10 ? '0' : '') + P.length;
