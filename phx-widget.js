@@ -866,6 +866,65 @@
       window.jivo_onOpen = function(){ if (prevH) prevH.apply(this, arguments); setTimeout(function(){ holo(0); }, 30); };
     })();
 
+    /* Social icons (footer / menu): hide the channels that are not active yet; YouTube stays */
+    (function(){
+      var off = ['t.me/phoinexesofficial', 'x.com/', 'instagram.com/', 'facebook.com/', 'tiktok.com/'];
+      [].forEach.call(document.querySelectorAll('.socialsList a'), function(a){
+        if (a.closest('.fixedSocials2')) return;
+        var h = a.getAttribute('href') || '';
+        if (off.some(function(s){ return h.indexOf(s) > -1; })) (a.closest('li') || a).style.display = 'none';
+      });
+    })();
+
+    /* Telegram channel button next to the language switcher (header on desktop, burger menu on phones) */
+    (function(){
+      var CH = 'https://t.me/phoinexesofficial';
+      var lcs = [].slice.call(document.querySelectorAll('.siteHeader .langContainer'));
+      if (!lcs.length) return;
+      var tg = document.createElement('style');
+      tg.textContent = '.phx-tgb{position:absolute;z-index:5;width:34px;height:34px;display:grid;place-items:center;box-sizing:border-box;text-decoration:none;' +
+        'background:linear-gradient(135deg,transparent 5px,#FD4B03 5px,#FD4B03 6.5px,transparent 6.5px) top left/10px 10px no-repeat,#0e0e0e;box-shadow:inset 0 0 0 1px #3a3a3a;' +
+        'clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px);transition:box-shadow .25s}' +
+        '.phx-tgb svg{width:17px;height:17px;display:block;transition:transform .25s}' +
+        '.phx-tgb:hover{box-shadow:inset 0 0 0 1px #FD4B03,0 0 14px rgba(253,75,3,.45)}' +
+        '.phx-tgb:hover svg{transform:translateX(1px) rotate(-8deg)}' +
+        '.phx-tgb i{position:absolute;right:4px;top:4px;width:5px;height:5px;border-radius:50%;background:#2AABEE;box-shadow:0 0 6px #2AABEE;animation:phxTgDot 2s ease-in-out infinite}' +
+        '@keyframes phxTgDot{0%,100%{opacity:.35}50%{opacity:1}}';
+      document.head.appendChild(tg);
+      var mk = function(){
+        var a = document.createElement('a');
+        a.className = 'phx-tgb'; a.href = CH; a.target = '_blank'; a.rel = 'noopener';
+        a.title = 'PHOINEXES Telegram channel'; a.setAttribute('aria-label', a.title);
+        a.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13.1l-4.8-1.5c-1-.3-1.1-1 .2-1.5L20.5 2.9c.9-.3 1.6.2 1.4 1.4z"/></svg><i></i>';
+        return a;
+      };
+      var slots = lcs.map(function(lc){ return { lc: lc, el: null }; });
+      var place = function(){
+        slots.forEach(function(s){
+          var lc = s.lc, op = lc.offsetParent;
+          if (!op || !lc.getBoundingClientRect().width) { if (s.el) s.el.style.display = 'none'; return; }
+          if (!s.el || s.el.parentNode !== op) { if (s.el) s.el.remove(); s.el = mk(); op.appendChild(s.el); }
+          var lr = lc.getBoundingClientRect(), pr = op.getBoundingClientRect(), nx = lc.nextElementSibling, x, room;
+          var nr = nx && nx.getBoundingClientRect();
+          if (nr && nr.width && nr.top < lr.bottom && nr.bottom > lr.top && nr.left >= lr.right) {
+            room = nr.left - lr.right; x = lr.right + (room - 34) / 2;      /* between language and Sign up / Log in */
+          } else {
+            room = lr.left - pr.left; x = lr.left - 34 - 12;                 /* left of the language button (phone menu) */
+          }
+          if (room < 40) { s.el.style.display = 'none'; return; }
+          s.el.style.display = '';
+          s.el.style.left = Math.round(x - pr.left - op.clientLeft) + 'px';
+          s.el.style.top = Math.round(lr.top - pr.top - op.clientTop + (lr.height - 34) / 2) + 'px';
+        });
+      };
+      place();
+      window.addEventListener('resize', place);
+      window.addEventListener('load', place);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+      document.addEventListener('click', function(e){ if (e.target.closest && e.target.closest('.burger')) { setTimeout(place, 60); setTimeout(place, 400); } }, true);
+      setTimeout(place, 1500);
+    })();
+
     /* Hero: sharp still image instead of the heavy video */
     if (CONFIG.heroImage) (function(){
       var BASE = 'https://vpozhar556-star.github.io/phoinexes-widget/';
