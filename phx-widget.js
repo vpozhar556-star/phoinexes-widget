@@ -374,7 +374,9 @@
         '.phx-pc .go{position:relative;display:inline-flex;align-items:center;gap:10px;padding:11px 16px;font:12px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:2px;color:#fff;text-transform:uppercase;' +
         'box-shadow:inset 0 0 0 1px #FD4B03;clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);transition:background .25s,color .25s}' +
         '.phx-pc:hover .go{background:#FD4B03;color:#141414}' +
-        '@media (max-width:767px){.hero .bonusItem .heroBonus.phx-pc{width:90% !important;min-height:0;padding:16px 16px 14px !important}.phx-pc .nm{font-size:26px;margin:12px 0 8px;min-height:30px}.phx-pc .ln{font-size:12px}.phx-pc .bar{margin:10px 0 12px}.phx-pc .go{padding:9px 12px;font-size:11px}}';
+        '@media (max-width:767px){.hero .layoutGrid.rows-2{grid-template-columns:minmax(0,46fr) minmax(0,54fr) !important}.hero .bonusItem{min-width:0;overflow:hidden}' +
+        '.hero .bonusItem .heroBonus.phx-pc{width:92% !important;min-height:0;padding:12px !important}.phx-pc .nm{white-space:normal;font-size:19px !important;letter-spacing:1px;margin:8px 0 6px;min-height:0}' +
+        '.phx-pc .top{font-size:9px;letter-spacing:1.5px}.phx-pc .ln{font-size:11px;margin:0 0 4px}.phx-pc .bg{display:none}.phx-pc .bar{gap:2px;margin:8px 0 10px}.phx-pc .go{padding:8px 10px;font-size:10px;letter-spacing:1px;gap:6px}}';
       document.head.appendChild(css);
       box.classList.add('phx-pc');
       box.innerHTML = '<i class="bg"></i><div class="top"><span>' + TTL + '</span><b class="ix"></b></div><div class="nm"></div>' +
