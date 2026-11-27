@@ -253,7 +253,7 @@
     (function(){
       if (!CONFIG.heroImage) return;
       if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      var IW = 2688, IH = 1152, MC = [1330, 0, 691, 1152]; /* full image size, crop used for hero-p-m.webp */
+      var IW = 2688, IH = 1152, MC = [1423, -174, 900, 1500]; /* full image size, crop rect used for hero-p-m2.webp (padded top/bottom) */
       var ROOTS = [
         [[.45,.70],[.48,.62],[.57,.56],[.585,.47]], [[.53,.80],[.535,.70],[.59,.58],[.595,.47]], [[.555,.86],[.57,.72],[.60,.62],[.605,.47]],
         [[.63,.88],[.625,.75],[.62,.60],[.62,.47]], [[.67,.84],[.66,.72],[.64,.62],[.635,.47]], [[.73,.76],[.70,.66],[.66,.58],[.645,.47]],
@@ -284,7 +284,7 @@
           var op = (getComputedStyle(img).objectPosition || '50% 50%').split(' '), px = (parseFloat(op[0]) || 50) / 100, py = (parseFloat(op[1]) || 50) / 100;
           var s = Math.max(W / iw, H / ih), dw = iw * s, dh = ih * s, ox = (W - dw) * px, oy = (H - dh) * py;
           k = Math.max(.6, Math.min(1.6, dw / 1600));
-          map = function(p){ var nx = mob ? (p[0] * IW - MC[0]) / MC[2] : p[0]; return [ox + nx * dw, oy + p[1] * dh]; };
+          map = function(p){ var nx = mob ? (p[0] * IW - MC[0]) / MC[2] : p[0], ny = mob ? (p[1] * IH - MC[1]) / MC[3] : p[1]; return [ox + nx * dw, oy + ny * dh]; };
         };
         var add = function(path, dur, out){ pulses.push({ p: path, t: 0, d: dur, o: out }); };
         var root = function(){ add(ROOTS[(Math.random() * ROOTS.length) | 0], 1500 + Math.random() * 700, 0); };
@@ -1256,7 +1256,7 @@
         var v = document.querySelector('.heroVisual video'); if (!v) return false; if (v.__phx) return true; v.__phx = 1;
         var pic = document.createElement('picture'); pic.className = 'phx-hero-pic';
         var hb = v.parentElement.getBoundingClientRect(), hsz = Math.ceil(Math.max(hb.width, hb.height * 16 / 9)) || window.innerWidth;
-        pic.innerHTML = '<source type="image/webp" media="(max-width:767px) and (orientation:portrait)" srcset="' + BASE + 'hero-p-m.webp">' +
+        pic.innerHTML = '<source type="image/webp" media="(max-width:767px) and (orientation:portrait)" srcset="' + BASE + 'hero-p-m2.webp">' +
           '<source type="image/webp" sizes="' + hsz + 'px" srcset="' + BASE + 'hero-p-960.webp 960w,' + BASE + 'hero-p-1600.webp 1600w,' + BASE + 'hero-p-2560.webp 2560w"><img src="' + BASE + 'hero-p.jpg" alt="PHOINEXES" decoding="async" fetchpriority="high">';
         v.parentElement.insertBefore(pic, v);
         try { v.pause(); v.removeAttribute('autoplay'); [].slice.call(v.querySelectorAll('source')).forEach(function(x){ x.remove(); }); v.removeAttribute('src'); v.load(); } catch(e){}
