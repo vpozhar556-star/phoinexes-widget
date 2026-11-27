@@ -685,7 +685,7 @@
           [li, li2].forEach(function(L){ L.firstChild.addEventListener('click', function(e){
             /* locked: shake + error tip, no navigation */
             e.preventDefault(); e.stopPropagation();
-            var a = L.firstChild; a.classList.remove('phx-den'); void a.offsetWidth; a.classList.add('phx-den');
+            var a = L.firstChild; a.classList.remove('phx-den'); void a.offsetWidth; a.classList.add('phx-den'); clearTimeout(a.__dt); a.__dt = setTimeout(function(){ a.classList.remove('phx-den'); }, 1500);
             var r = a.getBoundingClientRect(), t = document.createElement('div'); t.className = 'phx-den-tip'; t.textContent = 'ERROR 403 \u00b7 ACCESS DENIED'; document.body.appendChild(t);
             t.style.left = Math.round(Math.max(8, Math.min(innerWidth - t.offsetWidth - 8, r.left))) + 'px'; t.style.top = Math.round(r.bottom + 8) + 'px';
             requestAnimationFrame(function(){ t.classList.add('on'); });
