@@ -755,8 +755,8 @@
         /* art panel: right part of the card, fades into the dark side */
         '.phx-tap .art{position:absolute;right:0;top:0;width:62%;height:100%;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent 0,#000 28%);mask:linear-gradient(90deg,transparent 0,#000 28%);user-select:none;-webkit-tap-highlight-color:transparent}' +
         '.phx-tap .art .sc{position:absolute;left:0;top:0;width:100%;height:100%;background:50% 50%/cover no-repeat;transition:opacity 1s ease}' +
-        '.phx-tap .art .kb{animation:phxKb 16s ease-in-out infinite alternate}' +
-        '@keyframes phxKb{from{transform:scale(1.02) translateX(0)}to{transform:scale(1.12) translateX(-2%)}}' +
+        '.phx-tap .art .kb{animation:phxKb 20s ease-in-out infinite alternate;will-change:transform}' +
+        '@keyframes phxKb{from{transform:scale(1) translateX(0)}to{transform:scale(1.05) translateX(-1%)}}' +
         '.phx-tap .art canvas{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}' +
         '.phx-tap .art .cap{position:absolute;right:18px;bottom:16px;padding:7px 10px;font:11px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:2px;color:#fff;background:rgba(10,10,10,.65);box-shadow:inset 0 0 0 1px rgba(253,75,3,.6)}' +
         /* variant 1: boss HUD */
@@ -766,8 +766,7 @@
         '.phx-tap .hud .bar.low i{background:linear-gradient(90deg,#ff3b1f,#ff8a3d);box-shadow:0 0 10px rgba(255,80,30,.8)}' +
         '.phx-tap .hit-me{position:absolute;left:58%;top:58%;transform:translate(-50%,-50%);font:12px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:3px;color:#fff;padding:8px 12px;background:rgba(0,0,0,.55);box-shadow:inset 0 0 0 1px #FD4B03;animation:phxBlink 1.6s ease-in-out infinite;pointer-events:none}' +
         '@keyframes phxBlink{0%,100%{opacity:.35}50%{opacity:1}}' +
-        '.phx-tap .art.v1{cursor:crosshair}' +
-        '.phx-tap .art.shake .sc{animation:phxHitShake .18s linear}' +
+                '.phx-tap .art.shake .sc{animation:phxHitShake .18s linear}' +
         '@keyframes phxHitShake{0%{transform:translate(0,0)}25%{transform:translate(-5px,2px)}50%{transform:translate(4px,-3px)}75%{transform:translate(-2px,3px)}100%{transform:translate(0,0)}}' +
         '.phx-tap .dmg{position:absolute;pointer-events:none;font:20px/1 "Nasalization Rg",Arial,sans-serif;color:#fff;text-shadow:0 0 10px #FD4B03,0 0 2px #000;animation:phxDmg .9s ease-out forwards}' +
         '.phx-tap .dmg.crit{font-size:28px;color:#ffd36b;text-shadow:0 0 14px #ff7a00,0 0 2px #000}' +
@@ -782,12 +781,38 @@
         '.phx-tap .dots{position:absolute;left:32%;bottom:18px;display:flex;gap:8px}' +
         '.phx-tap .dots b{width:22px;height:3px;background:rgba(255,255,255,.25);transition:background .3s}.phx-tap .dots b.on{background:#FD4B03;box-shadow:0 0 8px #FD4B03}' +
         '.phx-tap .art.glitch .sc.cur{animation:phxGlitch .45s steps(3) 1}' +
+        '.phx-tap .art.v1 .sc{background-position:50% 38%}' +
+        /* variants 2-3: character cards (skins collection / champions podium) */
+        '.phx-tap .art.v2{background:radial-gradient(ellipse at 64% 55%,rgba(253,75,3,.30),transparent 62%),#0e0e0e}' +
+        '.phx-tap .art.v3{background:radial-gradient(ellipse at 64% 30%,rgba(255,200,80,.26),transparent 60%),radial-gradient(ellipse at 64% 100%,rgba(30,200,120,.20),transparent 60%),#0e0e0e}' +
+        '.phx-tap .art.v2 .cap,.phx-tap .art.v3 .cap{top:16px;bottom:auto}' +
+        '.phx-tap .deck{position:absolute;right:4%;top:54%;transform:translateY(-50%);width:64%;display:flex;gap:16px;align-items:center;justify-content:center}' +
+        '.phx-tap .v3 .deck{top:auto;bottom:0;transform:none;align-items:flex-end}' +
+        '.phx-tap .cw{position:relative;flex:1;min-width:0;filter:drop-shadow(0 0 10px var(--c));animation:phxFl 4.2s ease-in-out infinite;animation-delay:var(--d)}' +
+        '.phx-tap .cw.big{flex:1.22;z-index:2}' +
+        '@keyframes phxFl{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}' +
+        '.phx-tap .v3 .cw{animation:none}' +
+        '.phx-tap .cd{position:relative;display:block;aspect-ratio:4/5;background:50% 45%/cover no-repeat;overflow:hidden;cursor:pointer;transition:transform .35s cubic-bezier(.2,.8,.2,1);' +
+        'clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);box-shadow:inset 0 0 0 2px var(--c)}' +
+        '.phx-tap .cd:hover,.phx-tap .cd.pop{transform:translateY(-10px) scale(1.05)}' +
+        '.phx-tap .cd::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-18deg);animation:phxShine 4.2s ease-in-out infinite;animation-delay:var(--d)}' +
+        '@keyframes phxShine{0%,62%{left:-60%}100%{left:130%}}' +
+        '.phx-tap .cd b{position:absolute;left:0;right:0;bottom:0;padding:18px 6px 8px;text-align:center;font:400 10px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:2px;color:#fff;background:linear-gradient(0deg,rgba(0,0,0,.85),transparent)}' +
+        '.phx-tap .cd b em{display:block;margin-top:4px;font-style:normal;color:var(--c);text-shadow:0 0 8px var(--c)}' +
+        '.phx-tap .cd .rk{position:absolute;left:8px;top:8px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font:400 13px/1 "Nasalization Rg",Arial,sans-serif;color:#141414;background:var(--c);clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px)}' +
+        '.phx-tap .stp{height:var(--h);margin-top:8px;display:flex;align-items:center;justify-content:center;font:400 18px/1 "Nasalization Rg",Arial,sans-serif;color:var(--c);' +
+        'background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.02));box-shadow:inset 0 2px 0 var(--c);text-shadow:0 0 10px var(--c)}' +
+        '.phx-tap .crown{position:absolute;left:50%;top:-30px;transform:translateX(-50%);width:34px;height:24px;filter:drop-shadow(0 0 8px #ffc94a);animation:phxCr 2.4s ease-in-out infinite}' +
+        '@keyframes phxCr{0%,100%{transform:translate(-50%,0) rotate(-4deg)}50%{transform:translate(-50%,-5px) rotate(4deg)}}' +
         '@keyframes phxGlitch{0%{clip-path:inset(10% 0 60% 0);transform:translateX(-8px)}33%{clip-path:inset(50% 0 20% 0);transform:translateX(6px)}66%{clip-path:inset(30% 0 40% 0);transform:translateX(-3px)}100%{clip-path:inset(0);transform:none}}' +
         '@media (max-width:900px){.phx-tap .phx-tc{grid-template-columns:1fr;padding:0 0 30px;min-height:0}' +
         '.phx-tap .art{position:relative;width:100%;height:210px;-webkit-mask:linear-gradient(180deg,#000 70%,transparent);mask:linear-gradient(180deg,#000 70%,transparent)}' +
-        '.phx-tap .art{order:-1}.phx-tap .tx{padding:0 20px}.phx-tap .dots{left:20px}.phx-tap .hit-me{left:50%}}';
+        '.phx-tap .art{order:-1}.phx-tap .tx{padding:0 20px}.phx-tap .dots{left:20px}.phx-tap .hit-me{left:50%}' +
+        '.phx-tap .art.v2,.phx-tap .art.v3{height:270px;-webkit-mask:none;mask:none}' +
+        '.phx-tap .deck{left:50%;right:auto;width:min(92%,420px);transform:translate(-50%,-50%);gap:10px}.phx-tap .v3 .deck{transform:translateX(-50%)}' +
+        '.phx-tap .art.v2 .cap,.phx-tap .art.v3 .cap{display:none}.phx-tap .cd b{font-size:9px;letter-spacing:1px}.phx-tap .stp{font-size:15px}}';
       document.head.appendChild(gc);
-      var ART = { 1: ['tap-boss.webp'], 2: ['tap-skins.webp'], 3: ['tap-champs.webp'], 4: ['tap-boss.webp', 'tap-dungeon.webp', 'tap-skins.webp'] }[V];
+      var ART = { 1: ['tap-boss-hd.webp'], 2: [], 3: [], 4: ['tap-boss-hd.webp', 'tap-dungeon.webp', 'tap-skins.webp'] }[V];
       var sec = document.createElement('section'); sec.className = 'phx-tap';
       sec.innerHTML = '<div class="container"><div class="phx-tc">' +
         '<div class="tx"><div class="k">TELEGRAM GAME</div><h2>PHOINEXES <b>TAP</b></h2>' +
@@ -823,27 +848,21 @@
         else { run = true; requestAnimationFrame(fr); }
       };
       if (V === 1) {
-        art.insertAdjacentHTML('beforeend', '<div class="hud">EMERALD TYRANT \u00B7 BOSS<div class="bar"><i></i></div></div><div class="hit-me">TAP TO ATTACK</div><div class="win"><span>BOSS DEFEATED!</span><small>NOW DO IT WITH YOUR TEAM IN TELEGRAM</small></div>');
+        art.insertAdjacentHTML('beforeend', '<div class="hud">EMERALD TYRANT \u00B7 BOSS<div class="bar"><i></i></div></div>');
         canvasFx('embers');
-        var hp = 100, bar = art.querySelector('.bar'), hpi = bar.firstChild, win = art.querySelector('.win'), hint = art.querySelector('.hit-me'), lock = false;
-        art.addEventListener('pointerdown', function(e){
-          if (lock) return;
-          var r = art.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, crit = Math.random() < 0.18, d = crit ? 14 + ((Math.random() * 6) | 0) : 5 + ((Math.random() * 5) | 0);
-          if (hint) { hint.remove(); hint = null; }
-          hp = Math.max(0, hp - d); hpi.style.width = hp + '%'; bar.classList.toggle('low', hp < 30);
-          var t = document.createElement('span'); t.className = 'dmg' + (crit ? ' crit' : ''); t.textContent = (crit ? 'CRIT -' : '-') + d * 37; t.style.left = x + 'px'; t.style.top = (y - 10) + 'px'; art.appendChild(t);
-          var s = document.createElement('span'); s.className = 'slash'; s.style.left = x + 'px'; s.style.top = y + 'px'; s.style.setProperty('--r', ((Math.random() * 120) - 60).toFixed(0) + 'deg'); art.appendChild(s);
-          setTimeout(function(){ t.remove(); s.remove(); }, 900);
-          art.classList.remove('shake'); void art.offsetWidth; art.classList.add('shake');
-          if (hp <= 0) {
-            lock = true; win.classList.add('on');
-            setTimeout(function(){ win.classList.remove('on'); hp = 100; hpi.style.width = '100%'; bar.classList.remove('low'); lock = false; }, 3200);
-          }
-        });
       } else if (V === 2) {
-        art.insertAdjacentHTML('beforeend', '<div class="cap">COLLECT PHOENIX SKINS</div>'); canvasFx('embers');
+        canvasFx('embers');
+        var SK = [['skin-1', 'EPIC', '#b35cff'], ['skin-2', 'LEGENDARY', '#FD4B03'], ['skin-3', 'RARE', '#3aa0ff']];
+        art.insertAdjacentHTML('beforeend', '<div class="cap">COLLECT PHOENIX SKINS</div><div class="deck">' + SK.map(function(s, i){
+          return '<div class="cw' + (i === 1 ? ' big' : '') + '" style="--c:' + s[2] + ';--d:' + (i * 0.7) + 's"><span class="cd" style="background-image:url(' + A + s[0] + '.webp)"><b>PHOENIX SKIN<em>' + s[1] + '</em></b></span></div>';
+        }).join('') + '</div>');
       } else if (V === 3) {
-        art.insertAdjacentHTML('beforeend', '<div class="cap">WEEKLY CHAMPIONS</div>'); canvasFx('confetti');
+        canvasFx('confetti');
+        var CH = [['champ-1', '2', '#cfd6e0', '30px', 'SILVER'], ['champ-2', '1', '#ffc94a', '46px', 'GOLD'], ['champ-3', '3', '#e0894a', '20px', 'BRONZE']];
+        var crown = '<svg class="crown" viewBox="0 0 34 24"><path fill="#ffc94a" d="M2 8l8 6 7-12 7 12 8-6-3 15H5z"/><circle cx="2" cy="7" r="2" fill="#ffe08a"/><circle cx="17" cy="2" r="2" fill="#ffe08a"/><circle cx="32" cy="7" r="2" fill="#ffe08a"/></svg>';
+        art.insertAdjacentHTML('beforeend', '<div class="cap">WEEKLY CHAMPIONS</div><div class="deck">' + CH.map(function(c, i){
+          return '<div class="cw' + (i === 1 ? ' big' : '') + '" style="--c:' + c[2] + ';--d:' + (i * 0.7) + 's;--h:' + c[3] + '">' + (i === 1 ? crown : '') + '<span class="cd" style="background-image:url(' + A + c[0] + '.webp)"><i class="rk">' + c[1] + '</i><b>TOP PLAYER<em>' + c[4] + '</em></b></span><div class="stp">#' + c[1] + '</div></div>';
+        }).join('') + '</div>');
       } else {
         art.insertAdjacentHTML('beforeend', '<div class="dots">' + ART.map(function(f, i){ return '<b' + (i ? '' : ' class="on"') + '></b>'; }).join('') + '</div>');
         canvasFx('embers');
@@ -856,6 +875,7 @@
           art.classList.remove('glitch'); void art.offsetWidth; art.classList.add('glitch');
         }, 4200);
       }
+      [].forEach.call(art.querySelectorAll('.cd'), function(c){ c.addEventListener('pointerdown', function(){ c.classList.add('pop'); setTimeout(function(){ c.classList.remove('pop'); }, 450); }); });
       if (typeof phxCompute === 'function' && 'IntersectionObserver' in window) {
         var h2 = sec.querySelector('h2'); h2.classList.add('phx-sw');
         var tio = new IntersectionObserver(function(es){ if (!es[0].isIntersecting) return; tio.disconnect(); h2.classList.remove('phx-sw'); try { phxCompute([h2], { step: 1.6, scr: 8, lap: 0.5, ms: 45 }); } catch (e) {} }, { threshold: 0.5 });
