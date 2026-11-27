@@ -459,8 +459,12 @@
       box.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; }, { passive: true });
       box.addEventListener('touchend', function(e){ if (sx === null) return; var dx = e.changedTouches[0].clientX - sx; sx = null; if (Math.abs(dx) > 40) { touch(); show(cur + (dx < 0 ? 1 : -1)); } });
       box.addEventListener('mouseenter', function(){ hold = true; }); box.addEventListener('mouseleave', function(){ hold = false; });
-      show(0);
-      setInterval(function(){ if (!hold && !document.hidden && Date.now() > idle) show(cur + 1); }, 4000);
+      /* start together with the hero headline: the intro computes both at the same moment */
+      box.style.opacity = '0'; box.style.transition = 'opacity .6s ease';
+      var started = false, go = function(){ if (started) return; started = true; box.style.opacity = '1'; show(0); };
+      var introOn = CONFIG.menuIntro === 'on' || (CONFIG.menuIntro === 'demo' && /phxdemo/.test(location.hash + location.search));
+      if (window.__phxIntro || !introOn) go(); else { document.addEventListener('phx-intro', function(){ setTimeout(go, 300); }); setTimeout(go, 4500); }
+      setInterval(function(){ if (!started) return; if (!hold && !document.hidden && Date.now() > idle) show(cur + 1); }, 4000);
     })();
 
     /* Plans slider: the plan picture fills the whole card (it was cut off with an empty band at the bottom); soft shade keeps the texts readable */
@@ -648,6 +652,7 @@
     };
     var PHX_MENU = { step: 1.6, scr: 8, lap: 0.5, ms: 55 };
     var phxRun = function(){
+      window.__phxIntro = 1; try { document.dispatchEvent(new Event('phx-intro')); } catch (e) {}
       try {
         if (innerWidth > 991) { var ml = phxQ('.menuList > li > a'); if (ml.length) phxCompute(ml, { step: 1.6, scr: 8, lap: 0.5, ms: 55, done: phxPulse }); else phxPulse(); }
         var btn = phxQ('.themeBtn').filter(function(b){ return /start/i.test(b.textContent); }).slice(0, 1);
