@@ -472,6 +472,9 @@
       document.head.appendChild(st);
     })();
 
+    /* Widget is ready: lets the site's early <head> snippet (html:not(.phx-ready) ...) show the header buttons again, so the old buttons / video never flash on reload */
+    document.documentElement.classList.add('phx-ready');
+
     var phxOn = function(v){ return v === 'on' || (v === 'demo' && /phxdemo/.test(location.hash + location.search)); };
     if (phxOn(CONFIG.menuIntro)) {
     /* Intro: menu + hero texts "compute" letter by letter (code glyphs) */
