@@ -546,7 +546,7 @@
         '.phx-pc .top{display:none !important}' +
         '.phx-pc .nm{margin:0 0 14px;min-height:1.1em;font:400 clamp(30px,2.8vw,52px)/1.05 "Nasalization Rg",Arial,sans-serif;letter-spacing:2px;color:#fff;text-transform:uppercase;text-shadow:0 0 22px rgba(253,75,3,.45)}' +
         '.phx-pc .nm i{font-style:normal;color:#FD4B03}' +
-        '.phx-pc .mid{margin:auto 0}.phx-pc .nm{margin-bottom:20px !important}.phx-pc .ln{margin:0 0 10px;min-height:1.4em;font:18px/1.4 Arial,sans-serif;color:#d0d0d0;max-width:92%}.phx-pc .ln em{font-style:normal}.phx-pc .ln span{color:#fff}' +
+        '.phx-pc .mid{margin:auto 0}.phx-pc .nm{margin-bottom:20px !important}.phx-pc .ln{margin:0 0 10px;min-height:1.4em;font:17px/1.45 "Nasalization Rg",Arial,sans-serif;letter-spacing:.5px;color:#d0d0d0;max-width:92%}.phx-pc .ln em{font-style:normal}.phx-pc .ln span{color:#fff}' +
         '.phx-pc .bar{display:flex;gap:4px;margin:0 0 18px}.phx-pc .bar u{flex:1;height:14px;cursor:pointer;text-decoration:none;position:relative}' +
         '.phx-pc .bar u::after{content:"";position:absolute;left:0;right:0;top:6px;height:3px;background:rgba(255,255,255,.18);transition:background .3s,box-shadow .3s}' +
         '.phx-pc .bar u:hover::after{background:rgba(253,75,3,.6)}.phx-pc .bar u.on::after{background:#FD4B03;box-shadow:0 0 8px #FD4B03}' +
