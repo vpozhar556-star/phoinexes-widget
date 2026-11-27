@@ -1241,10 +1241,11 @@
     (function(){
       var css = document.createElement('style');
       css.textContent = 'html.phx-holo #jcont jdiv[class^="main__"]:has(> jdiv[class^="headerBox__"]),html.phx-holo jdiv[class^="mobile__"]:has(> jdiv[class^="headerBox__"]){transform-origin:50% 100%;animation:phxHoloIn 2.2s cubic-bezier(.22,.8,.25,1) both}' +
-        '@keyframes phxHoloIn{0%{opacity:0;transform:perspective(900px) rotateX(14deg) scaleY(.02);filter:brightness(2.4) saturate(0) blur(2px)}' +
-        '25%{opacity:.55;transform:perspective(900px) rotateX(7deg) scaleY(.5);filter:brightness(2) saturate(.25) blur(1px)}' +
-        '45%{opacity:.85;transform:perspective(900px) rotateX(0) scaleY(1.01);filter:brightness(1.55) saturate(.6) blur(0)}55%{opacity:.6}65%{opacity:.95}75%{opacity:.8}' +
-        '100%{opacity:1;transform:none;filter:none}}' +
+        /* clip-path reveal (no transform), so the chat measures its real size while it opens and is never left empty */
+        '@keyframes phxHoloIn{0%{opacity:.2;clip-path:inset(100% 0 0 0);filter:brightness(2.4) saturate(0)}' +
+        '30%{opacity:.6;clip-path:inset(55% 0 0 0);filter:brightness(2) saturate(.25)}' +
+        '55%{opacity:.85;clip-path:inset(0 0 0 0);filter:brightness(1.55) saturate(.6)}65%{opacity:.6}75%{opacity:.95}85%{opacity:.8}' +
+        '100%{opacity:1;clip-path:inset(0 0 0 0);filter:none}}' +
         '.phx-holo-fx{position:fixed;pointer-events:none;z-index:2147483647;transition:opacity .9s}';
       document.head.appendChild(css);
       var GLH = '01#%$\u25B2\u25BC/AIX<>';
@@ -1254,7 +1255,7 @@
         var r = win.getBoundingClientRect();
         if (r.width < 50 || r.height < 50) { if (tries < 10) setTimeout(function(){ holo(tries + 1); }, 60); return; }
         var de = document.documentElement; de.classList.remove('phx-holo'); void de.offsetWidth; de.classList.add('phx-holo');
-        setTimeout(function(){ de.classList.remove('phx-holo'); }, 2300);
+        setTimeout(function(){ de.classList.remove('phx-holo'); try { window.dispatchEvent(new Event('resize')); } catch (e) {} }, 2300);
         var cv = document.createElement('canvas'), dpr = Math.min(window.devicePixelRatio || 1, 2), W = r.width, H = r.height;
         cv.className = 'phx-holo-fx'; cv.style.left = r.left + 'px'; cv.style.top = r.top + 'px'; cv.style.width = W + 'px'; cv.style.height = H + 'px';
         cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); document.body.appendChild(cv);
