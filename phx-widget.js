@@ -479,7 +479,7 @@
     /* Plans slider: when the slide changes, the new plan picture is "generated from code" - a glyph scan reveals it top to bottom */
     (function(){
       var st = document.createElement('style');
-      st.textContent = '.planSlider .planCard .imageContainer img.phx-gen{animation:phxImgGen 1.2s steps(14) both}' +
+      st.textContent = '.planSlider .planCard .imageContainer img.phx-gen{animation:phxImgGen 2.7s steps(30) both}' +
         '@keyframes phxImgGen{0%{clip-path:inset(0 0 100% 0);filter:brightness(2.2) saturate(0)}65%{clip-path:inset(0 0 0 0);filter:brightness(1.5) saturate(.5)}100%{clip-path:inset(0 0 0 0);filter:none}}' +
         '.planSlider .planCard .imageContainer canvas.phx-gc{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1}';
       document.head.appendChild(st);
@@ -491,7 +491,7 @@
         var r = ic.getBoundingClientRect(), W = r.width, H = r.height; if (W < 50 || H < 50) return;
         var cv = document.createElement('canvas'), d = Math.min(window.devicePixelRatio || 1, 2); cv.className = 'phx-gc'; cv.width = Math.round(W * d); cv.height = Math.round(H * d); ic.appendChild(cv);
         var g = cv.getContext('2d'); g.setTransform(d, 0, 0, d, 0, 0); g.font = '13px Consolas,"Courier New",monospace'; g.textAlign = 'center'; g.textBaseline = 'middle';
-        var CW = 14, CH = 17, cols = Math.ceil(W / CW), rows = Math.ceil(H / CH), t0 = performance.now(), REV = 780, OUT = 500;
+        var CW = 14, CH = 17, cols = Math.ceil(W / CW), rows = Math.ceil(H / CH), t0 = performance.now(), REV = 1750, OUT = 950;
         var fr = function(now){
           var el = now - t0, sp = Math.min(1, el / REV), scan = H * sp, fade = el > REV ? Math.max(0, 1 - (el - REV) / OUT) : 1;
           g.clearRect(0, 0, W, H);
