@@ -665,7 +665,7 @@
         var f = 0, iv = setInterval(function(){ f++; node.textContent = txt.split('').map(function(c, i){ return c === ' ' || f > 3 + i * 2 ? c : GLZ.charAt((Math.random() * GLZ.length) | 0); }).join(''); if (f > 3 + txt.length * 2) clearInterval(iv); }, 55);
       };
       var open = function(){
-        if (el) { clearTimeout(hideT); hideT = setTimeout(close, 12000); return; }
+        if (el) { clearTimeout(hideT); hideT = setTimeout(close, 8000); return; }
         el = document.createElement('div'); el.className = 'phx-pl';
         el.innerHTML = '<i class="x" title="Close">&times;</i><div class="hd"><span>PULSE</span><small>LOGIN AGENT</small></div><canvas></canvas>' +
           '<form autocomplete="off" novalidate><label>LOGIN</label><input type="text" autocomplete="off" spellcheck="false">' +
@@ -699,11 +699,13 @@
           msg.className = 'msg ok'; compute(msg, 'VERIFYING...');
           setTimeout(function(){ if (!el) return; msg.className = 'msg'; compute(msg, 'ACCESS DENIED'); clearTimeout(hideT); hideT = setTimeout(close, 1300); }, 1400);
         });
-        el.addEventListener('input', function(){ clearTimeout(hideT); hideT = setTimeout(close, 12000); });
-        hideT = setTimeout(close, 12000);
+        el.addEventListener('input', function(){ clearTimeout(hideT); hideT = setTimeout(close, 3000); });
+        hideT = setTimeout(close, 8000);
       };
       window.addEventListener('resize', place);
       document.addEventListener('phx-pulse', function(){ setTimeout(open, 450); });
+      /* hide 3 s after the PULSE effect ends */
+      document.addEventListener('phx-pulse-end', function(){ if (el) { clearTimeout(hideT); hideT = setTimeout(close, 3000); } });
     })();
 
     /* PDF presentations: the header PDF icon opens a language chooser, plus a download block on the page (19 languages, files on GitHub Pages) */
@@ -1378,7 +1380,7 @@
           if (k < 1) requestAnimationFrame(fr);
           else {
             tint.classList.remove('on'); tx.classList.remove('on'); cv.style.transition = 'opacity .4s'; cv.style.opacity = '0';
-            setTimeout(function(){ tint.remove(); cv.remove(); tx.remove(); busy = 0; }, 450);
+            setTimeout(function(){ tint.remove(); cv.remove(); tx.remove(); busy = 0; document.dispatchEvent(new Event('phx-pulse-end')); }, 450);
           }
         };
         requestAnimationFrame(fr);
