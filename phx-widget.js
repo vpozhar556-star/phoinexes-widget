@@ -212,6 +212,43 @@
       build(); setTimeout(build, 2500); setTimeout(build, 7000);
     })();
 
+    /* Header icon buttons (PDF, YouTube, language, Telegram): "generate" with a scan reveal, once on load and on hover */
+    (function(){
+      var css = document.createElement('style');
+      css.textContent = '.phx-gn{position:relative}' +
+        '.phx-gn .phx-sc{position:absolute;left:-2px;right:-2px;top:0;height:2px;background:#FD4B03;box-shadow:0 0 8px #FD4B03,0 0 2px #fff;opacity:0;pointer-events:none;z-index:3}' +
+        '.phx-gn.go .phx-sc{animation:phxScn .7s linear}' +
+        '.phx-gn.go > :not(.phx-sc){animation:phxGen .7s steps(7) both}' +
+        '@keyframes phxScn{0%{top:0;opacity:1}90%{opacity:1}100%{top:100%;opacity:0}}' +
+        '@keyframes phxGen{0%{clip-path:inset(0 0 100% 0);filter:brightness(1.8) drop-shadow(0 0 4px #FD4B03)}50%{clip-path:inset(0 0 40% 0);transform:translateX(-1px)}70%{transform:translateX(1px)}100%{clip-path:inset(0);filter:none;transform:none}}';
+      document.head.appendChild(css);
+      var GLs = '01#%$<>/AIX';
+      var run = function(b){
+        if (b.__gn) return; b.__gn = 1;
+        b.classList.remove('go'); void b.offsetWidth; b.classList.add('go');
+        var tn = b.__tn;
+        if (tn) {
+          var fin = b.__tx, f = 0, t = setInterval(function(){
+            f++; tn.textContent = fin.split('').map(function(c, i){ return c === ' ' || i < f / 2 ? c : GLs[(Math.random() * GLs.length) | 0]; }).join('');
+            if (f / 2 >= fin.length) { clearInterval(t); tn.textContent = fin; }
+          }, 70);
+        }
+        setTimeout(function(){ b.__gn = 0; b.classList.remove('go'); }, 750);
+      };
+      var setup = function(){
+        var list = [document.querySelector('.siteHeader .fileLink a'), document.querySelector('.siteHeader .headerRight a[href*="youtube.com"]'),
+          document.querySelector('.siteHeader .langHead'), document.querySelector('.siteHeader .phx-tgb')].filter(Boolean);
+        list.forEach(function(b){
+          if (b.__gs) return; b.__gs = 1;
+          b.classList.add('phx-gn'); var s = document.createElement('i'); s.className = 'phx-sc'; b.appendChild(s);
+          if (b.classList.contains('langHead')) { var w = document.createTreeWalker(b, 4, null, false), n; while ((n = w.nextNode())) if (n.textContent.trim()) { b.__tn = n; b.__tx = n.textContent; break; } }
+          b.addEventListener('mouseenter', function(){ run(b); });
+        });
+        return list;
+      };
+      setTimeout(function(){ setup().forEach(function(b, i){ if (b.offsetParent) setTimeout(function(){ run(b); }, i * 160); }); }, 1400);
+    })();
+
     var phxOn = function(v){ return v === 'on' || (v === 'demo' && /phxdemo/.test(location.hash + location.search)); };
     if (phxOn(CONFIG.menuIntro)) {
     /* Intro: menu + hero texts "compute" letter by letter (code glyphs) */
