@@ -330,6 +330,17 @@
       var n = 0, iv = setInterval(function(){ var p = document.querySelector('.heroVisual .phx-hero-pic'); if (p) { clearInterval(iv); start(p); } else if (++n > 60) clearInterval(iv); }, 300);
     })();
 
+    /* Hero tiles: the headline box darkens only partially and fades into the city; the grey haze over the middle city tile is removed */
+    (function(){
+      if (!CONFIG.heroImage) return;
+      var st = document.createElement('style');
+      st.textContent = '.hero .layoutItem.contentItem{background:linear-gradient(90deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.62) 36%,rgba(0,0,0,.22) 70%,rgba(0,0,0,0) 100%) !important}' +
+        '.hero .layoutItem.contentItem .heroTitle,.hero .layoutItem.contentItem .bulletText{text-shadow:0 2px 16px rgba(0,0,0,.85)}' +
+        '.hero .layoutItem.stubItem{background-color:transparent !important}' +
+        '@media (max-width:991px){.hero .layoutItem.contentItem{background:linear-gradient(180deg,rgba(0,0,0,.2) 0%,rgba(0,0,0,.62) 45%,rgba(0,0,0,.82) 100%) !important}}';
+      document.head.appendChild(st);
+    })();
+
     var phxOn = function(v){ return v === 'on' || (v === 'demo' && /phxdemo/.test(location.hash + location.search)); };
     if (phxOn(CONFIG.menuIntro)) {
     /* Intro: menu + hero texts "compute" letter by letter (code glyphs) */
