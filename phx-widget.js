@@ -889,7 +889,9 @@
         '.phx-tgb:hover{box-shadow:inset 0 0 0 1px #FD4B03,0 0 14px rgba(253,75,3,.45)}' +
         '.phx-tgb:hover svg{transform:translateX(1px) rotate(-8deg)}' +
         '.phx-tgb i{position:absolute;right:4px;top:4px;width:5px;height:5px;border-radius:50%;background:#2AABEE;box-shadow:0 0 6px #2AABEE;animation:phxTgDot 2s ease-in-out infinite}' +
-        '@keyframes phxTgDot{0%,100%{opacity:.35}50%{opacity:1}}';
+        '@keyframes phxTgDot{0%,100%{opacity:.35}50%{opacity:1}}' +
+        '.phx-tgb.flow{position:relative;left:auto !important;top:auto !important;flex:0 0 34px}' +
+        '@media (min-width:1800px){.siteHeader .headerRight{justify-content:flex-end !important;column-gap:16px !important}}';
       document.head.appendChild(tg);
       var mk = function(){
         var a = document.createElement('a');
@@ -903,7 +905,14 @@
         slots.forEach(function(s){
           var lc = s.lc, op = lc.offsetParent;
           if (!op || !lc.getBoundingClientRect().width) { if (s.el) s.el.style.display = 'none'; return; }
-          if (!s.el || s.el.parentNode !== op) { if (s.el) s.el.remove(); s.el = mk(); op.appendChild(s.el); }
+          if (!s.el) s.el = mk();
+          /* wide screens: the header row is grouped to the right, the button simply sits after the language */
+          if (window.innerWidth >= 1800 && lc.parentNode && lc.parentNode.classList.contains('headerRight')) {
+            if (s.el.previousElementSibling !== lc) lc.parentNode.insertBefore(s.el, lc.nextSibling);
+            s.el.classList.add('flow'); s.el.style.display = ''; return;
+          }
+          s.el.classList.remove('flow');
+          if (s.el.parentNode !== op) op.appendChild(s.el);
           var lr = lc.getBoundingClientRect(), pr = op.getBoundingClientRect(), nx = lc.nextElementSibling, x, room;
           var nr = nx && nx.getBoundingClientRect();
           if (nr && nr.width && nr.top < lr.bottom && nr.bottom > lr.top && nr.left >= lr.right) {
