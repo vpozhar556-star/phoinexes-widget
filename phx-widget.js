@@ -890,7 +890,7 @@
         '.phx-tgb:hover svg{transform:translateX(1px) rotate(-8deg)}' +
         '.phx-tgb i{position:absolute;right:4px;top:4px;width:5px;height:5px;border-radius:50%;background:#2AABEE;box-shadow:0 0 6px #2AABEE;animation:phxTgDot 2s ease-in-out infinite}' +
         '@keyframes phxTgDot{0%,100%{opacity:.35}50%{opacity:1}}' +
-        '.phx-tgb.flow{position:relative;left:auto !important;top:auto !important;flex:0 0 34px}' +
+        '.phx-tgb.flow{position:relative;left:auto !important;top:auto !important;flex:0 0 34px;margin-left:-24px}' +
         '@media (min-width:1800px){.siteHeader .headerRight{justify-content:flex-end !important;column-gap:16px !important}}';
       document.head.appendChild(tg);
       var mk = function(){
