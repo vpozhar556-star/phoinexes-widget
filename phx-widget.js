@@ -524,6 +524,93 @@
       if (!hook()) { var hn = 0, hv = setInterval(function(){ if (hook() || ++hn > 30) clearInterval(hv); }, 300); }
     })();
 
+    /* Easter egg extra: while PULSE fires, a green "PULSE access" login panel appears in the left column under the live market (decorative only: nothing is sent or stored) */
+    (function(){
+      var css = document.createElement('style');
+      css.textContent = '.phx-pl{position:absolute;z-index:50;box-sizing:border-box;padding:18px 14px;display:flex;flex-direction:column;gap:9px;background:rgba(2,14,8,.9);' +
+        'box-shadow:inset 0 0 0 1px rgba(29,255,140,.55),0 0 26px rgba(29,255,140,.25);font:600 10px/1.2 Orbitron,"Nasalization Rg",Arial,sans-serif;letter-spacing:.18em;color:#9dffc9;' +
+        'clip-path:inset(0 0 100% 0);opacity:0;transition:clip-path .9s cubic-bezier(.2,.8,.2,1),opacity .4s}' +
+        '.phx-pl.on{clip-path:inset(0 0 0 0);opacity:1}' +
+        '.phx-pl .hd{font:900 20px/1 Orbitron,"Nasalization Rg",Arial,sans-serif;letter-spacing:.14em;color:#eafff3;text-shadow:0 0 12px #1dff8c}' +
+        '.phx-pl .hd small{display:block;margin-top:6px;font-size:9px;letter-spacing:.3em;color:#5dffa9;text-shadow:none}' +
+        '.phx-pl canvas{width:100%;height:34px;display:block}' +
+        '.phx-pl label{margin-top:4px;color:#5dffa9}' +
+        '.phx-pl input{width:100%;box-sizing:border-box;padding:8px 6px;background:rgba(0,0,0,.55);border:0;border-bottom:1px solid rgba(29,255,140,.6);color:#eafff3;font:13px/1.2 Consolas,monospace;outline:none;letter-spacing:.05em}' +
+        '.phx-pl input:focus{border-bottom-color:#1dff8c;box-shadow:0 6px 14px -8px #1dff8c}' +
+        '.phx-pl button{margin-top:8px;padding:10px 8px;cursor:pointer;background:transparent;color:#1dff8c;border:1px solid #1dff8c;font:900 10px/1 Orbitron,"Nasalization Rg",Arial,sans-serif;letter-spacing:.2em;text-shadow:0 0 8px #1dff8c;box-shadow:0 0 12px rgba(29,255,140,.3);transition:background .2s,color .2s}' +
+        '.phx-pl button:hover{background:#1dff8c;color:#02140a;text-shadow:none}' +
+        '.phx-pl .msg{min-height:12px;color:#ff5d5d;text-shadow:0 0 8px #ff2d2d}.phx-pl .msg.ok{color:#9dffc9;text-shadow:0 0 8px #1dff8c}' +
+        '.menuList > li.phx-la > a{color:#1dff8c !important;text-shadow:0 0 10px #1dff8c;cursor:pointer;animation:phxLa 1.6s ease-in-out infinite}' +
+        '@keyframes phxLa{0%,100%{text-shadow:0 0 6px #1dff8c}50%{text-shadow:0 0 16px #1dff8c,0 0 2px #eafff3}}' +
+        '.phx-pl .x{position:absolute;right:8px;top:6px;cursor:pointer;font:16px/1 Arial,sans-serif;color:#5dffa9;font-style:normal}.phx-pl .x:hover{color:#eafff3}';
+      document.head.appendChild(css);
+      var el = null, cv = null, raf = 0, hideT = 0, GLZ = '01#%$/<>AIX';
+      var place = function(){
+        if (!el) return;
+        var mk = document.querySelector('.hero .heroRate'), ci = document.querySelector('.hero .contentItem');
+        if (!mk || !ci) { close(); return; }
+        var a = mk.getBoundingClientRect(), b = ci.getBoundingClientRect();
+        if (a.width < 140) { close(); return; }
+        el.style.left = (a.left + scrollX) + 'px'; el.style.width = a.width + 'px';
+        el.style.top = (b.top + scrollY) + 'px'; el.style.height = b.height + 'px';
+      };
+      var ecg = function(){
+        if (!el || !cv) return;
+        var w = cv.clientWidth, h = cv.clientHeight, d = Math.min(window.devicePixelRatio || 1, 2);
+        if (cv.width !== Math.round(w * d)) { cv.width = Math.round(w * d); cv.height = Math.round(h * d); }
+        var g = cv.getContext('2d'), t = performance.now() / 1000; g.setTransform(d, 0, 0, d, 0, 0); g.clearRect(0, 0, w, h);
+        g.strokeStyle = '#1dff8c'; g.shadowColor = '#1dff8c'; g.shadowBlur = 8; g.lineWidth = 1.6; g.beginPath();
+        for (var x = 0; x <= w; x += 2) {
+          var p = ((x / w) * 2 - t * 0.8) % 1; if (p < 0) p += 1;
+          var y = h / 2 + (p > .42 && p < .46 ? -(p - .42) / .04 * h * .42 : p >= .46 && p < .5 ? -h * .42 + (p - .46) / .04 * h * .7 : p >= .5 && p < .53 ? h * .28 - (p - .5) / .03 * h * .28 : 0);
+          if (x === 0) g.moveTo(x, y); else g.lineTo(x, y);
+        }
+        g.stroke(); raf = requestAnimationFrame(ecg);
+      };
+      var close = function(){
+        if (!el) return; cancelAnimationFrame(raf); clearTimeout(hideT);
+        var e = el; el = null; cv = null; e.classList.remove('on');
+        [].forEach.call(document.querySelectorAll('.menuList > li.phx-la'), function(li){ li.remove(); });
+        [].forEach.call(e.querySelectorAll('input'), function(i){ i.value = ''; });
+        setTimeout(function(){ e.remove(); }, 900);
+      };
+      var compute = function(node, txt){
+        var f = 0, iv = setInterval(function(){ f++; node.textContent = txt.split('').map(function(c, i){ return c === ' ' || f > 3 + i * 2 ? c : GLZ.charAt((Math.random() * GLZ.length) | 0); }).join(''); if (f > 3 + txt.length * 2) clearInterval(iv); }, 55);
+      };
+      var open = function(){
+        if (el) { clearTimeout(hideT); hideT = setTimeout(close, 30000); return; }
+        el = document.createElement('div'); el.className = 'phx-pl';
+        el.innerHTML = '<i class="x" title="Close">&times;</i><div class="hd"><span>PULSE</span><small>LOGIN AGENT</small></div><canvas></canvas>' +
+          '<form autocomplete="off" novalidate><label>LOGIN</label><input type="text" autocomplete="off" spellcheck="false">' +
+          '<label>PASSWORD</label><input type="password" autocomplete="new-password"><button type="submit">CONNECT PULSE</button><div class="msg"></div></form>';
+        document.body.appendChild(el); place();
+        if (!el) return;
+        cv = el.querySelector('canvas');
+        requestAnimationFrame(function(){ if (el) el.classList.add('on'); });
+        compute(el.querySelector('.hd span'), 'PULSE'); ecg();
+        el.querySelector('.x').addEventListener('click', close);
+        /* menu item "LOGIN AGENT" after Contacts while the panel is open */
+        var ml = document.querySelector('.siteHeader .menuList') || document.querySelector('.menuList');
+        if (ml && !ml.querySelector('li.phx-la')) {
+          var li = document.createElement('li'); li.className = 'phx-la'; li.innerHTML = '<a href="#">LOGIN AGENT</a>'; ml.appendChild(li);
+          var li2 = document.createElement('li'); li2.className = 'phx-la'; li2.innerHTML = '<a href="#">CONNECT PULSE</a>'; ml.appendChild(li2);
+          compute(li.firstChild, 'LOGIN AGENT'); compute(li2.firstChild, 'CONNECT PULSE');
+          [li, li2].forEach(function(L){ L.firstChild.addEventListener('click', function(e){ e.preventDefault(); if (!el) return; try { scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + scrollY - 120), behavior: 'smooth' }); } catch (x) {} var i = el.querySelector('input'); if (i) setTimeout(function(){ i.focus({ preventScroll: true }); }, 400); }); });
+        }
+        var form = el.querySelector('form'), msg = el.querySelector('.msg');
+        /* decorative: never sends or keeps anything */
+        form.addEventListener('submit', function(e){
+          e.preventDefault(); var ins = form.querySelectorAll('input'); ins[1].value = '';
+          msg.className = 'msg ok'; compute(msg, 'VERIFYING...');
+          setTimeout(function(){ if (!el) return; msg.className = 'msg'; compute(msg, 'ACCESS DENIED'); }, 1400);
+        });
+        el.addEventListener('focusin', function(){ clearTimeout(hideT); });
+        hideT = setTimeout(close, 30000);
+      };
+      window.addEventListener('resize', place);
+      document.addEventListener('phx-pulse', function(){ setTimeout(open, 450); });
+    })();
+
     var phxOn = function(v){ return v === 'on' || (v === 'demo' && /phxdemo/.test(location.hash + location.search)); };
     if (phxOn(CONFIG.menuIntro)) {
     /* Intro: menu + hero texts "compute" letter by letter (code glyphs) */
@@ -1056,7 +1143,7 @@
       var GLP = '01#%$\u25B2\u25BC/<>AIX';
       var busy = 0;
       var pulse = function(ox, oy){
-        if (busy) return; busy = 1;
+        if (busy) return; busy = 1; try { document.dispatchEvent(new Event('phx-pulse')); } catch (e) {}
         if (!document.querySelector('link[href*="Orbitron"]')) { var fl = document.createElement('link'); fl.rel = 'stylesheet'; fl.href = 'https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&display=swap'; document.head.appendChild(fl); }
         var tint = document.createElement('div'); tint.className = 'phx-pz phx-pz-tint';
         var cv = document.createElement('canvas'); cv.className = 'phx-pz';
