@@ -901,7 +901,15 @@
         return a;
       };
       var slots = lcs.map(function(lc){ return { lc: lc, el: null }; });
+      /* wide screens: the PDF button joins the same group on the right (moved back below 1800px) */
+      var pdf = document.querySelector('.siteHeader .fileLink'), pdfHome = pdf && pdf.parentNode, pdfNext = pdf && pdf.nextSibling;
+      var movePdf = function(){
+        var hr = document.querySelector('.siteHeader .headerRight'); if (!pdf || !hr) return;
+        if (window.innerWidth >= 1800) { if (pdf.parentNode !== hr) hr.insertBefore(pdf, hr.firstChild); }
+        else if (pdf.parentNode !== pdfHome) pdfHome.insertBefore(pdf, pdfNext && pdfNext.parentNode === pdfHome ? pdfNext : null);
+      };
       var place = function(){
+        movePdf();
         slots.forEach(function(s){
           var lc = s.lc, op = lc.offsetParent;
           if (!op || !lc.getBoundingClientRect().width) { if (s.el) s.el.style.display = 'none'; return; }
@@ -934,6 +942,9 @@
       document.addEventListener('click', function(e){ if (e.target.closest && e.target.closest('.burger')) { setTimeout(place, 60); setTimeout(place, 400); } }, true);
       setTimeout(place, 1500);
     })();
+
+    /* "Game & Earn" menu item opens the game in Telegram (official bot) */
+    [].forEach.call(document.querySelectorAll('.menuList a[href*="phoinexes.app"]'), function(a){ a.href = 'https://t.me/PHOINEXES_TaP_BOT'; a.target = '_blank'; a.rel = 'noopener'; });
 
     /* Hero: sharp still image instead of the heavy video */
     if (CONFIG.heroImage) (function(){
