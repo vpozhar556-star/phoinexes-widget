@@ -236,8 +236,7 @@
         setTimeout(function(){ b.__gn = 0; b.classList.remove('go'); }, 750);
       };
       var setup = function(){
-        var list = [document.querySelector('.siteHeader .fileLink a'), document.querySelector('.siteHeader .headerRight a[href*="youtube.com"]'),
-          document.querySelector('.siteHeader .langHead'), document.querySelector('.siteHeader .phx-tgb')].filter(Boolean);
+        var list = [].slice.call(document.querySelectorAll('.siteHeader .fileLink a, .siteHeader .headerRight a[href*="youtube.com"], .siteHeader .langHead, .siteHeader .phx-tgb'));
         list.forEach(function(b){
           if (b.__gs) return; b.__gs = 1;
           b.classList.add('phx-gn'); var s = document.createElement('i'); s.className = 'phx-sc'; b.appendChild(s);
