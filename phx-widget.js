@@ -476,6 +476,50 @@
     /* Widget is ready: lets the site's early <head> snippet (html:not(.phx-ready) ...) show the header buttons again, so the old buttons / video never flash on reload */
     document.documentElement.classList.add('phx-ready');
 
+    /* Plans slider: when the slide changes, the new plan picture is "generated from code" - a glyph scan reveals it top to bottom */
+    (function(){
+      var st = document.createElement('style');
+      st.textContent = '.planSlider .planCard .imageContainer img.phx-gen{animation:phxImgGen 1.2s steps(14) both}' +
+        '@keyframes phxImgGen{0%{clip-path:inset(0 0 100% 0);filter:brightness(2.2) saturate(0)}65%{clip-path:inset(0 0 0 0);filter:brightness(1.5) saturate(.5)}100%{clip-path:inset(0 0 0 0);filter:none}}' +
+        '.planSlider .planCard .imageContainer canvas.phx-gc{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:1}';
+      document.head.appendChild(st);
+      var GLC = '01#%$<>/AIX';
+      var fx = function(card){
+        var ic = card && card.querySelector('.imageContainer'), im = ic && ic.querySelector('img'); if (!im) return;
+        im.classList.remove('phx-gen'); void im.offsetWidth; im.classList.add('phx-gen');
+        var old = ic.querySelector('canvas.phx-gc'); if (old) old.remove();
+        var r = ic.getBoundingClientRect(), W = r.width, H = r.height; if (W < 50 || H < 50) return;
+        var cv = document.createElement('canvas'), d = Math.min(window.devicePixelRatio || 1, 2); cv.className = 'phx-gc'; cv.width = Math.round(W * d); cv.height = Math.round(H * d); ic.appendChild(cv);
+        var g = cv.getContext('2d'); g.setTransform(d, 0, 0, d, 0, 0); g.font = '13px Consolas,"Courier New",monospace'; g.textAlign = 'center'; g.textBaseline = 'middle';
+        var CW = 14, CH = 17, cols = Math.ceil(W / CW), rows = Math.ceil(H / CH), t0 = performance.now(), REV = 780, OUT = 500;
+        var fr = function(now){
+          var el = now - t0, sp = Math.min(1, el / REV), scan = H * sp, fade = el > REV ? Math.max(0, 1 - (el - REV) / OUT) : 1;
+          g.clearRect(0, 0, W, H);
+          for (var y = 0; y < rows; y++) {
+            var py = y * CH + CH / 2, dist = scan - py; if (dist < -CH) break;
+            for (var x = 0; x < cols; x++) {
+              if (Math.random() < .55) continue;
+              var a = (dist < CH * 3 ? .95 : Math.max(0, .45 - dist / H * .8)) * fade; if (a <= .03) continue;
+              g.fillStyle = dist < CH * 2 ? 'rgba(255,220,190,' + a + ')' : 'rgba(253,' + (90 + ((Math.random() * 60) | 0)) + ',3,' + a + ')';
+              g.fillText(GLC.charAt((Math.random() * GLC.length) | 0), x * CW + CW / 2, py);
+            }
+          }
+          if (sp < 1) {
+            g.fillStyle = 'rgba(253,75,3,.9)'; g.fillRect(0, scan - 1, W, 2);
+            var gr = g.createLinearGradient(0, scan - 40, 0, scan); gr.addColorStop(0, 'rgba(253,75,3,0)'); gr.addColorStop(1, 'rgba(253,75,3,.25)'); g.fillStyle = gr; g.fillRect(0, scan - 40, W, 40);
+          }
+          if (fade > 0) requestAnimationFrame(fr); else cv.remove();
+        };
+        requestAnimationFrame(fr);
+      };
+      var hook = function(){
+        var sl = document.querySelector('.planSlider'), sw = sl && sl.swiper; if (!sw || !sw.on) return false;
+        sw.on('slideChange', function(){ setTimeout(function(){ var s = sw.slides[sw.activeIndex]; fx(s && (s.classList.contains('planCard') ? s : s.querySelector('.planCard'))); }, 30); });
+        return true;
+      };
+      if (!hook()) { var hn = 0, hv = setInterval(function(){ if (hook() || ++hn > 30) clearInterval(hv); }, 300); }
+    })();
+
     var phxOn = function(v){ return v === 'on' || (v === 'demo' && /phxdemo/.test(location.hash + location.search)); };
     if (phxOn(CONFIG.menuIntro)) {
     /* Intro: menu + hero texts "compute" letter by letter (code glyphs) */
