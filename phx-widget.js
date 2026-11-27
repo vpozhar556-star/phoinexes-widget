@@ -508,6 +508,7 @@
             '.phx-news .phx-im i{position:absolute;left:-24px;top:-24px;right:-24px;bottom:-24px;background:50% 50%/cover no-repeat;filter:blur(18px) brightness(.5)}' +
             '.phx-news .phx-im img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:contain;transition:transform .6s}' +
             '.phx-news .phx-nc:hover .phx-im img{transform:scale(1.04)}' +
+            '.phx-news .phx-im img ~ b{display:none}' +
             '.phx-news .phx-im b{position:absolute;left:16px;bottom:12px;font:400 22px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:3px;color:rgba(255,255,255,.14)}' +
             '.phx-news .phx-bd{display:flex;flex-direction:column;gap:8px;padding:14px 16px 16px;flex:1}' +
             '.phx-news .phx-dt{font:11px/1 Arial,sans-serif;color:#8a8a8a;letter-spacing:.5px}' +
