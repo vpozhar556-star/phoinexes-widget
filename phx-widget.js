@@ -730,18 +730,18 @@
       });
     })();
 
-    /* PHOINEXES TAP game card at the end of the page: tap the phoenix for a mini demo, button opens the official bot */
+    /* PHOINEXES TAP game card at the end of the page: game art on the right (4 variants), button opens the official bot.
+       Variant: TAP_ART below (1 boss fight, 2 skins squad, 3 champions, 4 gallery); preview any with #tap=N in the URL */
     (function(){
       var ft = document.querySelector('footer.siteFooter') || document.querySelector('footer'); if (!ft) return;
-      var BOT = 'https://t.me/PHOINEXES_TaP_BOT';
+      var TAP_ART = 1;
+      var V = +((location.hash.match(/tap=([1-4])/) || [])[1]) || TAP_ART;
+      var BOT = 'https://t.me/PHOINEXES_TaP_BOT', A = 'https://vpozhar556-star.github.io/phoinexes-widget/';
       var gc = document.createElement('style');
       gc.textContent = '.phx-tap{padding:20px 0 70px}' +
-        '.phx-tap .phx-tc{position:relative;display:grid;grid-template-columns:1.15fr 1fr;gap:28px;align-items:center;padding:34px 36px;overflow:hidden;' +
-        'background:radial-gradient(circle at 78% 50%,rgba(253,75,3,.22),transparent 55%),#141414;box-shadow:inset 0 0 0 1px #FD4B03;' +
-        'clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px)}' +
-        '.phx-tap .phx-tc::before{content:"";position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;opacity:.25;' +
-        'background:repeating-linear-gradient(0deg,transparent 0 23px,rgba(253,75,3,.12) 23px 24px),repeating-linear-gradient(90deg,transparent 0 23px,rgba(253,75,3,.12) 23px 24px);' +
-        '-webkit-mask:radial-gradient(circle at 78% 50%,#000,transparent 60%);mask:radial-gradient(circle at 78% 50%,#000,transparent 60%)}' +
+        '.phx-tap .phx-tc{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:28px;align-items:center;min-height:340px;padding:34px 36px;overflow:hidden;' +
+        'background:#141414;box-shadow:inset 0 0 0 1px #FD4B03;clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px)}' +
+        '.phx-tap .tx{position:relative;z-index:2}' +
         '.phx-tap .k{font:11px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:3px;color:#FD4B03}' +
         '.phx-tap h2{margin:12px 0 10px;font:400 clamp(28px,4vw,46px)/1.05 "Nasalization Rg",Arial,sans-serif;color:#fff;letter-spacing:1px}' +
         '.phx-tap h2 b{font-weight:400;color:#FD4B03;text-shadow:0 0 18px rgba(253,75,3,.6)}' +
@@ -749,46 +749,113 @@
         '.phx-tap .ch{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}' +
         '.phx-tap .ch span{padding:7px 10px;font:11px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:1px;color:#fff;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px #333}' +
         '.phx-tap .go{display:inline-flex;align-items:center;gap:10px;padding:15px 22px;background:#FD4B03;color:#141414;text-decoration:none;' +
-        'font:13px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:2px;clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);' +
-        'animation:phxGo 2.6s ease-in-out infinite}' +
-        '.phx-tap .go:hover{filter:brightness(1.12)}' +
-        '.phx-tap .go svg{width:18px;height:18px}' +
+        'font:13px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:2px;clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);animation:phxGo 2.6s ease-in-out infinite}' +
+        '.phx-tap .go:hover{filter:brightness(1.12)}.phx-tap .go svg{width:18px;height:18px}' +
         '@keyframes phxGo{0%,100%{box-shadow:0 0 0 rgba(253,75,3,0)}50%{box-shadow:0 0 26px rgba(253,75,3,.65)}}' +
-        '.phx-tap .zone{position:relative;justify-self:center;width:min(300px,70vw);aspect-ratio:1/1;border-radius:50%;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;' +
-        'display:grid;place-items:center;background:radial-gradient(circle,rgba(253,75,3,.28),rgba(253,75,3,.04) 60%,transparent 70%)}' +
-        '.phx-tap .zone::before,.phx-tap .zone::after{content:"";position:absolute;left:8%;top:8%;width:84%;height:84%;border-radius:50%;border:1px solid rgba(253,75,3,.45);animation:phxRing 3s linear infinite}' +
-        '.phx-tap .zone::after{animation-delay:1.5s}' +
-        '@keyframes phxRing{0%{transform:scale(.7);opacity:.9}100%{transform:scale(1.18);opacity:0}}' +
-        '.phx-tap .zone img{width:46%;filter:drop-shadow(0 0 22px rgba(253,75,3,.7));transition:transform .09s;animation:phxBob 3.2s ease-in-out infinite}' +
-        '.phx-tap .zone.hit img{transform:scale(.9)}' +
-        '@keyframes phxBob{0%,100%{translate:0 0}50%{translate:0 -6px}}' +
-        '.phx-tap .cnt{position:absolute;left:50%;bottom:-4px;transform:translateX(-50%);white-space:nowrap;font:11px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:2px;color:#8a8a8a}' +
-        '.phx-tap .cnt b{color:#FD4B03;font-weight:400}' +
-        '.phx-tap .pl{position:absolute;pointer-events:none;font:16px/1 "Nasalization Rg",Arial,sans-serif;color:#ffb27a;text-shadow:0 0 10px #FD4B03;animation:phxPlus .8s ease-out forwards}' +
-        '@keyframes phxPlus{0%{opacity:1;transform:translate(-50%,0) scale(.8)}100%{opacity:0;transform:translate(-50%,-70px) scale(1.25)}}' +
-        '.phx-tap .rp{position:absolute;pointer-events:none;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;border:2px solid #FD4B03;animation:phxRp .6s ease-out forwards}' +
-        '@keyframes phxRp{0%{opacity:1;transform:scale(.3)}100%{opacity:0;transform:scale(5)}}' +
-        '@media (max-width:900px){.phx-tap .phx-tc{grid-template-columns:1fr;padding:26px 20px 34px;text-align:left}.phx-tap .zone{width:min(230px,64vw);order:-1}}';
+        /* art panel: right part of the card, fades into the dark side */
+        '.phx-tap .art{position:absolute;right:0;top:0;width:62%;height:100%;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent 0,#000 28%);mask:linear-gradient(90deg,transparent 0,#000 28%);user-select:none;-webkit-tap-highlight-color:transparent}' +
+        '.phx-tap .art .sc{position:absolute;left:0;top:0;width:100%;height:100%;background:50% 50%/cover no-repeat;transition:opacity 1s ease}' +
+        '.phx-tap .art .kb{animation:phxKb 16s ease-in-out infinite alternate}' +
+        '@keyframes phxKb{from{transform:scale(1.02) translateX(0)}to{transform:scale(1.12) translateX(-2%)}}' +
+        '.phx-tap .art canvas{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}' +
+        '.phx-tap .art .cap{position:absolute;right:18px;bottom:16px;padding:7px 10px;font:11px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:2px;color:#fff;background:rgba(10,10,10,.65);box-shadow:inset 0 0 0 1px rgba(253,75,3,.6)}' +
+        /* variant 1: boss HUD */
+        '.phx-tap .hud{position:absolute;right:18px;top:16px;width:min(300px,70%);font:11px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:2px;color:#d7ffe6;text-shadow:0 0 8px rgba(30,255,120,.6)}' +
+        '.phx-tap .hud .bar{margin-top:7px;height:10px;background:rgba(0,0,0,.6);box-shadow:inset 0 0 0 1px rgba(60,255,140,.5)}' +
+        '.phx-tap .hud .bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#14c45a,#5dff9a);box-shadow:0 0 10px rgba(60,255,140,.7);transition:width .25s}' +
+        '.phx-tap .hud .bar.low i{background:linear-gradient(90deg,#ff3b1f,#ff8a3d);box-shadow:0 0 10px rgba(255,80,30,.8)}' +
+        '.phx-tap .hit-me{position:absolute;left:58%;top:58%;transform:translate(-50%,-50%);font:12px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:3px;color:#fff;padding:8px 12px;background:rgba(0,0,0,.55);box-shadow:inset 0 0 0 1px #FD4B03;animation:phxBlink 1.6s ease-in-out infinite;pointer-events:none}' +
+        '@keyframes phxBlink{0%,100%{opacity:.35}50%{opacity:1}}' +
+        '.phx-tap .art.v1{cursor:crosshair}' +
+        '.phx-tap .art.shake .sc{animation:phxHitShake .18s linear}' +
+        '@keyframes phxHitShake{0%{transform:translate(0,0)}25%{transform:translate(-5px,2px)}50%{transform:translate(4px,-3px)}75%{transform:translate(-2px,3px)}100%{transform:translate(0,0)}}' +
+        '.phx-tap .dmg{position:absolute;pointer-events:none;font:20px/1 "Nasalization Rg",Arial,sans-serif;color:#fff;text-shadow:0 0 10px #FD4B03,0 0 2px #000;animation:phxDmg .9s ease-out forwards}' +
+        '.phx-tap .dmg.crit{font-size:28px;color:#ffd36b;text-shadow:0 0 14px #ff7a00,0 0 2px #000}' +
+        '@keyframes phxDmg{0%{opacity:1;transform:translate(-50%,0) scale(.7)}100%{opacity:0;transform:translate(-50%,-80px) scale(1.2)}}' +
+        '.phx-tap .slash{position:absolute;pointer-events:none;width:140px;height:4px;margin:-2px 0 0 -70px;background:linear-gradient(90deg,transparent,#fff,#FD4B03,transparent);box-shadow:0 0 14px #FD4B03;animation:phxSlash .35s ease-out forwards}' +
+        '@keyframes phxSlash{0%{opacity:1;transform:rotate(var(--r)) scaleX(.2)}100%{opacity:0;transform:rotate(var(--r)) scaleX(1.3)}}' +
+        '.phx-tap .win{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(0,0,0,.45);opacity:0;transition:opacity .4s;pointer-events:none;' +
+        'font:400 clamp(26px,3.4vw,44px)/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:3px;color:#fff;text-shadow:0 0 18px #FD4B03}' +
+        '.phx-tap .win small{font-size:12px;letter-spacing:3px;color:#ffd0b0;text-shadow:none}' +
+        '.phx-tap .win.on{opacity:1}' +
+        /* variant 4: gallery dots + glitch */
+        '.phx-tap .dots{position:absolute;left:32%;bottom:18px;display:flex;gap:8px}' +
+        '.phx-tap .dots b{width:22px;height:3px;background:rgba(255,255,255,.25);transition:background .3s}.phx-tap .dots b.on{background:#FD4B03;box-shadow:0 0 8px #FD4B03}' +
+        '.phx-tap .art.glitch .sc.cur{animation:phxGlitch .45s steps(3) 1}' +
+        '@keyframes phxGlitch{0%{clip-path:inset(10% 0 60% 0);transform:translateX(-8px)}33%{clip-path:inset(50% 0 20% 0);transform:translateX(6px)}66%{clip-path:inset(30% 0 40% 0);transform:translateX(-3px)}100%{clip-path:inset(0);transform:none}}' +
+        '@media (max-width:900px){.phx-tap .phx-tc{grid-template-columns:1fr;padding:0 0 30px;min-height:0}' +
+        '.phx-tap .art{position:relative;width:100%;height:210px;-webkit-mask:linear-gradient(180deg,#000 70%,transparent);mask:linear-gradient(180deg,#000 70%,transparent)}' +
+        '.phx-tap .art{order:-1}.phx-tap .tx{padding:0 20px}.phx-tap .dots{left:20px}.phx-tap .hit-me{left:50%}}';
       document.head.appendChild(gc);
-      var logo = (document.querySelector('.layoutLogoItem img') || {}).src || '/assets/5cc3f13a/img/logo-short.svg';
+      var ART = { 1: ['tap-boss.webp'], 2: ['tap-skins.webp'], 3: ['tap-champs.webp'], 4: ['tap-boss.webp', 'tap-dungeon.webp', 'tap-skins.webp'] }[V];
       var sec = document.createElement('section'); sec.className = 'phx-tap';
       sec.innerHTML = '<div class="container"><div class="phx-tc">' +
-        '<div><div class="k">TELEGRAM GAME</div><h2>PHOINEXES <b>TAP</b></h2>' +
-        '<p>Play & earn tickets. Tap, level up your phoenix, open daily chests and join the team boss fights in the Dungeon.</p>' +
+        '<div class="tx"><div class="k">TELEGRAM GAME</div><h2>PHOINEXES <b>TAP</b></h2>' +
+        '<p>Play & earn tickets. Tap, level up your phoenix, collect skins, open daily chests and join the team boss fights in the Dungeon.</p>' +
         '<div class="ch"><span>\uD83D\uDD25 Fire Rush</span><span>\uD83C\uDF81 Daily Chest</span><span>\uD83C\uDFA1 Lucky Wheel</span><span>\uD83D\uDC09 Dungeon</span></div>' +
         '<a class="go" href="' + BOT + '" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path fill="#141414" d="M21.9 4.3 18.7 19.4c-.2 1.1-.9 1.3-1.8.8l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.2 13.1l-4.8-1.5c-1-.3-1.1-1 .2-1.5L20.5 2.9c.9-.3 1.6.2 1.4 1.4z"/></svg>PLAY IN TELEGRAM</a></div>' +
-        '<div class="zone" role="button" aria-label="Tap the phoenix"><img src="' + logo + '" alt="PHOINEXES" draggable="false"><div class="cnt">TAP ME \u00B7 <b>0</b></div></div>' +
+        '<div></div><div class="art v' + V + '">' + ART.map(function(f, i){ return '<div class="sc' + (V === 4 ? '' : ' kb') + (i === 0 ? ' cur' : '') + '" style="background-image:url(' + A + f + ');' + (i ? 'opacity:0' : '') + '"></div>'; }).join('') + '</div>' +
         '</div></div>';
       ft.parentNode.insertBefore(sec, ft);
-      var z = sec.querySelector('.zone'), cb = z.querySelector('.cnt b'), n = 0;
-      z.addEventListener('pointerdown', function(e){
-        var r = z.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
-        n++; cb.textContent = n; z.classList.add('hit'); setTimeout(function(){ z.classList.remove('hit'); }, 90);
-        var p = document.createElement('span'); p.className = 'pl'; p.textContent = (n % 10 === 0) ? 'CRIT x2' : '+1'; p.style.left = x + 'px'; p.style.top = y + 'px'; z.appendChild(p);
-        var q = document.createElement('span'); q.className = 'rp'; q.style.left = x + 'px'; q.style.top = y + 'px'; z.appendChild(q);
-        setTimeout(function(){ p.remove(); q.remove(); }, 820);
-        if (n === 15) { var cbx = z.querySelector('.cnt'); cbx.innerHTML = 'FULL GAME IN TELEGRAM \u2192'; }
-      });
+      var art = sec.querySelector('.art');
+      var canvasFx = function(kind){
+        var cv = document.createElement('canvas'); art.appendChild(cv);
+        var g = cv.getContext('2d'), ps = [], W = 0, H = 0, run = false;
+        var size = function(){ var r = art.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2); W = r.width; H = r.height; cv.width = W * d; cv.height = H * d; g.setTransform(d, 0, 0, d, 0, 0); };
+        var spawn = function(){
+          if (kind === 'embers') return { x: Math.random() * W, y: H + 10, vx: (Math.random() - .5) * .4, vy: -(0.4 + Math.random() * 1.1), r: 1 + Math.random() * 2.2, a: .6 + Math.random() * .4, c: Math.random() < .5 ? '255,140,40' : '120,255,150' };
+          return { x: Math.random() * W, y: -10, vx: (Math.random() - .5) * .6, vy: 0.6 + Math.random() * 1.2, r: 2 + Math.random() * 3, a: .9, rot: Math.random() * 6, vr: (Math.random() - .5) * .2, c: ['255,210,90', '253,75,3', '255,240,200'][(Math.random() * 3) | 0] };
+        };
+        var fr = function(){
+          if (!run) return;
+          g.clearRect(0, 0, W, H);
+          if (ps.length < (kind === 'embers' ? 55 : 45)) ps.push(spawn());
+          ps.forEach(function(p){
+            p.x += p.vx; p.y += p.vy;
+            if (kind === 'embers') { p.a -= .003; g.fillStyle = 'rgba(' + p.c + ',' + Math.max(0, p.a) + ')'; g.shadowColor = 'rgba(' + p.c + ',1)'; g.shadowBlur = 8; g.beginPath(); g.arc(p.x, p.y, p.r, 0, 6.3); g.fill(); }
+            else { p.rot += p.vr; g.save(); g.translate(p.x, p.y); g.rotate(p.rot); g.fillStyle = 'rgba(' + p.c + ',' + p.a + ')'; g.fillRect(-p.r, -p.r / 2, p.r * 2, p.r); g.restore(); }
+          });
+          ps = ps.filter(function(p){ return p.y > -20 && p.y < H + 20 && p.a > 0; });
+          requestAnimationFrame(fr);
+        };
+        size(); window.addEventListener('resize', size);
+        if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ var v = es[0].isIntersecting; if (v && !run) { run = true; requestAnimationFrame(fr); } else if (!v) run = false; }).observe(art);
+        else { run = true; requestAnimationFrame(fr); }
+      };
+      if (V === 1) {
+        art.insertAdjacentHTML('beforeend', '<div class="hud">EMERALD TYRANT \u00B7 BOSS<div class="bar"><i></i></div></div><div class="hit-me">TAP TO ATTACK</div><div class="win"><span>BOSS DEFEATED!</span><small>NOW DO IT WITH YOUR TEAM IN TELEGRAM</small></div>');
+        canvasFx('embers');
+        var hp = 100, bar = art.querySelector('.bar'), hpi = bar.firstChild, win = art.querySelector('.win'), hint = art.querySelector('.hit-me'), lock = false;
+        art.addEventListener('pointerdown', function(e){
+          if (lock) return;
+          var r = art.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, crit = Math.random() < 0.18, d = crit ? 14 + ((Math.random() * 6) | 0) : 5 + ((Math.random() * 5) | 0);
+          if (hint) { hint.remove(); hint = null; }
+          hp = Math.max(0, hp - d); hpi.style.width = hp + '%'; bar.classList.toggle('low', hp < 30);
+          var t = document.createElement('span'); t.className = 'dmg' + (crit ? ' crit' : ''); t.textContent = (crit ? 'CRIT -' : '-') + d * 37; t.style.left = x + 'px'; t.style.top = (y - 10) + 'px'; art.appendChild(t);
+          var s = document.createElement('span'); s.className = 'slash'; s.style.left = x + 'px'; s.style.top = y + 'px'; s.style.setProperty('--r', ((Math.random() * 120) - 60).toFixed(0) + 'deg'); art.appendChild(s);
+          setTimeout(function(){ t.remove(); s.remove(); }, 900);
+          art.classList.remove('shake'); void art.offsetWidth; art.classList.add('shake');
+          if (hp <= 0) {
+            lock = true; win.classList.add('on');
+            setTimeout(function(){ win.classList.remove('on'); hp = 100; hpi.style.width = '100%'; bar.classList.remove('low'); lock = false; }, 3200);
+          }
+        });
+      } else if (V === 2) {
+        art.insertAdjacentHTML('beforeend', '<div class="cap">COLLECT PHOENIX SKINS</div>'); canvasFx('embers');
+      } else if (V === 3) {
+        art.insertAdjacentHTML('beforeend', '<div class="cap">WEEKLY CHAMPIONS</div>'); canvasFx('confetti');
+      } else {
+        art.insertAdjacentHTML('beforeend', '<div class="dots">' + ART.map(function(f, i){ return '<b' + (i ? '' : ' class="on"') + '></b>'; }).join('') + '</div>');
+        canvasFx('embers');
+        var scs = [].slice.call(art.querySelectorAll('.sc')), dts = [].slice.call(art.querySelectorAll('.dots b')), k = 0;
+        setInterval(function(){
+          if (document.hidden) return;
+          scs[k].classList.remove('cur'); scs[k].style.opacity = 0; dts[k].classList.remove('on');
+          k = (k + 1) % scs.length;
+          scs[k].classList.add('cur'); scs[k].style.opacity = 1; dts[k].classList.add('on');
+          art.classList.remove('glitch'); void art.offsetWidth; art.classList.add('glitch');
+        }, 4200);
+      }
       if (typeof phxCompute === 'function' && 'IntersectionObserver' in window) {
         var h2 = sec.querySelector('h2'); h2.classList.add('phx-sw');
         var tio = new IntersectionObserver(function(es){ if (!es[0].isIntersecting) return; tio.disconnect(); h2.classList.remove('phx-sw'); try { phxCompute([h2], { step: 1.6, scr: 8, lap: 0.5, ms: 45 }); } catch (e) {} }, { threshold: 0.5 });
