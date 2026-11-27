@@ -918,7 +918,8 @@
         });
       };
       place();
-      window.addEventListener('resize', place);
+      var prt = 0;
+      window.addEventListener('resize', function(){ place(); clearTimeout(prt); prt = setTimeout(place, 250); });
       window.addEventListener('load', place);
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
       document.addEventListener('click', function(e){ if (e.target.closest && e.target.closest('.burger')) { setTimeout(place, 60); setTimeout(place, 400); } }, true);
