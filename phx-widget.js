@@ -1393,7 +1393,7 @@
           e.preventDefault();
           try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (x) {}
           var now = Date.now(); hits = hits.filter(function(t){ return now - t < 2500; }); hits.push(now);
-          if (hits.length >= 5) { hits = []; var r = a.getBoundingClientRect(); pulse(r.left + r.width / 2, r.top + r.height / 2); }
+          if (hits.length >= 3) { hits = []; var r = a.getBoundingClientRect(); pulse(r.left + r.width / 2, r.top + r.height / 2); }
         });
       });
     })();
