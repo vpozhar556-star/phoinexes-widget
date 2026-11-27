@@ -392,7 +392,7 @@
         '.phx-pc .top{display:none !important}' +
         '.phx-pc .nm{margin:0 0 14px;min-height:1.1em;font:400 clamp(30px,2.8vw,52px)/1.05 "Nasalization Rg",Arial,sans-serif;letter-spacing:2px;color:#fff;text-transform:uppercase;text-shadow:0 0 22px rgba(253,75,3,.45)}' +
         '.phx-pc .nm i{font-style:normal;color:#FD4B03}' +
-        '.phx-pc .ln{margin:0 0 6px;min-height:1.4em;font:14px/1.4 Arial,sans-serif;color:#c4c4c4;max-width:80%}.phx-pc .ln em{font-style:normal}.phx-pc .ln span{color:#fff}' +
+        '.phx-pc .mid{margin:auto 0}.phx-pc .nm{margin-bottom:20px !important}.phx-pc .ln{margin:0 0 10px;min-height:1.4em;font:18px/1.4 Arial,sans-serif;color:#d0d0d0;max-width:92%}.phx-pc .ln em{font-style:normal}.phx-pc .ln span{color:#fff}' +
         '.phx-pc .bar{display:flex;gap:4px;margin:0 0 18px}.phx-pc .bar u{flex:1;height:14px;cursor:pointer;text-decoration:none;position:relative}' +
         '.phx-pc .bar u::after{content:"";position:absolute;left:0;right:0;top:6px;height:3px;background:rgba(255,255,255,.18);transition:background .3s,box-shadow .3s}' +
         '.phx-pc .bar u:hover::after{background:rgba(253,75,3,.6)}.phx-pc .bar u.on::after{background:#FD4B03;box-shadow:0 0 8px #FD4B03}' +
@@ -404,7 +404,7 @@
         '.phx-pc .go:hover{filter:brightness(1.12)}' +
         '@media (max-width:767px){.hero .layoutGrid.rows-2{grid-template-columns:minmax(0,46fr) minmax(0,54fr) !important}.hero .bonusItem{min-width:0}' +
         '.hero .heroBonus.phx-pc{padding:14px 12px 12px !important}.phx-pc .top{font-size:9px;letter-spacing:1.5px}.phx-pc .nm{font-size:20px !important;letter-spacing:1px;margin:0 0 8px}' +
-        '.phx-pc .ln{font-size:11px;margin:0 0 4px;max-width:none}.phx-pc .bar{gap:2px;margin:0 0 10px}.phx-pc .ar{width:30px;height:30px}.phx-pc .go{height:30px;padding:0 9px;font-size:9px;letter-spacing:1px;gap:5px}.phx-pc .go svg{display:none}}';
+        '.phx-pc .ln{font-size:12px;margin:0 0 5px;max-width:none}.phx-pc .nm{margin-bottom:10px !important}.phx-pc .bar{gap:2px;margin:0 0 10px}.phx-pc .ar{width:30px;height:30px}.phx-pc .go{height:30px;padding:0 9px;font-size:9px;letter-spacing:1px;gap:5px}.phx-pc .go svg{display:none}}';
       document.head.appendChild(css);
       box.className = 'heroBonus phx-pc';
       /* desktop: the carousel sits in the lower right tile (the upper one shows the picture); on phones it stays in the upper tile */
