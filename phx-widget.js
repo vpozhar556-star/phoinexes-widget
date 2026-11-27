@@ -341,6 +341,25 @@
       document.head.appendChild(st);
     })();
 
+    /* Hide the "Elysium Russian" plan on the page (slider card + calculator dropdown item) - visual only, the plan itself stays in the system.
+       The slide is removed only when it is at the end of the slider, so the other plans keep their order and the calculator stays in sync */
+    (function(){
+      var st = document.createElement('style');
+      st.textContent = '.calcSection .choices__item[data-value*="Russian" i]{display:none !important}';
+      document.head.appendChild(st);
+      var run = function(){
+        var sl = document.querySelector('.planSlider'); if (!sl) return;
+        var sw = sl.swiper, all = [].slice.call(sl.querySelectorAll('.swiper-slide')), idx = [];
+        all.forEach(function(s, i){ var n = s.querySelector('.name'); if (n && /russian/i.test(n.textContent)) idx.push(i); });
+        if (!idx.length) return;
+        var tail = idx.every(function(i, k){ return i === all.length - idx.length + k; });
+        if (!tail) return;
+        if (sw && sw.removeSlide) { try { if (sw.activeIndex >= all.length - idx.length) sw.slideTo(0, 0); sw.removeSlide(idx); return; } catch (e) {} }
+        idx.forEach(function(i){ all[i].remove(); }); if (sw && sw.update) sw.update();
+      };
+      run(); setTimeout(run, 1500); setTimeout(run, 4000);
+    })();
+
     /* Hero top-right tile: full-tile carousel of all plans (names "compute"), arrows / bar / swipe to browse, button goes to the plans section; no profit figures; the looping background video is removed */
     (function(){
       var tile = document.querySelector('.hero .bonusItem'), box = tile && tile.querySelector('.heroBonus'), cards = [].slice.call(document.querySelectorAll('.planSlider .planCard'));
