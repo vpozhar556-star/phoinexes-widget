@@ -621,7 +621,13 @@
         '.phx-pl button:hover{background:#1dff8c;color:#02140a;text-shadow:none}' +
         '.phx-pl .msg{min-height:12px;color:#ff5d5d;text-shadow:0 0 8px #ff2d2d}.phx-pl .msg.ok{color:#9dffc9;text-shadow:0 0 8px #1dff8c}' +
         '.menuList > li.phx-la > a::before{content:"";display:inline-block;width:10px;height:12px;margin-right:7px;vertical-align:-1px;background:currentColor;filter:drop-shadow(0 0 4px #1dff8c);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 12 14%27%3E%3Cpath d=%27M3 6.5V4.2a3 3 0 0 1 6 0v2.3%27 fill=%27none%27 stroke=%27%23000%27 stroke-width=%271.8%27/%3E%3Crect x=%271%27 y=%276%27 width=%2710%27 height=%278%27 rx=%271.5%27/%3E%3C/svg%3E") no-repeat center/contain;mask:url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 12 14%27%3E%3Cpath d=%27M3 6.5V4.2a3 3 0 0 1 6 0v2.3%27 fill=%27none%27 stroke=%27%23000%27 stroke-width=%271.8%27/%3E%3Crect x=%271%27 y=%276%27 width=%2710%27 height=%278%27 rx=%271.5%27/%3E%3C/svg%3E") no-repeat center/contain}' +
-        '.menuList > li.phx-la > a{color:#1dff8c !important;text-shadow:0 0 10px #1dff8c;cursor:pointer;animation:phxLa 1.6s ease-in-out infinite}' +
+        '.menuList > li.phx-la > a{color:#5f8f73 !important;text-shadow:none !important;cursor:not-allowed !important;transition:color .2s}' +
+        '.menuList > li.phx-la > a:hover{color:#7fae92 !important}' +
+        '.menuList > li.phx-la > a::before{filter:none !important}' +
+        '.menuList > li.phx-la > a.phx-den{color:#ff5d5d !important;animation:phxDen .36s linear 1}' +
+        '@keyframes phxDen{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}' +
+        '.phx-den-tip{position:fixed;z-index:2147483001;padding:7px 10px;background:rgba(22,4,4,.95);box-shadow:inset 0 0 0 1px rgba(255,80,80,.6),0 6px 18px rgba(0,0,0,.5);color:#ff6b6b;font:600 10px/1.2 Orbitron,"Nasalization Rg",Arial,sans-serif;letter-spacing:.16em;white-space:nowrap;pointer-events:none;opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .2s}' +
+        '.phx-den-tip.on{opacity:1;transform:none}' +
         '@keyframes phxLa{0%,100%{text-shadow:0 0 6px #1dff8c}50%{text-shadow:0 0 16px #1dff8c,0 0 2px #eafff3}}' +
         '.phx-pl .x{position:absolute;right:8px;top:6px;cursor:pointer;font:16px/1 Arial,sans-serif;color:#5dffa9;font-style:normal}.phx-pl .x:hover{color:#eafff3}';
       document.head.appendChild(css);
@@ -676,7 +682,15 @@
           var li = document.createElement('li'); li.className = 'phx-la'; li.innerHTML = '<a href="#">LOGIN AGENT</a>'; ml.appendChild(li);
           var li2 = document.createElement('li'); li2.className = 'phx-la'; li2.innerHTML = '<a href="#">CONNECT PULSE</a>'; ml.appendChild(li2);
           compute(li.firstChild, 'LOGIN AGENT'); compute(li2.firstChild, 'CONNECT PULSE');
-          [li, li2].forEach(function(L){ L.firstChild.addEventListener('click', function(e){ e.preventDefault(); if (!el) return; try { scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + scrollY - 120), behavior: 'smooth' }); } catch (x) {} var i = el.querySelector('input'); if (i) setTimeout(function(){ i.focus({ preventScroll: true }); }, 400); }); });
+          [li, li2].forEach(function(L){ L.firstChild.addEventListener('click', function(e){
+            /* locked: shake + error tip, no navigation */
+            e.preventDefault(); e.stopPropagation();
+            var a = L.firstChild; a.classList.remove('phx-den'); void a.offsetWidth; a.classList.add('phx-den');
+            var r = a.getBoundingClientRect(), t = document.createElement('div'); t.className = 'phx-den-tip'; t.textContent = 'ERROR 403 \u00b7 ACCESS DENIED'; document.body.appendChild(t);
+            t.style.left = Math.round(Math.max(8, Math.min(innerWidth - t.offsetWidth - 8, r.left))) + 'px'; t.style.top = Math.round(r.bottom + 8) + 'px';
+            requestAnimationFrame(function(){ t.classList.add('on'); });
+            setTimeout(function(){ t.classList.remove('on'); setTimeout(function(){ t.remove(); }, 250); }, 1800);
+          }); });
         }
         var form = el.querySelector('form'), msg = el.querySelector('.msg');
         /* decorative: never sends or keeps anything */
