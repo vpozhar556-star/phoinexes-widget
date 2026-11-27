@@ -611,6 +611,97 @@
       document.addEventListener('phx-pulse', function(){ setTimeout(open, 450); });
     })();
 
+    /* PDF presentations: the header PDF icon opens a language chooser, plus a download block on the page (19 languages, files on GitHub Pages) */
+    (function(){
+      var GH0 = 'https://vpozhar556-star.github.io/phoinexes-widget/', GH = GH0 + 'Phoinexes_Presentation_';
+      var PDFS = [
+        ['EN', 'English', GH0 + 'Phoinexes_Original_EN.pdf', '3.2'], ['RU', '\u0420\u0443\u0441\u0441\u043a\u0438\u0439', GH0 + 'Phoinexes_Original_RU%20(1).pdf', '2.6'],
+        ['DE', 'Deutsch', 0, '2.4'], ['ES', 'Espa\u00f1ol', 0, '2.4'], ['FR', 'Fran\u00e7ais', 0, '2.4'], ['IT', 'Italiano', 0, '2.4'],
+        ['PT-BR', 'Portugu\u00eas (BR)', 0, '2.4'], ['PL', 'Polski', 0, '2.5'], ['AR', '\u0627\u0644\u0639\u0631\u0628\u064a\u0629', 0, '2.5'], ['FA', '\u0641\u0627\u0631\u0633\u06cc', 0, '2.5'],
+        ['HI', '\u0939\u093f\u0928\u094d\u0926\u0940', 0, '2.5'], ['JA', '\u65e5\u672c\u8a9e', 0, '4.1'], ['KO', '\ud55c\uad6d\uc5b4', 0, '2.5'], ['TH', '\u0e44\u0e17\u0e22', 0, '2.5'],
+        ['VI', 'Ti\u1ebfng Vi\u1ec7t', 0, '2.5'], ['MS', 'Bahasa Melayu', 0, '2.4'], ['FIL', 'Filipino', 0, '2.4'], ['KA', '\u10e5\u10d0\u10e0\u10d7\u10e3\u10da\u10d8', 0, '2.5'], ['AM', '\u12a0\u121b\u122d\u129b', 0, '2.5']
+      ];
+      var lang = (document.documentElement.lang || 'en').slice(0, 2).toLowerCase();
+      var T = {
+        en: ['PRESENTATION', 'The full PHOINEXES presentation: technology, plans and how it works. Choose your language and download.', 'Download', '19 languages'],
+        ru: ['\u041f\u0420\u0415\u0417\u0415\u041d\u0422\u0410\u0426\u0418\u042f', '\u041f\u043e\u043b\u043d\u0430\u044f \u043f\u0440\u0435\u0437\u0435\u043d\u0442\u0430\u0446\u0438\u044f PHOINEXES: \u0442\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0438\u0438, \u043f\u043b\u0430\u043d\u044b \u0438 \u043a\u0430\u043a \u0432\u0441\u0451 \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442. \u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u044f\u0437\u044b\u043a \u0438 \u0441\u043a\u0430\u0447\u0430\u0439\u0442\u0435.', '\u0421\u043a\u0430\u0447\u0430\u0442\u044c', '19 \u044f\u0437\u044b\u043a\u043e\u0432'],
+        vi: ['T\u00c0I LI\u1ec6U', 'B\u00e0i thuy\u1ebft tr\u00ecnh \u0111\u1ea7y \u0111\u1ee7 v\u1ec1 PHOINEXES: c\u00f4ng ngh\u1ec7, c\u00e1c g\u00f3i v\u00e0 c\u00e1ch ho\u1ea1t \u0111\u1ed9ng. Ch\u1ecdn ng\u00f4n ng\u1eef v\u00e0 t\u1ea3i v\u1ec1.', 'T\u1ea3i v\u1ec1', '19 ng\u00f4n ng\u1eef'],
+        ms: ['PEMBENTANGAN', 'Pembentangan penuh PHOINEXES: teknologi, pelan dan cara ia berfungsi. Pilih bahasa dan muat turun.', 'Muat turun', '19 bahasa'],
+        th: ['\u0e40\u0e2d\u0e01\u0e2a\u0e32\u0e23\u0e19\u0e33\u0e40\u0e2a\u0e19\u0e2d', '\u0e40\u0e2d\u0e01\u0e2a\u0e32\u0e23\u0e19\u0e33\u0e40\u0e2a\u0e19\u0e2d PHOINEXES \u0e09\u0e1a\u0e31\u0e1a\u0e40\u0e15\u0e47\u0e21: \u0e40\u0e17\u0e04\u0e42\u0e19\u0e42\u0e25\u0e22\u0e35 \u0e41\u0e1c\u0e19 \u0e41\u0e25\u0e30\u0e27\u0e34\u0e18\u0e35\u0e01\u0e32\u0e23\u0e17\u0e33\u0e07\u0e32\u0e19 \u0e40\u0e25\u0e37\u0e2d\u0e01\u0e20\u0e32\u0e29\u0e32\u0e41\u0e25\u0e49\u0e27\u0e14\u0e32\u0e27\u0e19\u0e4c\u0e42\u0e2b\u0e25\u0e14', '\u0e14\u0e32\u0e27\u0e19\u0e4c\u0e42\u0e2b\u0e25\u0e14', '19 \u0e20\u0e32\u0e29\u0e32']
+      }[lang] || ['PRESENTATION', 'The full PHOINEXES presentation: technology, plans and how it works. Choose your language and download.', 'Download', '19 languages'];
+      var url = function(p){ return p[2] || (GH + p[0] + '.pdf'); };
+      /* current language first */
+      PDFS.sort(function(a, b){ return (b[0].slice(0, 2).toLowerCase() === lang) - (a[0].slice(0, 2).toLowerCase() === lang); });
+      var css = document.createElement('style');
+      css.textContent = '.phx-pdfm{position:fixed;z-index:2147483000;width:360px;max-width:calc(100vw - 16px);max-height:min(70vh,520px);overflow:auto;padding:10px;box-sizing:border-box;background:rgba(14,14,14,.97);' +
+        'box-shadow:inset 0 0 0 1px rgba(253,75,3,.55),0 14px 40px rgba(0,0,0,.6);clip-path:inset(0 0 100% 0);opacity:0;transition:clip-path .4s ease,opacity .25s;pointer-events:none;scrollbar-width:thin;scrollbar-color:#FD4B03 transparent}' +
+        '.phx-pdfm.on{clip-path:inset(0 0 0 0);opacity:1;pointer-events:auto}' +
+        '.phx-pdfm .t{display:flex;justify-content:space-between;padding:4px 4px 10px;font:11px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:3px;color:#FD4B03}.phx-pdfm .t em{font-style:normal;color:#777;letter-spacing:1px}' +
+        '.phx-pdfm .g{display:grid;grid-template-columns:1fr 1fr;gap:4px}' +
+        '.phx-pdl{position:relative;display:flex;align-items:center;gap:9px;padding:9px 8px;color:#fff !important;text-decoration:none !important;font:13px/1.15 Arial,sans-serif;background:rgba(255,255,255,.03);transition:background .2s,box-shadow .2s;overflow:hidden}' +
+        '.phx-pdl:hover{background:rgba(253,75,3,.14);box-shadow:inset 0 0 0 1px rgba(253,75,3,.7)}' +
+        '.phx-pdl b{flex:none;min-width:30px;padding:4px 3px;text-align:center;font:400 10px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:1px;color:#FD4B03;box-shadow:inset 0 0 0 1px rgba(253,75,3,.6)}' +
+        '.phx-pdl span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}' +
+        '.phx-pdl em{flex:none;font-style:normal;font-size:10px;color:#8d8d8d}' +
+        '.phx-pdl i{flex:none;width:14px;height:14px;color:#FD4B03}.phx-pdl i svg{display:block}' +
+        '.phx-pdl.cur{box-shadow:inset 0 0 0 1px rgba(253,75,3,.5)}' +
+        '.phx-pdl.ld::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;background:#FD4B03;transform-origin:left;animation:phxPdl 1.2s ease-in-out infinite}' +
+        '@keyframes phxPdl{0%{transform:scaleX(0)}100%{transform:scaleX(1);opacity:0}}' +
+        '.phx-pdfc{padding:10px 0 50px}' +
+        '.phx-pdfc .bx{position:relative;display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.6fr);gap:32px;align-items:center;padding:34px 36px;background:linear-gradient(135deg,#1a0d06 0%,#121212 45%);box-shadow:inset 0 0 0 1px rgba(253,75,3,.45);' +
+        'clip-path:polygon(18px 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%,0 18px)}' +
+        '.phx-pdfc .k{font:11px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:3px;color:#FD4B03}' +
+        '.phx-pdfc h2{margin:12px 0 12px;font:400 clamp(26px,3.2vw,42px)/1.05 "Nasalization Rg",Arial,sans-serif;color:#fff;letter-spacing:1px}.phx-pdfc h2 b{font-weight:400;color:#FD4B03;text-shadow:0 0 18px rgba(253,75,3,.6)}' +
+        '.phx-pdfc p{margin:0 0 14px;font:15px/1.55 Arial,sans-serif;color:#b5b5b5}' +
+        '.phx-pdfc .n{font:12px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:2px;color:#777}' +
+        '.phx-pdfc .g{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:6px}' +
+        '.phx-pdfc .phx-pdl{padding:12px 10px;clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);box-shadow:inset 0 0 0 1px #2c2c2c}' +
+        '.phx-pdfc .phx-pdl:hover,.phx-pdfc .phx-pdl.cur{box-shadow:inset 0 0 0 1px #FD4B03}' +
+        '@media (max-width:1000px){.phx-pdfc .bx{grid-template-columns:1fr;padding:24px 18px;gap:20px}}' +
+        '@media (max-width:480px){.phx-pdfc .g{grid-template-columns:1fr 1fr}.phx-pdfc .phx-pdl em{display:none}.phx-pdfm .g{grid-template-columns:1fr}}';
+      document.head.appendChild(css);
+      var ico = '<i><svg viewBox="0 0 14 14" width="14" height="14"><path d="M7 1v8M3.5 5.5 7 9l3.5-3.5M2 12h10" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></i>';
+      var item = function(p){ return '<a class="phx-pdl' + (p[0].slice(0, 2).toLowerCase() === lang ? ' cur' : '') + '" href="' + url(p) + '" download="PHOINEXES_Presentation_' + p[0] + '.pdf" target="_blank" rel="noopener" data-n="PHOINEXES_Presentation_' + p[0] + '.pdf"><b>' + p[0] + '</b><span>' + p[1] + '</span><em>' + p[3] + ' MB</em>' + ico + '</a>'; };
+      var list = '<div class="g">' + PDFS.map(item).join('') + '</div>';
+      /* cross-origin files: fetch and save under a clean name; fall back to opening the link */
+      document.addEventListener('click', function(e){
+        var a = e.target.closest && e.target.closest('a.phx-pdl'); if (!a || a.href.indexOf(location.origin) === 0) return;
+        e.preventDefault(); if (a.classList.contains('ld')) return; a.classList.add('ld');
+        fetch(a.href).then(function(r){ if (!r.ok) throw 0; return r.blob(); }).then(function(b){
+          var u = URL.createObjectURL(b), t = document.createElement('a'); t.href = u; t.download = a.getAttribute('data-n'); document.body.appendChild(t); t.click(); t.remove();
+          setTimeout(function(){ URL.revokeObjectURL(u); }, 4000); a.classList.remove('ld');
+        }).catch(function(){ a.classList.remove('ld'); window.open(a.href, '_blank', 'noopener'); });
+      });
+      /* header chooser */
+      var menu = document.createElement('div'); menu.className = 'phx-pdfm';
+      menu.innerHTML = '<div class="t">PDF<em>' + T[3] + '</em></div>' + list;
+      document.body.appendChild(menu);
+      var openFor = null;
+      var close = function(){ menu.classList.remove('on'); openFor = null; };
+      var open = function(btn){
+        var r = btn.getBoundingClientRect(), w = menu.offsetWidth || 360;
+        menu.style.top = Math.round(r.bottom + 8) + 'px';
+        menu.style.left = Math.round(Math.max(8, Math.min(innerWidth - w - 8, r.left + r.width / 2 - w / 2))) + 'px';
+        menu.classList.add('on'); openFor = btn;
+      };
+      document.addEventListener('click', function(e){
+        var a = e.target.closest && e.target.closest('.fileLink a, a[href^="/pdf/"]:not(.phx-pdl)');
+        if (a && !menu.contains(a) && !a.closest('.phx-pdfc')) { e.preventDefault(); e.stopPropagation(); if (openFor === a) close(); else open(a); return; }
+        if (openFor && !menu.contains(e.target)) close();
+      }, true);
+      menu.addEventListener('click', function(e){ if (e.target.closest('a')) setTimeout(close, 300); });
+      document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+      window.addEventListener('scroll', function(){ if (openFor && !menu.matches(':hover')) close(); }, { passive: true });
+      window.addEventListener('resize', close);
+      /* download block on the page, before the footer */
+      var ft = document.querySelector('.pageWrapper > footer') || document.querySelector('footer');
+      if (ft && ft.parentNode) {
+        var sec = document.createElement('section'); sec.className = 'phx-pdfc'; sec.id = 'presentation';
+        sec.innerHTML = '<div class="container"><div class="bx"><div><div class="k">' + T[0] + '</div><h2>PHOINEXES <b>PDF</b></h2><p>' + T[1] + '</p><div class="n">' + T[3] + '</div></div>' + list + '</div></div>';
+        ft.parentNode.insertBefore(sec, ft);
+      }
+    })();
+
     var phxOn = function(v){ return v === 'on' || (v === 'demo' && /phxdemo/.test(location.hash + location.search)); };
     if (phxOn(CONFIG.menuIntro)) {
     /* Intro: menu + hero texts "compute" letter by letter (code glyphs) */
