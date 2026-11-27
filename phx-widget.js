@@ -504,8 +504,9 @@
             'clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s,box-shadow .25s}' +
             '.phx-news .phx-nc.in{opacity:1;transform:none}' +
             '.phx-news .phx-nc:hover{box-shadow:inset 0 0 0 1px #FD4B03}' +
-            '.phx-news .phx-im{position:relative;aspect-ratio:16/9;overflow:hidden;background:radial-gradient(circle at 70% 40%,rgba(253,75,3,.35),transparent 60%),#0b0b0b}' +
-            '.phx-news .phx-im img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;transition:transform .6s}' +
+            '.phx-news .phx-im{position:relative;aspect-ratio:4/3;overflow:hidden;background:radial-gradient(circle at 70% 40%,rgba(253,75,3,.35),transparent 60%),#0b0b0b}' +
+            '.phx-news .phx-im i{position:absolute;left:-24px;top:-24px;right:-24px;bottom:-24px;background:50% 50%/cover no-repeat;filter:blur(18px) brightness(.5)}' +
+            '.phx-news .phx-im img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:contain;transition:transform .6s}' +
             '.phx-news .phx-nc:hover .phx-im img{transform:scale(1.04)}' +
             '.phx-news .phx-im b{position:absolute;left:16px;bottom:12px;font:400 22px/1 "Nasalization Rg",Arial,sans-serif;letter-spacing:3px;color:rgba(255,255,255,.14)}' +
             '.phx-news .phx-bd{display:flex;flex-direction:column;gap:8px;padding:14px 16px 16px;flex:1}' +
@@ -523,7 +524,7 @@
             var dt = '';
             try { var dd = new Date(p.date); dt = dd.toLocaleDateString(lang, { day: 'numeric', month: 'short' }) + ' \u00B7 ' + dd.toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' }); } catch (e) {}
             return '<a class="phx-nc" href="' + esc(p.url) + '" target="_blank" rel="noopener">' +
-              '<span class="phx-im">' + (p.image ? '<img src="' + esc(p.image) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">' : '') + '<b>PHOINEXES</b></span>' +
+              '<span class="phx-im">' + (p.image ? '<i style="background-image:url(\'' + esc(p.image) + '\')"></i><img src="' + esc(p.image) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentNode.removeChild(this.previousSibling);this.remove()">' : '') + '<b>PHOINEXES</b></span>' +
               '<span class="phx-bd"><span class="phx-dt"><i></i>' + esc(dt) + '</span><span class="phx-tl">' + esc(title) + '</span>' +
               (body ? '<span class="phx-tx">' + esc(body) + '</span>' : '') + '<span class="phx-mo">READ IN TELEGRAM \u203A</span></span></a>';
           }).join('');
