@@ -468,7 +468,7 @@
       var st = document.createElement('style');
       st.textContent = '@media (min-width:768px){.planSlider .planCard{position:relative}.planSlider .planCard .infoLine{position:relative;z-index:2}' +
         '.planSlider .planCard .imageContainer{top:0 !important;left:0 !important;right:0 !important;bottom:0 !important;width:auto !important;height:auto !important;margin:0 !important;transform:none !important;overflow:hidden}' +
-        '.planSlider .planCard .imageContainer img{width:100% !important;height:100% !important;object-fit:cover}' +
+        '.planSlider .planCard .imageContainer{background:#000}.planSlider .planCard .imageContainer img{width:100% !important;height:100% !important;object-fit:contain !important;object-position:50% 50%}' +
         '.planSlider .planCard .imageContainer::after{content:"";position:absolute;left:0;top:0;right:0;bottom:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 68%,rgba(0,0,0,.8) 100%);pointer-events:none}}';
       document.head.appendChild(st);
     })();
